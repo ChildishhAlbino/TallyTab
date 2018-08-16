@@ -11,4 +11,8 @@ package com.albinodevelopment.Model.Components;
  */
 public class Drink extends Item{
     
+    public Drink(double price, String name) {
+        super(price, name);
+    }
+    
 }
