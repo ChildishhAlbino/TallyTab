@@ -10,5 +10,5 @@ package com.albinodevelopment.Database;
  * @author conno
  */
 public class DatabaseConnectivity {
-    
+
 }
