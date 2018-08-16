@@ -6,10 +6,12 @@
 package com.albinodevelopment.Model;
 
 import com.albinodevelopment.Commands.Command;
+import com.albinodevelopment.Commands.ControllerCommand;
 import com.albinodevelopment.Commands.ICommand;
 import com.albinodevelopment.Commands.ICommandHandler;
 import com.albinodevelopment.Commands.ModelCommand;
 import com.albinodevelopment.Commands.ViewCommand;
+import com.albinodevelopment.Logging.PriorityLogger;
 
 /**
  *
@@ -47,7 +49,16 @@ public class Model implements ICommandHandler<ModelCommand> {
 
     @Override
     public boolean CanHandle(Command command) {
-        return command instanceof ModelCommand;
+        if (command instanceof ModelCommand) {
+            // log success
+            PriorityLogger.Log(command.toString() + ": Success.", PriorityLogger.PriorityLevel.Medium);
+            return true;
+        } else {
+            // log failure
+            command.GenerateErrorCode("This command cannot be handled by this Command Handler.");
+            PriorityLogger.Log(command.GetErrorCode(), PriorityLogger.PriorityLevel.High);
+            return false;
+        }
     }
 
 }

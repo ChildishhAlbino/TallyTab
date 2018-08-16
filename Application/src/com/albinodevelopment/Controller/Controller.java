@@ -65,13 +65,13 @@ public class Controller extends Thread implements ICommandHandler<ControllerComm
     public boolean CanHandle(Command command) {
         if (command instanceof ControllerCommand) {
             // log success
-
+            PriorityLogger.Log(command.toString() + ": Success.", PriorityLogger.PriorityLevel.Medium);
             return true;
         } else {
             // log failure
+            command.GenerateErrorCode("This command cannot be handled by this Command Handler.");
             PriorityLogger.Log(command.GetErrorCode(), PriorityLogger.PriorityLevel.High);
             return false;
         }
-
     }
 }
