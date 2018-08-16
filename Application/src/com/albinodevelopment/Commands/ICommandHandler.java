@@ -15,4 +15,5 @@ public interface ICommandHandler<U extends ICommand<?>> {
 
     void Handle(U command);
 
+    void SetCommandHandler(ICommandHandler commandHandler);
 }
