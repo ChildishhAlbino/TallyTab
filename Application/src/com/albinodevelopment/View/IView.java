@@ -3,14 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.albinodevelopment.Commands;
-
-import com.albinodevelopment.View.IView;
+package com.albinodevelopment.View;
 
 /**
  *
  * @author conno
  */
-public abstract class ViewCommand extends Command<IView> {
+public interface IView {
 
 }

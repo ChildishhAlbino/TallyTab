@@ -8,12 +8,15 @@ package com.albinodevelopment.Commands;
 /**
  *
  * @author conno
+ * @param <U>
  */
 public interface ICommandHandler<U extends ICommand<?>> {
 
-    boolean CanHandle(U command);
+    boolean CanHandle(Command command);
 
     void Handle(U command);
 
     void SetCommandHandler(ICommandHandler commandHandler);
+
+    ICommandHandler GetCommandHandler();
 }

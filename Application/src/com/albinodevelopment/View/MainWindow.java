@@ -5,10 +5,13 @@
  */
 package com.albinodevelopment.View;
 
+import com.albinodevelopment.Commands.Command;
 import com.albinodevelopment.Commands.ControllerCommand;
+import com.albinodevelopment.Commands.ICommand.ExecutionResult;
 import com.albinodevelopment.Commands.ICommandHandler;
 import com.albinodevelopment.Commands.ViewCommand;
 import com.albinodevelopment.Controller.Controller;
+import com.albinodevelopment.Logging.PriorityLogger;
 import com.albinodevelopment.Model.Model;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -21,15 +24,14 @@ import javafx.scene.control.Label;
  *
  * @author conno
  */
-public class MainWindow extends Thread implements Initializable, ICommandHandler<ViewCommand> {
+public class MainWindow extends Thread implements Initializable, ICommandHandler<ViewCommand>, IView {
 
     private ICommandHandler<ControllerCommand> commandHandler;
-    
-    
-    public MainWindow(){
+
+    public MainWindow() {
         StartUp();
     }
-    
+
     @FXML
     private Label label;
 
@@ -45,13 +47,14 @@ public class MainWindow extends Thread implements Initializable, ICommandHandler
     }
 
     @Override
-    public boolean CanHandle(ViewCommand command) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public void Handle(ViewCommand command) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (command.CanExecute(this)) {
+            ExecutionResult exectutionResult = command.Execute(this);
+            if (exectutionResult.equals(ExecutionResult.failure)) {
+                // log
+                PriorityLogger.Log(command.GetErrorCode(), PriorityLogger.PriorityLevel.Zero);
+            }
+        }
     }
 
     @Override
@@ -62,15 +65,33 @@ public class MainWindow extends Thread implements Initializable, ICommandHandler
             // log and output
         }
     }
-    
-    private void StartUp(){
+
+    private void StartUp() {
         Controller controller = new Controller();
         Model model = new Model();
-        
         model.SetCommandHandler(this);
         this.SetCommandHandler(controller);
         controller.SetCommandHandler(model);
         controller.start();
     }
-    
+
+    @Override
+    public ICommandHandler GetCommandHandler() {
+        return commandHandler;
+    }
+
+    @Override
+    public boolean CanHandle(Command command) {
+        if (command instanceof ViewCommand) {
+            // log success
+            PriorityLogger.Log(command.toString() + ": Success.", PriorityLogger.PriorityLevel.Medium);
+            return true;
+        } else {
+            // log failure
+            command.GenerateErrorCode("This command cannot be handled by this Command Handler.");
+            PriorityLogger.Log(command.GetErrorCode(), PriorityLogger.PriorityLevel.High);
+            return false;
+        }
+    }
+
 }

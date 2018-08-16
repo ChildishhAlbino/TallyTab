@@ -11,6 +11,29 @@ import com.albinodevelopment.Controller.Controller;
  *
  * @author conno
  */
-public abstract class ControllerCommand implements ICommand<Controller> {
-    
+public abstract class ControllerCommand extends Command<Controller> {
+
+    public static class PassToViewCommand extends ControllerCommand {
+
+        private final ModelCommand modelCommand;
+
+        public PassToViewCommand(ModelCommand modelCommand) {
+            this.modelCommand = modelCommand;
+        }
+
+        @Override
+        public boolean CanExecute(Controller commandHandler) {
+            return commandHandler.GetCommandHandler().CanHandle(modelCommand);
+        }
+
+        @Override
+        public ExecutionResult Execute(Controller commandHandler) {
+            if (CanExecute(commandHandler)) {
+                commandHandler.GetCommandHandler().Handle(modelCommand);
+                return ExecutionResult.success;
+            } else {
+                return ExecutionResult.failure;
+            }
+        }
+    }
 }
