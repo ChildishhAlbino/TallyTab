@@ -24,4 +24,7 @@ public interface ICommand<U> {
     // executes code packet
     ExecutionResult Execute(U commandHandler);
 
+    String GetErrorCode();
+
+    void GenerateErrorCode(String errorCode);
 }

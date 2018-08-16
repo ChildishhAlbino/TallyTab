@@ -11,6 +11,6 @@ import com.albinodevelopment.Model.Model;
  *
  * @author conno
  */
-public abstract class ModelCommand implements ICommand<Model> {
-    
+public abstract class ModelCommand extends Command<Model> {
+
 }

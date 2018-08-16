@@ -5,38 +5,44 @@
  */
 package com.albinodevelopment.Controller;
 
+import com.albinodevelopment.Commands.Command;
 import com.albinodevelopment.Commands.ControllerCommand;
+import com.albinodevelopment.Commands.ICommand;
 import com.albinodevelopment.Commands.ICommandHandler;
 import com.albinodevelopment.Commands.ModelCommand;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import com.albinodevelopment.Logging.PriorityLogger;
 
 /**
  *
  * @author conno
  */
 public class Controller extends Thread implements ICommandHandler<ControllerCommand> {
+
     private boolean running = true;
     private ICommandHandler<ModelCommand> commandHandler;
 
     @Override
-    public boolean CanHandle(ControllerCommand command) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public void Handle(ControllerCommand command) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (command.CanExecute(this)) {
+            ICommand.ExecutionResult exectutionResult = command.Execute(this);
+            if (exectutionResult.equals(ICommand.ExecutionResult.failure)) {
+                // log
+            }
+        }
     }
 
     @Override
     public void run() {
+        PriorityLogger.LoggingOnOrOff(false);
+        PriorityLogger.SetPriority(PriorityLogger.PriorityLevel.High);
+        PriorityLogger.Log("Logging is on", PriorityLogger.PriorityLevel.High);
+
         while (running) {
             System.out.println("Controller");
             try {
                 Thread.sleep(2500);
             } catch (InterruptedException ex) {
-                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+
             }
         }
     }
@@ -50,4 +56,22 @@ public class Controller extends Thread implements ICommandHandler<ControllerComm
         }
     }
 
+    @Override
+    public ICommandHandler GetCommandHandler() {
+        return commandHandler;
+    }
+
+    @Override
+    public boolean CanHandle(Command command) {
+        if (command instanceof ControllerCommand) {
+            // log success
+
+            return true;
+        } else {
+            // log failure
+            PriorityLogger.Log(command.GetErrorCode(), PriorityLogger.PriorityLevel.High);
+            return false;
+        }
+
+    }
 }

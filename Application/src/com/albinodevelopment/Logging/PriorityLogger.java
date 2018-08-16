@@ -11,13 +11,13 @@ import java.io.PrintStream;
  *
  * @author conno
  */
-public class Logger extends Thread {
+public class PriorityLogger extends Thread {
 
-    private static PriorityLevel currentPriority;
+    private static PriorityLevel currentPriority = PriorityLevel.Unset;
     private static boolean on;
-    private static PrintStream output;
-    
-    public static enum PriorityLevel {      
+    private static PrintStream output = System.out;
+
+    public static enum PriorityLevel {
         Zero,
         Low,
         Medium,
@@ -27,7 +27,7 @@ public class Logger extends Thread {
 
     public static void Log(String toBeLogged, PriorityLevel priorityLevel) {
         if (on) {
-            if (currentPriority.compareTo(priorityLevel) >= 0) {
+            if (currentPriority.compareTo(priorityLevel) <= 0) {
                 output.println(toBeLogged);
             }
         }
@@ -41,7 +41,7 @@ public class Logger extends Thread {
         }
     }
 
-    public static void LoggingOnOrOff(boolean onOrOff){
+    public static void LoggingOnOrOff(boolean onOrOff) {
         on = onOrOff;
     }
 
