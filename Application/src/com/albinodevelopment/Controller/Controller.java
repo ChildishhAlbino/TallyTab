@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  * @author conno
  */
 public class Controller extends Thread implements ICommandHandler<ControllerCommand> {
-
+    private boolean running = true;
     private ICommandHandler<ModelCommand> commandHandler;
 
     @Override
@@ -31,7 +31,7 @@ public class Controller extends Thread implements ICommandHandler<ControllerComm
 
     @Override
     public void run() {
-        while (true) {
+        while (running) {
             System.out.println("Controller");
             try {
                 Thread.sleep(2500);
