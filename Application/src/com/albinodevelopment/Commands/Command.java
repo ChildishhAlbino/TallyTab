@@ -13,19 +13,19 @@ package com.albinodevelopment.Commands;
 public abstract class Command<U> implements ICommand<U> {
 
     protected String errorCode;
-    
+
     @Override
     public String GetErrorCode() {
         return errorCode;
     }
-    
+
     @Override
-    public void GenerateErrorCode(String errorCode){
-        this.errorCode = this.toString() + errorCode;     
+    public void GenerateErrorCode(String errorCode) {
+        this.errorCode = this.toString() + errorCode;
     }
-    
+
     @Override
-    public String toString(){   
+    public String toString() {
         String toString = this.getClass().getName() + ": ";
         return toString;
     }

@@ -6,12 +6,13 @@
 package com.albinodevelopment.Model;
 
 import com.albinodevelopment.Commands.Command;
-import com.albinodevelopment.Commands.ControllerCommand;
 import com.albinodevelopment.Commands.ICommand;
 import com.albinodevelopment.Commands.ICommandHandler;
 import com.albinodevelopment.Commands.ModelCommand;
 import com.albinodevelopment.Commands.ViewCommand;
 import com.albinodevelopment.Logging.PriorityLogger;
+import com.albinodevelopment.Model.Components.DrinksList;
+import java.util.ArrayList;
 
 /**
  *
@@ -20,7 +21,7 @@ import com.albinodevelopment.Logging.PriorityLogger;
 public class Model implements ICommandHandler<ModelCommand> {
 
     private ICommandHandler<ViewCommand> commandHandler;
-
+    
     @Override
     public void Handle(ModelCommand command) {
         if (command.CanExecute(this)) {

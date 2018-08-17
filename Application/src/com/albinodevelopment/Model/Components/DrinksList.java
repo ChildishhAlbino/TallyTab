@@ -12,10 +12,10 @@ import java.util.ArrayList;
  * @author conno
  */
 public class DrinksList {
-    
+
     private ArrayList<Drink> drinks;
-    
-    public ArrayList<Drink> getDrinksList(){
+
+    public ArrayList<Drink> getDrinksList() {
         return drinks;
     }
 }

@@ -9,10 +9,10 @@ package com.albinodevelopment.Model.Components;
  *
  * @author conno
  */
-public class Drink extends Item{
-    
+public class Drink extends Item {
+
     public Drink(double price, String name) {
         super(price, name);
     }
-    
+
 }

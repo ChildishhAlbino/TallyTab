@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.albinodevelopment.settings;
+package com.albinodevelopment.Settings;
 
 /**
  *
  * @author conno
  */
-public class ApplicationSettings implements ISettingsManager{
-    
+public interface ISettingsManager {
+
 }

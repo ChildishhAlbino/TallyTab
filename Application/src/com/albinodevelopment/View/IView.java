@@ -5,10 +5,27 @@
  */
 package com.albinodevelopment.View;
 
+import com.albinodevelopment.Model.Components.Drink;
+import javafx.scene.control.Button;
+import javafx.scene.control.Tab;
+
 /**
  *
  * @author conno
  */
 public interface IView {
 
+    void CreateDrinkGUI(Drink drink);
+
+    void Refresh();
+
+    String GetDrinkNameFromGUI(Button button);
+
+    void New();
+
+    void Open();
+
+    void Save();
+
+    void TabClosed();
 }

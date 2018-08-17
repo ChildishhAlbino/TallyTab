@@ -10,5 +10,5 @@ package com.albinodevelopment.Model.Components.Interpreter;
  * @author conno
  */
 public interface IDrinksListInterpreter {
-    
+
 }
