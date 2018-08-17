@@ -7,7 +7,6 @@ package com.albinodevelopment.Model.Components;
 
 import com.albinodevelopment.Logging.PriorityLogger;
 import java.util.HashMap;
-import java.util.function.BiConsumer;
 
 /**
  *
@@ -17,13 +16,13 @@ public class DrinksTab {
 
     private final DrinksList drinksList;
     private final HashMap<Drink, Integer> count = new HashMap<>();
-    private double Limit;
+    private double limit;
     private double currentValue;
     private double percentUsed;
 
     public DrinksTab(DrinksList drinksList, double Limit) {
         this.drinksList = drinksList;
-        this.Limit = Limit;
+        this.limit = Limit;
     }
 
     public void CheckValues() {
@@ -67,29 +66,29 @@ public class DrinksTab {
     }
 
     private void CalculatePercentUsed() {
-        if (Double.isFinite(Limit)) {
-            percentUsed = currentValue / Limit;
+        if (Double.isFinite(limit)) {
+            percentUsed = currentValue / limit;
         } else {
             percentUsed = 0;
         }
         PriorityLogger.Log(Double.toString(percentUsed), PriorityLogger.PriorityLevel.Low);
     }
-    
-    public double GetPercentUsed(){
+
+    public double GetPercentUsed() {
         return percentUsed;
     }
-    
-    public double GetCurrentValue(){
+
+    public double GetCurrentValue() {
         return currentValue;
     }
-    
-    public double GetLimit(){
-        return Limit;
+
+    public double GetLimit() {
+        return limit;
     }
-    
-    public void ChangeLimit(double limit){
-        if(limit > currentValue){
-            this.Limit = limit;
+
+    public void ChangeLimit(double limit) {
+        if (limit > currentValue) {
+            this.limit = limit;
             PriorityLogger.Log("Limit Changed.", PriorityLogger.PriorityLevel.Zero);
         } else {
             PriorityLogger.Log("New limit was below current value. Cannot change.", PriorityLogger.PriorityLevel.Zero);

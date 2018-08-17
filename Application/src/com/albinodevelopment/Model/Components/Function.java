@@ -18,9 +18,9 @@ public class Function {
         this.name = name;
         this.tab = tab;
     }
-    
-    public String GetName(){
+
+    public String GetName() {
         return name;
     }
-    
+
 }

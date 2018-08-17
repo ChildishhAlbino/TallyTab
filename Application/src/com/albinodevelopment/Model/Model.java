@@ -67,6 +67,7 @@ public class Model implements ICommandHandler<ModelCommand> {
 
     public void NewFunction(String name, double Limit, DrinksList drinksList) {
         Function newFunction = new Function(name, new DrinksTab(drinksList, Limit));
+        functions.add(newFunction);
     }
 
 }
