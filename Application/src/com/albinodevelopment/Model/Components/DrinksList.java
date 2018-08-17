@@ -5,6 +5,7 @@
  */
 package com.albinodevelopment.Model.Components;
 
+import com.albinodevelopment.Logging.PriorityLogger;
 import java.util.HashMap;
 
 /**
@@ -18,8 +19,18 @@ public class DrinksList {
     public HashMap<String, Drink> getDrinksList() {
         return drinks;
     }
-    
-    public Drink GetDrink(String name){
+
+    public Drink GetDrink(String name) {
         return drinks.get(name);
+    }
+
+    public int GetListSize() {
+        return drinks.size();
+    }
+
+    public Drink GetDrink(int index) {
+        Drink drink = (Drink) drinks.values().toArray()[index];
+        PriorityLogger.Log(drink.GetName(), PriorityLogger.PriorityLevel.Low);
+        return drink;
     }
 }

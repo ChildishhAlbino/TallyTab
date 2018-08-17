@@ -145,7 +145,7 @@ public class MainWindow extends Thread implements Initializable, ICommandHandler
     }
     
     @Override
-    public void CreateDrinkGUI(Drink drink) {
+    public void CreateDrinkGUIElements(Drink drink) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
@@ -177,16 +177,17 @@ public class MainWindow extends Thread implements Initializable, ICommandHandler
         tab.setOnClosed((Event event) -> {
             TabClosed();
         });
-        tab.contentProperty().set(GenerateNewFunction());
+        tab.contentProperty().set(GenerateNewFunctionPane("New Function"));
         tabPane.getTabs().add(tab);
         
     }
     
-    private StackPane GenerateNewFunction() {
+    private StackPane GenerateNewFunctionPane(String name) {
         StackPane stackPane = new StackPane();
         stackPane.getChildren().add(new Button("Lol"));
         return stackPane;
     }
+    
     
     @Override
     public void Open() {

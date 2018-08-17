@@ -9,7 +9,7 @@ package com.albinodevelopment.Model.Components;
  *
  * @author conno
  */
-public class Item implements i_Item {
+public abstract class Item implements i_Item {
 
     private final double price;
     private final String name;
@@ -17,5 +17,15 @@ public class Item implements i_Item {
     public Item(double price, String name) {
         this.name = name;
         this.price = price;
+    }
+
+    @Override
+    public double GetPrice() {
+        return price;
+    }
+
+    @Override
+    public String GetName() {
+        return name;
     }
 }
