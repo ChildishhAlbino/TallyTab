@@ -5,10 +5,13 @@
  */
 package com.albinodevelopment.Settings;
 
+import com.albinodevelopment.Model.Components.Interpreter.IDrinksListInterpreter;
+
 /**
  *
  * @author conno
  */
 public interface ISettingsManager {
 
+    IDrinksListInterpreter GetDrinksListInterpreter();
 }

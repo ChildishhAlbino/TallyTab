@@ -12,6 +12,8 @@ import com.albinodevelopment.Commands.ModelCommand;
 import com.albinodevelopment.Commands.ViewCommand;
 import com.albinodevelopment.Logging.PriorityLogger;
 import com.albinodevelopment.Model.Components.DrinksList;
+import com.albinodevelopment.Model.Components.DrinksTab;
+import com.albinodevelopment.Model.Components.Function;
 import java.util.ArrayList;
 
 /**
@@ -21,7 +23,8 @@ import java.util.ArrayList;
 public class Model implements ICommandHandler<ModelCommand> {
 
     private ICommandHandler<ViewCommand> commandHandler;
-    
+    private final ArrayList<Function> functions = new ArrayList<>();
+
     @Override
     public void Handle(ModelCommand command) {
         if (command.CanExecute(this)) {
@@ -60,6 +63,11 @@ public class Model implements ICommandHandler<ModelCommand> {
             PriorityLogger.Log(command.GetErrorCode(), PriorityLogger.PriorityLevel.High);
             return false;
         }
+    }
+
+    public void NewFunction(String name, double Limit, DrinksList drinksList) {
+        Function newFunction = new Function(name, new DrinksTab(drinksList, Limit));
+        functions.add(newFunction);
     }
 
 }

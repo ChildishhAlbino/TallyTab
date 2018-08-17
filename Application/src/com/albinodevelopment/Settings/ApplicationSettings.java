@@ -5,10 +5,26 @@
  */
 package com.albinodevelopment.Settings;
 
+import com.albinodevelopment.Model.Components.Interpreter.IDrinksListInterpreter;
+
 /**
  *
  * @author conno
  */
 public class ApplicationSettings implements ISettingsManager {
 
+    private static ISettingsManager instance;
+    private IDrinksListInterpreter drinksListInterpreter;
+
+    @Override
+    public IDrinksListInterpreter GetDrinksListInterpreter() {
+        return drinksListInterpreter;
+    }
+
+    public static ISettingsManager GetInstance() {
+        if (instance == null) {
+            instance = new ApplicationSettings();
+        }
+        return instance;
+    }
 }

@@ -5,10 +5,13 @@
  */
 package com.albinodevelopment.Model.Components.Interpreter;
 
+import com.albinodevelopment.Model.Components.DrinksList;
+
 /**
  *
  * @author conno
  */
 public interface IDrinksListInterpreter {
 
+    DrinksList Interpret();
 }

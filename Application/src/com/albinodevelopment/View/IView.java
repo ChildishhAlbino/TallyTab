@@ -15,7 +15,7 @@ import javafx.scene.control.Tab;
  */
 public interface IView {
 
-    void CreateDrinkGUI(Drink drink);
+    void CreateDrinkGUIElements(Drink drink);
 
     void Refresh();
 
@@ -28,4 +28,5 @@ public interface IView {
     void Save();
 
     void TabClosed();
+    
 }

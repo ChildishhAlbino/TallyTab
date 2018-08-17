@@ -9,9 +9,18 @@ package com.albinodevelopment.Model.Components;
  *
  * @author conno
  */
-public interface i_Item {
+public class Function {
 
-    public double GetPrice();
+    private final String name;
+    private final DrinksTab tab;
 
-    public String GetName();
+    public Function(String name, DrinksTab tab) {
+        this.name = name;
+        this.tab = tab;
+    }
+
+    public String GetName() {
+        return name;
+    }
+
 }

@@ -5,7 +5,8 @@
  */
 package com.albinodevelopment.Model.Components;
 
-import java.util.ArrayList;
+import com.albinodevelopment.Logging.PriorityLogger;
+import java.util.HashMap;
 
 /**
  *
@@ -13,9 +14,23 @@ import java.util.ArrayList;
  */
 public class DrinksList {
 
-    private ArrayList<Drink> drinks;
+    private final HashMap<String, Drink> drinks = new HashMap<>();
 
-    public ArrayList<Drink> getDrinksList() {
+    public HashMap<String, Drink> getDrinksList() {
         return drinks;
+    }
+
+    public Drink GetDrink(String name) {
+        return drinks.get(name);
+    }
+
+    public int GetListSize() {
+        return drinks.size();
+    }
+
+    public Drink GetDrink(int index) {
+        Drink drink = (Drink) drinks.values().toArray()[index];
+        PriorityLogger.Log(drink.GetName(), PriorityLogger.PriorityLevel.Low);
+        return drink;
     }
 }
