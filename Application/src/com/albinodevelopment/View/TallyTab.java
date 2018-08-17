@@ -1,11 +1,15 @@
 package com.albinodevelopment.View;
 
+import com.albinodevelopment.Logging.PriorityLogger;
 import java.io.IOException;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -20,10 +24,18 @@ public class TallyTab extends Application {
 
     @Override
     public void start(Stage stage) {
-        // create MVC objects
-        // link them
-        // show gui
-
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        PriorityLogger.Log("Application shutdown!", PriorityLogger.PriorityLevel.High);
+                        System.exit(0);
+                    }
+                });
+            }
+        });
         SetupGUI(stage);
     }
 

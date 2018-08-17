@@ -12,12 +12,15 @@ import com.albinodevelopment.Commands.ICommandHandler;
 import com.albinodevelopment.Commands.ViewCommand;
 import com.albinodevelopment.Controller.Controller;
 import com.albinodevelopment.Logging.PriorityLogger;
+import com.albinodevelopment.Model.Components.Drink;
 import com.albinodevelopment.Model.Model;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 /**
@@ -33,12 +36,53 @@ public class MainWindow extends Thread implements Initializable, ICommandHandler
     }
 
     @FXML
-    private Label label;
+    private void decreaseButtonAction(ActionEvent event) {
+        if (event.getSource() instanceof Button) {
+            Button button = (Button) event.getSource();
+            // get drink
+            String drink = GetDrinkNameFromGUI(button);
+            PriorityLogger.Log(drink, PriorityLogger.PriorityLevel.Low);
+            // pass to drinks manager
+        } else {
+            // log error 
+            PriorityLogger.Log("ERROR: Source was not button.", PriorityLogger.PriorityLevel.Medium);
+        }
+    }
 
     @FXML
-    private void handleButtonAction(ActionEvent event) {
-        System.out.println("You clicked me!");
-        label.setText("Hello World!");
+    private void increaseButtonAction(ActionEvent event) {
+        // check which drink was increased
+        if (event.getSource() instanceof Button) {
+
+            Button button = (Button) event.getSource();
+            // get drink
+            String drink = GetDrinkNameFromGUI(button);
+            PriorityLogger.Log(drink, PriorityLogger.PriorityLevel.Low);
+            // pass to drinks manager
+        } else {
+            // log error 
+            PriorityLogger.Log("ERROR: Source was not button.", PriorityLogger.PriorityLevel.Medium);
+        }
+    }
+    
+    @FXML
+    private void handleNewButton(ActionEvent event) {
+
+    }
+    
+     @FXML
+    private void handleOpenButton(ActionEvent event) {
+
+    }
+    
+     @FXML
+    private void handleSaveButton(ActionEvent event) {
+
+    }
+    
+     @FXML
+    private void handleCloseButton(ActionEvent event) {
+
     }
 
     @Override
@@ -52,7 +96,7 @@ public class MainWindow extends Thread implements Initializable, ICommandHandler
             ExecutionResult exectutionResult = command.Execute(this);
             if (exectutionResult.equals(ExecutionResult.failure)) {
                 // log
-                PriorityLogger.Log(command.GetErrorCode(), PriorityLogger.PriorityLevel.Zero);
+                PriorityLogger.Log(command.GetErrorCode(), PriorityLogger.PriorityLevel.High);
             }
         }
     }
@@ -94,4 +138,27 @@ public class MainWindow extends Thread implements Initializable, ICommandHandler
         }
     }
 
+    @Override
+    public void CreateDrinkGUI(Drink drink) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void Refresh() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String GetDrinkNameFromGUI(Button button) {
+        String drinkName = null;
+        Node n = button.getParent().getChildrenUnmodifiable().get(0);
+        if (n instanceof Label) {
+            PriorityLogger.Log("Label found!", PriorityLogger.PriorityLevel.Medium);
+            Label drinkNameLabel = (Label) n;
+            drinkName = drinkNameLabel.getText();
+        } else {
+            PriorityLogger.Log("ERROR: Node was not label.", PriorityLogger.PriorityLevel.Medium);
+        }
+        return drinkName;
+    }
 }

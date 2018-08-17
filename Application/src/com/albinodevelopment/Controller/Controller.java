@@ -33,8 +33,8 @@ public class Controller extends Thread implements ICommandHandler<ControllerComm
 
     @Override
     public void run() {
-        PriorityLogger.LoggingOnOrOff(false);
-        PriorityLogger.SetPriority(PriorityLogger.PriorityLevel.High);
+        PriorityLogger.LoggingOnOrOff(true);
+        PriorityLogger.SetPriority(PriorityLogger.PriorityLevel.Low);
         PriorityLogger.Log("Logging is on", PriorityLogger.PriorityLevel.High);
 
         while (running) {
