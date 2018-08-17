@@ -5,12 +5,35 @@
  */
 package com.albinodevelopment.Commands;
 
-import com.albinodevelopment.View.IView;
+import com.albinodevelopment.View.View;
 
 /**
  *
  * @author conno
  */
-public abstract class ViewCommand extends Command<IView> {
+public abstract class ViewCommand extends Command<View> {
 
+    public static class PassToControllerCommand extends ViewCommand {
+
+        private final Command controllerCommand;
+
+        public PassToControllerCommand(ControllerCommand controllerCommand) {
+            this.controllerCommand = controllerCommand;
+        }
+
+        @Override
+        public boolean CanExecute(View commandHandler) {
+            return commandHandler.GetCommandHandler().CanHandle(controllerCommand);
+        }
+
+        @Override
+        public ExecutionResult Execute(View commandHandler) {
+            if (CanExecute(commandHandler)) {
+                commandHandler.GetCommandHandler().Handle(controllerCommand);
+                return ExecutionResult.success;
+            } else {
+                return ExecutionResult.failure;
+            }
+        }
+    }
 }

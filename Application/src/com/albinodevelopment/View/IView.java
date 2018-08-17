@@ -7,7 +7,6 @@ package com.albinodevelopment.View;
 
 import com.albinodevelopment.Model.Components.Drink;
 import javafx.scene.control.Button;
-import javafx.scene.control.Tab;
 
 /**
  *
@@ -28,5 +27,5 @@ public interface IView {
     void Save();
 
     void TabClosed();
-    
+
 }

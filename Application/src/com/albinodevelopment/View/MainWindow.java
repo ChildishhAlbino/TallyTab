@@ -31,16 +31,16 @@ import javafx.scene.layout.StackPane;
  *
  * @author conno
  */
-public class MainWindow extends Thread implements Initializable, ICommandHandler<ViewCommand>, IView {
-    
+public class MainWindow extends View {
+
     private ICommandHandler<ControllerCommand> commandHandler;
     @FXML
     private TabPane tabPane;
-    
+
     public MainWindow() {
         StartUp();
     }
-    
+
     @FXML
     private void decreaseButtonAction(ActionEvent event) {
         if (event.getSource() instanceof Button) {
@@ -54,12 +54,12 @@ public class MainWindow extends Thread implements Initializable, ICommandHandler
             PriorityLogger.Log("ERROR: Source was not button.", PriorityLogger.PriorityLevel.Medium);
         }
     }
-    
+
     @FXML
     private void increaseButtonAction(ActionEvent event) {
         // check which drink was increased
         if (event.getSource() instanceof Button) {
-            
+
             Button button = (Button) event.getSource();
             // get drink
             String drink = GetDrinkNameFromGUI(button);
@@ -70,32 +70,27 @@ public class MainWindow extends Thread implements Initializable, ICommandHandler
             PriorityLogger.Log("ERROR: Source was not button.", PriorityLogger.PriorityLevel.Medium);
         }
     }
-    
+
     @FXML
     private void handleNewButton(ActionEvent event) {
         New();
     }
-    
+
     @FXML
     private void handleOpenButton(ActionEvent event) {
         Open();
     }
-    
+
     @FXML
     private void handleSaveButton(ActionEvent event) {
         Save();
     }
-    
+
     @FXML
     private void handleCloseButton(ActionEvent event) {
         //Close();
     }
-    
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }
-    
+
     @Override
     public void Handle(ViewCommand command) {
         if (command.CanExecute(this)) {
@@ -106,7 +101,7 @@ public class MainWindow extends Thread implements Initializable, ICommandHandler
             }
         }
     }
-    
+
     @Override
     public void SetCommandHandler(ICommandHandler commandHandler) {
         if (this.commandHandler == null && commandHandler != null) {
@@ -115,7 +110,7 @@ public class MainWindow extends Thread implements Initializable, ICommandHandler
             // log and output
         }
     }
-    
+
     private void StartUp() {
         Controller controller = new Controller();
         Model model = new Model();
@@ -124,12 +119,12 @@ public class MainWindow extends Thread implements Initializable, ICommandHandler
         controller.SetCommandHandler(model);
         controller.start();
     }
-    
+
     @Override
     public ICommandHandler GetCommandHandler() {
         return commandHandler;
     }
-    
+
     @Override
     public boolean CanHandle(Command command) {
         if (command instanceof ViewCommand) {
@@ -143,17 +138,17 @@ public class MainWindow extends Thread implements Initializable, ICommandHandler
             return false;
         }
     }
-    
+
     @Override
     public void CreateDrinkGUIElements(Drink drink) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     @Override
     public void Refresh() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     @Override
     public String GetDrinkNameFromGUI(Button button) {
         String drinkName = null;
@@ -167,7 +162,7 @@ public class MainWindow extends Thread implements Initializable, ICommandHandler
         }
         return drinkName;
     }
-    
+
     @Override
     public void New() {
         // open new function window
@@ -179,29 +174,28 @@ public class MainWindow extends Thread implements Initializable, ICommandHandler
         });
         tab.contentProperty().set(GenerateNewFunctionPane("New Function"));
         tabPane.getTabs().add(tab);
-        
+
     }
-    
+
     private StackPane GenerateNewFunctionPane(String name) {
         StackPane stackPane = new StackPane();
         stackPane.getChildren().add(new Button("Lol"));
         return stackPane;
     }
-    
-    
+
     @Override
     public void Open() {
         // read in a function file and open a tab with it's corresponding details
     }
-    
+
     @Override
     public void Save() {
         // create a function file and write it to the disk
     }
-    
+
     @Override
     public void TabClosed() {
         PriorityLogger.Log("Tab closed", PriorityLogger.PriorityLevel.Low);
     }
-    
+
 }

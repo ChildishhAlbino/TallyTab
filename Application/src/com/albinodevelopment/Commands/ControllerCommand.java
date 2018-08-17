@@ -13,11 +13,11 @@ import com.albinodevelopment.Controller.Controller;
  */
 public abstract class ControllerCommand extends Command<Controller> {
 
-    public static class PassToViewCommand extends ControllerCommand {
+    public static class PassToModelCommand extends ControllerCommand {
 
         private final ModelCommand modelCommand;
 
-        public PassToViewCommand(ModelCommand modelCommand) {
+        public PassToModelCommand(ModelCommand modelCommand) {
             this.modelCommand = modelCommand;
         }
 
