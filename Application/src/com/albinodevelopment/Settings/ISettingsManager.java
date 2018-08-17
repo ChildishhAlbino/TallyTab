@@ -10,5 +10,5 @@ package com.albinodevelopment.Settings;
  * @author conno
  */
 public interface ISettingsManager {
-    
+
 }

@@ -10,5 +10,5 @@ package com.albinodevelopment.Model.Components;
  * @author conno
  */
 public interface i_Item {
-    
+
 }

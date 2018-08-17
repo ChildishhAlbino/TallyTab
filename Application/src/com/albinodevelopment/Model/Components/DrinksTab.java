@@ -10,5 +10,6 @@ package com.albinodevelopment.Model.Components;
  * @author conno
  */
 public class DrinksTab {
+
     private DrinksList drinksList;
 }

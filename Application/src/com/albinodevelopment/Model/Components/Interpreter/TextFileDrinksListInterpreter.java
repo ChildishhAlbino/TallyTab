@@ -9,6 +9,6 @@ package com.albinodevelopment.Model.Components.Interpreter;
  *
  * @author conno
  */
-public class TextFileDrinksListInterpreter implements IDrinksListInterpreter{
-    
+public class TextFileDrinksListInterpreter implements IDrinksListInterpreter {
+
 }

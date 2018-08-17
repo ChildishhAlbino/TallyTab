@@ -9,6 +9,6 @@ package com.albinodevelopment.Settings;
  *
  * @author conno
  */
-public class ApplicationSettings implements ISettingsManager{
-    
+public class ApplicationSettings implements ISettingsManager {
+
 }

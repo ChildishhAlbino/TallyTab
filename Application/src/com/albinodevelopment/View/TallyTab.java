@@ -21,7 +21,7 @@ import javafx.stage.WindowEvent;
  * @author conno
  */
 public class TallyTab extends Application {
-
+    
     @Override
     public void start(Stage stage) {
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -45,7 +45,7 @@ public class TallyTab extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-
+    
     private void SetupGUI(Stage stage) {
         Parent root;
         try {
@@ -56,7 +56,7 @@ public class TallyTab extends Application {
         } catch (IOException ex) {
             // log
         }
-
+        
     }
-
+    
 }

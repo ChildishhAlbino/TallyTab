@@ -9,12 +9,12 @@ package com.albinodevelopment.Model.Components;
  *
  * @author conno
  */
-public class Item implements i_Item{
+public class Item implements i_Item {
+
     private final double price;
     private final String name;
-    
-    
-    public Item(double price, String name){
+
+    public Item(double price, String name) {
         this.name = name;
         this.price = price;
     }
