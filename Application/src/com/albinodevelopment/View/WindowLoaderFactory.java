@@ -5,13 +5,15 @@
  */
 package com.albinodevelopment.View;
 
-import com.albinodevelopment.Commands.ICommandHandler;
-import com.albinodevelopment.Commands.ViewCommand;
-
 /**
  *
  * @author conno
+ * @param <T>
  */
-public abstract class View extends Window implements IView, ICommandHandler<ViewCommand> {
+public class WindowLoaderFactory<T extends Window> {
+
+    public WindowLoader<T> getWindowLoader() {
+        return new WindowLoader<>();
+    }
 
 }

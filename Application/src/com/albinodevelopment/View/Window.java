@@ -5,13 +5,22 @@
  */
 package com.albinodevelopment.View;
 
-import com.albinodevelopment.Commands.ICommandHandler;
-import com.albinodevelopment.Commands.ViewCommand;
+import javafx.stage.Stage;
 
 /**
  *
  * @author conno
  */
-public abstract class View extends Window implements IView, ICommandHandler<ViewCommand> {
+public abstract class Window extends Thread{
+
+    protected Stage stage;
+
+    public Window() {
+        //
+    }
+
+    public void SetStage(Stage stage) {
+        this.stage = stage;
+    }
 
 }

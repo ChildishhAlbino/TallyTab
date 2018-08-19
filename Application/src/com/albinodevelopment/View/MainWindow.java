@@ -14,12 +14,9 @@ import com.albinodevelopment.Controller.Controller;
 import com.albinodevelopment.Logging.PriorityLogger;
 import com.albinodevelopment.Model.Components.Drink;
 import com.albinodevelopment.Model.Model;
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -34,11 +31,16 @@ import javafx.scene.layout.StackPane;
 public class MainWindow extends View {
 
     private ICommandHandler<ControllerCommand> commandHandler;
+    private final WindowLoaderFactory<SettingsWindow> windowLoaderFactory;
+    private SettingsWindow settingsWindow;
+
     @FXML
     private TabPane tabPane;
 
     public MainWindow() {
-        StartUp();
+        windowLoaderFactory = new WindowLoaderFactory<>();
+        SetupMVC();
+        SetupSettingsWindow();
     }
 
     @FXML
@@ -91,6 +93,11 @@ public class MainWindow extends View {
         //Close();
     }
 
+    @FXML
+    private void handlePreferencesButton(ActionEvent event) {
+        settingsWindow.Open();
+    }
+
     @Override
     public void Handle(ViewCommand command) {
         if (command.CanExecute(this)) {
@@ -111,13 +118,22 @@ public class MainWindow extends View {
         }
     }
 
-    private void StartUp() {
+    private void SetupMVC() {
         Controller controller = new Controller();
         Model model = new Model();
         model.SetCommandHandler(this);
         this.SetCommandHandler(controller);
         controller.SetCommandHandler(model);
         controller.start();
+    }
+
+    private void SetupSettingsWindow() {
+        WindowLoader windowLoader = windowLoaderFactory.getWindowLoader();
+        try {
+            settingsWindow = (SettingsWindow) windowLoader.NewWindow("SettingsWindowFXML.fxml", com.albinodevelopment.View.SettingsWindow.class);
+        } catch (InstantiationException | IllegalAccessException ex) {
+            PriorityLogger.Log("ERROR; Couldn't load settings window for some reason - " + ex.toString(), PriorityLogger.PriorityLevel.High);
+        }
     }
 
     @Override

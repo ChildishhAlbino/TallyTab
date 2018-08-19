@@ -24,17 +24,11 @@ public class TallyTab extends Application {
 
     @Override
     public void start(Stage stage) {
-        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent event) {
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        PriorityLogger.Log("Application shutdown!", PriorityLogger.PriorityLevel.High);
-                        System.exit(0);
-                    }
-                });
-            }
+        stage.setOnCloseRequest((WindowEvent event) -> {
+            Platform.runLater(() -> {
+                PriorityLogger.Log("Application shutdown!", PriorityLogger.PriorityLevel.High);
+                System.exit(0);
+            });
         });
         SetupGUI(stage);
     }
