@@ -13,5 +13,5 @@ import com.albinodevelopment.Model.Components.DrinksList;
  */
 public interface IDrinksListInterpreter {
 
-    DrinksList Interpret(String directory);
+    DrinksList Interpret(String directoryt);
 }

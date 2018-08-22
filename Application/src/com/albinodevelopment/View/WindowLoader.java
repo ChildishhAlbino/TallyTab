@@ -7,7 +7,6 @@ package com.albinodevelopment.View;
 
 import com.albinodevelopment.Logging.PriorityLogger;
 import java.io.IOException;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

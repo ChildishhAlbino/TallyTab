@@ -14,8 +14,6 @@ import com.albinodevelopment.Controller.Controller;
 import com.albinodevelopment.Logging.PriorityLogger;
 import com.albinodevelopment.Model.Components.Drink;
 import com.albinodevelopment.Model.Model;
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -31,7 +29,7 @@ import javafx.scene.layout.StackPane;
  *
  * @author conno
  */
-public class MainWindow extends View implements Initializable{
+public class MainWindow extends View implements Initializable {
 
     private ICommandHandler<ControllerCommand> commandHandler;
     private final WindowLoaderFactory<SettingsWindow> windowLoaderFactory;
@@ -167,7 +165,7 @@ public class MainWindow extends View implements Initializable{
 
     @Override
     protected void Refresh() {
-        PriorityLogger.Log("Main Window Refreshed.", PriorityLogger.PriorityLevel.Low);
+        PriorityLogger.Log("Main Window Refreshed.", PriorityLogger.PriorityLevel.Zero);
     }
 
     @Override
@@ -223,5 +221,5 @@ public class MainWindow extends View implements Initializable{
     public void Open() {
         // read in a function file and open a tab with it's corresponding details
     }
-    
+
 }

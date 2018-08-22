@@ -6,12 +6,13 @@
 package com.albinodevelopment.Model.Components.Interpreter;
 
 import com.albinodevelopment.Model.Components.DrinksList;
+import java.io.Serializable;
 
 /**
  *
  * @author conno
  */
-public class TextFileDrinksListInterpreter implements IDrinksListInterpreter {
+public class TextFileDrinksListInterpreter implements IDrinksListInterpreter, Serializable {
 
     @Override
     public DrinksList Interpret(String directory) {

@@ -6,13 +6,14 @@
 package com.albinodevelopment.Model.Components;
 
 import com.albinodevelopment.Logging.PriorityLogger;
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
  *
  * @author conno
  */
-public class DrinksTab {
+public class DrinksTab implements Serializable{
 
     private final DrinksList drinksList;
     private final HashMap<Drink, Integer> count = new HashMap<>();
