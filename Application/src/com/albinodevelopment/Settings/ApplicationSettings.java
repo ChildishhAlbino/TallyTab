@@ -5,15 +5,17 @@
  */
 package com.albinodevelopment.Settings;
 
+import com.albinodevelopment.IO.SerializerDeserializerFactory;
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
  *
  * @author conno
  */
-public class ApplicationSettings implements ISettingsManager {
+public class ApplicationSettings implements ISettingsManager, Serializable {
 
-    private HashMap<settingsList, Setting> settings;
+    private final HashMap<settingsList, Setting> settings;
     private static ISettingsManager instance;
 
     public ApplicationSettings() {
@@ -24,7 +26,13 @@ public class ApplicationSettings implements ISettingsManager {
     public static ISettingsManager GetInstance() {
         if (instance == null) {
             //check for serialized version first
-            instance = new ApplicationSettings();
+            SerializerDeserializerFactory<ApplicationSettings> deserializerFactory = new SerializerDeserializerFactory<>();
+            ISettingsManager iSettingsManager = deserializerFactory.getDeserializer().Deserialize("ApplicationSettings.ser");
+            if (iSettingsManager != null) {
+                instance = iSettingsManager;
+            } else {
+                instance = new ApplicationSettings();
+            }
         }
         return instance;
     }
@@ -55,5 +63,10 @@ public class ApplicationSettings implements ISettingsManager {
                 settings.put(value, getSettingFromEnum(value));
             }
         }
+    }
+
+    @Override
+    public String toString() {
+        return "ApplicationSettings";
     }
 }

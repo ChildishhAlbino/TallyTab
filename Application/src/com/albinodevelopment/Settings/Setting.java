@@ -5,15 +5,22 @@
  */
 package com.albinodevelopment.Settings;
 
+import com.albinodevelopment.Logging.PriorityLogger;
 import com.albinodevelopment.Model.Components.Interpreter.IDrinksListInterpreter;
 import com.albinodevelopment.Model.Components.Interpreter.TextFileDrinksListInterpreter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author conno
  * @param <U>
  */
-public abstract class Setting<U> implements ISetting<U> {
+public abstract class Setting<U> implements ISetting<U>, Serializable {
 
     protected U value;
     protected U defaultValue;
@@ -25,7 +32,7 @@ public abstract class Setting<U> implements ISetting<U> {
 
     @Override
     public void setToDefault() {
-        value = defaultValue;
+        change(defaultValue);
     }
 
     public static class TextFileDirectorySetting extends Setting<String> {
@@ -33,6 +40,7 @@ public abstract class Setting<U> implements ISetting<U> {
         public TextFileDirectorySetting() {
             defaultValue = System.getenv("Appdata") + "\\TallyTab";
             setToDefault();
+            WriteToFile();
         }
 
         // static class that holds the value of the Text File Directory
@@ -40,10 +48,26 @@ public abstract class Setting<U> implements ISetting<U> {
         public boolean change(String value) {
             if (value != null) {
                 // move files from oldDirectory to newDirectory
-                this.value = value + "\\TallyTab";
+                this.value = value;
+                if(this.value.contains("TallyTab") == false){
+                    this.value += "\\TallyTab";
+                }
+                WriteToFile();
                 return true;
             } else {
                 return false;
+            }
+        }
+
+        private void WriteToFile() {
+            File file = new File("userDirectory.txt");
+            try {
+                PrintWriter printWriter = new PrintWriter(file);
+                printWriter.println(value);
+                PriorityLogger.Log("NOTE: userDirectory.txt written with value = " + value, PriorityLogger.PriorityLevel.Low);
+                printWriter.close();
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(Setting.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -52,12 +76,12 @@ public abstract class Setting<U> implements ISetting<U> {
 
         public DrinksListInterpreterSetting() {
             defaultValue = new TextFileDrinksListInterpreter();
+            setToDefault();
         }
 
         @Override
         public boolean change(IDrinksListInterpreter value) {
             if (value != null) {
-                // move files from oldDirectory to newDirectory
                 this.value = value;
                 return true;
             } else {

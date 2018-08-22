@@ -36,6 +36,9 @@ public class SettingsWindow extends Window {
 
     @FXML
     private VBox vBox;
+    
+    @FXML
+    private Button resetToDefaultButton;
 
     @FXML
     private Label directoryLabel; // the label in question
@@ -46,7 +49,7 @@ public class SettingsWindow extends Window {
 
     @Override
     protected void Refresh() {
-        PriorityLogger.Log("Settings Window Refreshed.", PriorityLogger.PriorityLevel.Low);
+        PriorityLogger.Log("Settings Window Refreshed.", PriorityLogger.PriorityLevel.Zero);
         // returns a null pointer exception
         Platform.runLater(() -> {
             directoryLabel.setText((String) ApplicationSettings.GetInstance().getSetting(ISettingsManager.settingsList.TextFileDirectory).getValue());
@@ -60,6 +63,12 @@ public class SettingsWindow extends Window {
         if (directory != null) {
             ApplicationSettings.GetInstance().getSetting(ISettingsManager.settingsList.TextFileDirectory).change(directory);
         }
+    }
+    
+    @FXML
+    public void handleResetDefaultButton(ActionEvent event){
+        ApplicationSettings.GetInstance().getSetting(ISettingsManager.settingsList.TextFileDirectory).setToDefault();
+        PriorityLogger.Log("NOTE: FileDirectory set to default.", PriorityLogger.PriorityLevel.Low);
     }
 
     @FXML

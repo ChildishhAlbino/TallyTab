@@ -5,11 +5,13 @@
  */
 package com.albinodevelopment.Model.Components;
 
+import java.io.Serializable;
+
 /**
  *
  * @author conno
  */
-public class Function {
+public class Function implements Serializable{
 
     private final String name;
     private final DrinksTab tab;

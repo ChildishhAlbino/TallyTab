@@ -1,12 +1,14 @@
 package com.albinodevelopment.View;
 
+import com.albinodevelopment.IO.SerializerDeserializerFactory;
 import com.albinodevelopment.Logging.PriorityLogger;
+import com.albinodevelopment.Settings.ApplicationSettings;
+import com.albinodevelopment.Settings.ISettingsManager;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -31,6 +33,11 @@ public class TallyTab extends Application {
         stage.setOnCloseRequest((WindowEvent event) -> {
             Platform.runLater(() -> {
                 PriorityLogger.Log("Application shutdown!", PriorityLogger.PriorityLevel.High);
+                SerializerDeserializerFactory<ApplicationSettings> 
+                        serializerDeserializerFactory = 
+                        new SerializerDeserializerFactory<>();
+                serializerDeserializerFactory.getSerializer().serialize(
+                        (ApplicationSettings) ApplicationSettings.GetInstance());
                 System.exit(0);
             });
         });

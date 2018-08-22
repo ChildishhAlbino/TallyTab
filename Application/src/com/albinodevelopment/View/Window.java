@@ -22,7 +22,7 @@ public abstract class Window extends Thread implements Initializable {
 
     protected Stage stage;
     protected Timer timer;
-    protected final long REFRESH_RATE = 1000L;
+    protected final long REFRESH_RATE = 100L;
 
     public Window() {
         timer = new Timer();

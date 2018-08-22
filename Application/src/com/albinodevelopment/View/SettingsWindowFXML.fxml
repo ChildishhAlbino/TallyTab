@@ -43,6 +43,11 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
+            <Button fx:id="resetToDefaultButton" mnemonicParsing="false" onAction="#handleResetDefaultButton" text="Reset to default directory">
+               <VBox.margin>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </VBox.margin>
+            </Button>
             <HBox alignment="CENTER_LEFT" prefHeight="32.0" prefWidth="313.0" spacing="20.0">
                <children>
                   <Button fx:id="directorySetButton" mnemonicParsing="false" onAction="#HandleDirectoryChangeButton" text="Change directory" />
