@@ -5,8 +5,11 @@
  */
 package com.albinodevelopment.Commands;
 
+import com.albinodevelopment.Model.Components.DrinksList;
+import com.albinodevelopment.Model.Components.Interpreter.IDrinksListInterpreter;
 import com.albinodevelopment.Model.Model;
 import com.albinodevelopment.Settings.ApplicationSettings;
+import com.albinodevelopment.Settings.ISettingsManager;
 
 /**
  *
@@ -42,10 +45,12 @@ public abstract class ModelCommand extends Command<Model> {
 
         private final String name;
         private final double limit;
+        private final String directory;
 
-        public NewFunctionCommand(String name, double limit) {
+        public NewFunctionCommand(String name, double limit, String directory) {
             this.name = name;
             this.limit = limit;
+            this.directory = directory;
         }
 
         @Override
@@ -55,9 +60,12 @@ public abstract class ModelCommand extends Command<Model> {
 
         @Override
         public ExecutionResult Execute(Model commandHandler) {
+            IDrinksListInterpreter drinksListInterpreter
+                    = (IDrinksListInterpreter) ApplicationSettings.GetInstance().
+                            getSetting(ISettingsManager.settingsList.DrinksListInterpreter).
+                            getValue();
             commandHandler.NewFunction(name, limit,
-                    ApplicationSettings.GetInstance().GetDrinksListInterpreter()
-                            .Interpret());
+                    drinksListInterpreter.Interpret(directory));
             return ExecutionResult.success;
         }
     }

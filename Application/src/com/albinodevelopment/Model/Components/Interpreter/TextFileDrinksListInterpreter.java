@@ -14,7 +14,7 @@ import com.albinodevelopment.Model.Components.DrinksList;
 public class TextFileDrinksListInterpreter implements IDrinksListInterpreter {
 
     @Override
-    public DrinksList Interpret() {
+    public DrinksList Interpret(String directory) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

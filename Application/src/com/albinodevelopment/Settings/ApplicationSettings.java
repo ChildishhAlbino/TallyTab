@@ -5,7 +5,6 @@
  */
 package com.albinodevelopment.Settings;
 
-import com.albinodevelopment.Model.Components.Interpreter.IDrinksListInterpreter;
 import java.util.HashMap;
 
 /**
@@ -13,8 +12,6 @@ import java.util.HashMap;
  * @author conno
  */
 public class ApplicationSettings implements ISettingsManager {
-
-    
 
     private HashMap<settingsList, Setting> settings;
     private static ISettingsManager instance;
