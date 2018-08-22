@@ -1,11 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="800" prefWidth="400" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.albinodevelopment.View.SettingsWindow">
-    
-</AnchorPane>
+<StackPane fx:id="settingsWindowStackPane" onMouseMoved="#HandleMouseMoved" prefHeight="800.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.albinodevelopment.View.SettingsWindow">
+   <children>
+      <VBox fx:id="vBox" prefHeight="200.0" prefWidth="100.0">
+         <children>
+            <HBox prefHeight="45.0" prefWidth="331.0" spacing="20.0">
+               <children>
+                  <Label text="Drinks List Interpreter">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <RadioButton mnemonicParsing="false" text="Database">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="DrinksListInterpreter" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton mnemonicParsing="false" selected="true" text="Text File" toggleGroup="$DrinksListInterpreter" />
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </HBox>
+            <Label text="Directory for Text File Drinks lists">
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <HBox alignment="CENTER_LEFT" prefHeight="32.0" prefWidth="313.0" spacing="20.0">
+               <children>
+                  <Button fx:id="directorySetButton" mnemonicParsing="false" onAction="#HandleDirectoryChangeButton" text="Change directory" />
+                  <Label fx:id="directoryLabel" text="text i shouldn't see">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</StackPane>

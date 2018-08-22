@@ -7,10 +7,12 @@ package com.albinodevelopment.View;
 
 import com.albinodevelopment.Logging.PriorityLogger;
 import java.io.IOException;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 /**
  *
@@ -19,17 +21,27 @@ import javafx.stage.Stage;
  */
 public class WindowLoader<T extends Window> {
 
+    private final FXMLLoader loader = new FXMLLoader();
+
     public T NewWindow(String fxml, Class<T> windowClass) throws InstantiationException, IllegalAccessException {
         Stage stage = new Stage();
+        return NewWindow(fxml, windowClass, stage);
+    }
+
+    public T NewWindow(String fxml, Class<T> windowClass, Stage stage) throws InstantiationException, IllegalAccessException {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource(fxml));
+            loader.setLocation(getClass().getResource(fxml));
+            Parent root = loader.load();
             Scene scene = new Scene(root);
             stage.setScene(scene);
+
         } catch (IOException ex) {
             PriorityLogger.Log("ERROR: Window Loader couldn't load your window - " + ex.toString(), PriorityLogger.PriorityLevel.High);
         }
-
-        T t = windowClass.newInstance();
+        T t = (T) loader.getController();
+        stage.setOnShowing((WindowEvent event) -> {
+            t.Refresh();
+        });
         t.SetStage(stage);
         return t;
     }

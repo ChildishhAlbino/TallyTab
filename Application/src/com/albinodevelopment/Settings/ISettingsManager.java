@@ -14,4 +14,8 @@ import com.albinodevelopment.Model.Components.Interpreter.IDrinksListInterpreter
 public interface ISettingsManager {
 
     IDrinksListInterpreter GetDrinksListInterpreter();
+
+    String GetTextFileDirectory();
+
+    void setTextFileDirectory(String newDirectory);
 }

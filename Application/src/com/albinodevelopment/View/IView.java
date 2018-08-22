@@ -12,11 +12,9 @@ import javafx.scene.control.Button;
  *
  * @author conno
  */
-public interface IView{
+public interface IView {
 
     void CreateDrinkGUIElements(Drink drink);
-
-    void Refresh();
 
     String GetDrinkNameFromGUI(Button button);
 

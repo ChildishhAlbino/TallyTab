@@ -14,4 +14,9 @@ import com.albinodevelopment.Commands.ViewCommand;
  */
 public abstract class View extends Window implements IView, ICommandHandler<ViewCommand> {
 
+    public View() {
+        super();
+
+    }
+
 }

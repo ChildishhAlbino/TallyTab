@@ -14,9 +14,12 @@ import com.albinodevelopment.Controller.Controller;
 import com.albinodevelopment.Logging.PriorityLogger;
 import com.albinodevelopment.Model.Components.Drink;
 import com.albinodevelopment.Model.Model;
+import java.net.URL;
+import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -28,7 +31,7 @@ import javafx.scene.layout.StackPane;
  *
  * @author conno
  */
-public class MainWindow extends View {
+public class MainWindow extends View implements Initializable{
 
     private ICommandHandler<ControllerCommand> commandHandler;
     private final WindowLoaderFactory<SettingsWindow> windowLoaderFactory;
@@ -38,12 +41,11 @@ public class MainWindow extends View {
     private TabPane tabPane;
 
     public MainWindow() {
+        super();
         windowLoaderFactory = new WindowLoaderFactory<>();
         SetupMVC();
-        SetupSettingsWindow();
     }
 
-    @FXML
     private void decreaseButtonAction(ActionEvent event) {
         if (event.getSource() instanceof Button) {
             Button button = (Button) event.getSource();
@@ -57,7 +59,6 @@ public class MainWindow extends View {
         }
     }
 
-    @FXML
     private void increaseButtonAction(ActionEvent event) {
         // check which drink was increased
         if (event.getSource() instanceof Button) {
@@ -80,7 +81,7 @@ public class MainWindow extends View {
 
     @FXML
     private void handleOpenButton(ActionEvent event) {
-        Open();
+        Show();
     }
 
     @FXML
@@ -95,7 +96,10 @@ public class MainWindow extends View {
 
     @FXML
     private void handlePreferencesButton(ActionEvent event) {
-        settingsWindow.Open();
+        if (settingsWindow == null) {
+            SetupSettingsWindow();
+        }
+        settingsWindow.Show();
     }
 
     @Override
@@ -131,6 +135,7 @@ public class MainWindow extends View {
         WindowLoader windowLoader = windowLoaderFactory.getWindowLoader();
         try {
             settingsWindow = (SettingsWindow) windowLoader.NewWindow("SettingsWindowFXML.fxml", com.albinodevelopment.View.SettingsWindow.class);
+            settingsWindow.start();
         } catch (InstantiationException | IllegalAccessException ex) {
             PriorityLogger.Log("ERROR; Couldn't load settings window for some reason - " + ex.toString(), PriorityLogger.PriorityLevel.High);
         }
@@ -161,8 +166,8 @@ public class MainWindow extends View {
     }
 
     @Override
-    public void Refresh() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    protected void Refresh() {
+        PriorityLogger.Log("Main Window Refreshed.", PriorityLogger.PriorityLevel.Low);
     }
 
     @Override
@@ -200,8 +205,8 @@ public class MainWindow extends View {
     }
 
     @Override
-    public void Open() {
-        // read in a function file and open a tab with it's corresponding details
+    public void Show() {
+        stage.show();
     }
 
     @Override
@@ -214,4 +219,9 @@ public class MainWindow extends View {
         PriorityLogger.Log("Tab closed", PriorityLogger.PriorityLevel.Low);
     }
 
+    @Override
+    public void Open() {
+        // read in a function file and open a tab with it's corresponding details
+    }
+    
 }

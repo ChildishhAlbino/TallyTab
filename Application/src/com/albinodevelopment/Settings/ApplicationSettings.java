@@ -15,6 +15,7 @@ public class ApplicationSettings implements ISettingsManager {
 
     private static ISettingsManager instance;
     private IDrinksListInterpreter drinksListInterpreter;
+    private String textFileDirectory = System.getenv("Appdata") + "\\TallyTab";
 
     @Override
     public IDrinksListInterpreter GetDrinksListInterpreter() {
@@ -23,8 +24,19 @@ public class ApplicationSettings implements ISettingsManager {
 
     public static ISettingsManager GetInstance() {
         if (instance == null) {
+            //check for serialized version first
             instance = new ApplicationSettings();
         }
         return instance;
+    }
+
+    @Override
+    public String GetTextFileDirectory() {
+        return textFileDirectory;
+    }
+
+    @Override
+    public void setTextFileDirectory(String newDirectory) {
+        textFileDirectory = newDirectory + "\\TallyTab";
     }
 }

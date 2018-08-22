@@ -2,6 +2,8 @@ package com.albinodevelopment.View;
 
 import com.albinodevelopment.Logging.PriorityLogger;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -22,6 +24,8 @@ import javafx.stage.WindowEvent;
  */
 public class TallyTab extends Application {
 
+    private static WindowLoaderFactory<MainWindow> windowLoaderFactory = new WindowLoaderFactory<MainWindow>();
+
     @Override
     public void start(Stage stage) {
         stage.setOnCloseRequest((WindowEvent event) -> {
@@ -30,7 +34,8 @@ public class TallyTab extends Application {
                 System.exit(0);
             });
         });
-        SetupGUI(stage);
+        //SetupGUI(stage);
+        LoadWindow(stage);
     }
 
     /**
@@ -49,6 +54,20 @@ public class TallyTab extends Application {
             stage.show();
         } catch (IOException ex) {
             // log
+        }
+    }
+
+    private void LoadWindow(Stage stage) {
+        WindowLoader windowLoader = windowLoaderFactory.getWindowLoader();
+
+        try {
+            MainWindow mainWindow = (MainWindow) windowLoader.NewWindow(
+                    "MainWindowFXML.fxml", com.albinodevelopment.View.MainWindow.class, stage);
+            mainWindow.Show();
+            mainWindow.start();
+        } catch (InstantiationException | IllegalAccessException ex) {
+            Logger.getLogger(TallyTab.class.getName()).log(Level.SEVERE,
+                    null, ex);
         }
 
     }
