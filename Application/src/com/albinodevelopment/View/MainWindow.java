@@ -96,9 +96,27 @@ public class MainWindow extends View implements Initializable {
     @FXML
     private void handlePreferencesButton(ActionEvent event) {
         if (settingsWindow == null) {
-            SetupSettingsWindow();
+            Window window = setupWindow(com.albinodevelopment.View.SettingsWindow.class, "SettingsWindowFXML.fxml");
+            if (window != null) {
+                settingsWindow = window;
+            } else {
+                return;
+            }
         }
         settingsWindow.Show();
+    }
+
+    @FXML
+    private void handleDrinksListButton(ActionEvent event) {
+        if (drinksListBuilderWindow == null) {
+            Window window = setupWindow(com.albinodevelopment.View.DrinksListBuilder.DrinksListBuilderWindow.class, "DrinksListBuilder/DrinksListBuilderWindowFXML.fxml");
+            if (window != null) {
+                drinksListBuilderWindow = window;
+            } else {
+                return;
+            }
+        }
+        drinksListBuilderWindow.Show();
     }
 
     @Override
@@ -129,27 +147,39 @@ public class MainWindow extends View implements Initializable {
         controller.SetCommandHandler(model);
         controller.start();
     }
+// DEPRECATED - replaced by SetupWindow(windowClass, fxml) will be removed next 
+// commit.
+//    private void SetupSettingsWindow() {
+//        WindowLoader windowLoader = windowLoaderFactory.getWindowLoader(com.albinodevelopment.View.SettingsWindow.class);
+//        try {
+//            settingsWindow = windowLoader.NewWindow("SettingsWindowFXML.fxml");
+//            settingsWindow.start();
+//        } catch (InstantiationException | IllegalAccessException ex) {
+//            PriorityLogger.Log("ERROR; Couldn't load settings window for some reason - " + ex.toString(), PriorityLogger.PriorityLevel.High);
+//        }
+//    }
+//
+//    private void SetupDrinksListBuilderWindow() {
+//        WindowLoader windowLoader = windowLoaderFactory.getWindowLoader(com.albinodevelopment.View.DrinksListBuilder.DrinksListBuilderWindow.class);
+//        try {
+//            drinksListBuilderWindow = windowLoader.NewWindow("SettingsWindowFXML.fxml");
+//            drinksListBuilderWindow.start();
+//        } catch (InstantiationException | IllegalAccessException ex) {
+//            PriorityLogger.Log("ERROR; Couldn't load settings window for some reason - " + ex.toString(), PriorityLogger.PriorityLevel.High);
+//        }
+//    }
 
-    private void SetupSettingsWindow() {
-        WindowLoader windowLoader = windowLoaderFactory.getWindowLoader(com.albinodevelopment.View.SettingsWindow.class);
+    private <T extends Window> Window setupWindow(Class<T> windowClass, String fxml) {
+        WindowLoader windowLoader = windowLoaderFactory.getWindowLoader(windowClass);
         try {
-            settingsWindow = windowLoader.NewWindow("SettingsWindowFXML.fxml");
-            settingsWindow.start();
+            Window window = windowLoader.NewWindow(fxml);
+            window.start();
+            return window;
         } catch (InstantiationException | IllegalAccessException ex) {
             PriorityLogger.Log("ERROR; Couldn't load settings window for some reason - " + ex.toString(), PriorityLogger.PriorityLevel.High);
         }
+        return null;
     }
-
-    private void SetupDrinksListBuilderWindow() {
-        WindowLoader windowLoader = windowLoaderFactory.getWindowLoader(com.albinodevelopment.View.DrinksListBuilder.DrinksListBuilderWindow.class);
-        try {
-            drinksListBuilderWindow = windowLoader.NewWindow("SettingsWindowFXML.fxml");
-            drinksListBuilderWindow.start();
-        } catch (InstantiationException | IllegalAccessException ex) {
-            PriorityLogger.Log("ERROR; Couldn't load settings window for some reason - " + ex.toString(), PriorityLogger.PriorityLevel.High);
-        }
-    }
-
 
     @Override
     public ICommandHandler GetCommandHandler() {
