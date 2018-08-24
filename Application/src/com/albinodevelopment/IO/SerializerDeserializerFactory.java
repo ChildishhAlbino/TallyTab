@@ -19,5 +19,4 @@ public class SerializerDeserializerFactory<T> {
     public Deserializer<T> getDeserializer() {
         return new Deserializer<>();
     }
-
 }

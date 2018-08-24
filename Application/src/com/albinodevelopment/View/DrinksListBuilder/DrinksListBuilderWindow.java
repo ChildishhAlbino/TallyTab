@@ -49,6 +49,12 @@ public class DrinksListBuilderWindow extends Window implements Initializable {
     private Label output;
 
     @FXML
+    private TextField drinksListName;
+
+    @FXML
+    private Button saveButton;
+
+    @FXML
     private void createButtonAction(ActionEvent event) {
         String name = drinkName.getText();
         String price = drinkPrice.getText();
@@ -68,6 +74,16 @@ public class DrinksListBuilderWindow extends Window implements Initializable {
         }
     }
 
+    @FXML
+    private void saveButtonAction(ActionEvent event) {
+        
+    }
+
+    @FXML
+    private void openButtonAction(ActionEvent event) {
+
+    }
+
     private void createGUIFromDrink(Drink drink) {
         Button removeButton = new Button("Remove Item");
         removeButton.setOnAction((event) -> {
@@ -75,7 +91,7 @@ public class DrinksListBuilderWindow extends Window implements Initializable {
         });
         Label drinkNameLabel = new Label(drink.GetName());
         Label drinkPriceLabel = new Label(String.valueOf(drink.GetPrice()));
-        HBox hBox = new HBox(75, setLabelSize(drinkNameLabel), 
+        HBox hBox = new HBox(75, setLabelSize(drinkNameLabel),
                 setLabelSize(drinkPriceLabel), removeButton);
         VBox.setMargin(hBox, new Insets(10, 0, 0, 10));
         scrollVbox.getChildren().add(hBox);
@@ -85,7 +101,7 @@ public class DrinksListBuilderWindow extends Window implements Initializable {
         PriorityLogger.Log("Removing item!", PriorityLogger.PriorityLevel.Low);
         Label drinkNameLabel = (Label) parent.getChildrenUnmodifiable().get(0);
         Label drinkPriceLabel = (Label) parent.getChildrenUnmodifiable().get(1);
-        temporary.remove(createDrink(drinkNameLabel.getText(), 
+        temporary.remove(createDrink(drinkNameLabel.getText(),
                 drinkPriceLabel.getText()));
         scrollVbox.getChildren().remove(parent);
         output.setText("Item removed!");
