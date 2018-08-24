@@ -33,6 +33,7 @@ public class WindowLoader<T extends Window> {
             Parent root = loader.load();
             Scene scene = new Scene(root);
             stage.setScene(scene);
+            stage.setTitle("TallyTab");
 
         } catch (IOException ex) {
             PriorityLogger.Log("ERROR: Window Loader couldn't load your window - " + ex.toString(), PriorityLogger.PriorityLevel.High);

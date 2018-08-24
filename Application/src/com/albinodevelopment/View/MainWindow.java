@@ -147,27 +147,6 @@ public class MainWindow extends View implements Initializable {
         controller.SetCommandHandler(model);
         controller.start();
     }
-// DEPRECATED - replaced by SetupWindow(windowClass, fxml) will be removed next 
-// commit.
-//    private void SetupSettingsWindow() {
-//        WindowLoader windowLoader = windowLoaderFactory.getWindowLoader(com.albinodevelopment.View.SettingsWindow.class);
-//        try {
-//            settingsWindow = windowLoader.NewWindow("SettingsWindowFXML.fxml");
-//            settingsWindow.start();
-//        } catch (InstantiationException | IllegalAccessException ex) {
-//            PriorityLogger.Log("ERROR; Couldn't load settings window for some reason - " + ex.toString(), PriorityLogger.PriorityLevel.High);
-//        }
-//    }
-//
-//    private void SetupDrinksListBuilderWindow() {
-//        WindowLoader windowLoader = windowLoaderFactory.getWindowLoader(com.albinodevelopment.View.DrinksListBuilder.DrinksListBuilderWindow.class);
-//        try {
-//            drinksListBuilderWindow = windowLoader.NewWindow("SettingsWindowFXML.fxml");
-//            drinksListBuilderWindow.start();
-//        } catch (InstantiationException | IllegalAccessException ex) {
-//            PriorityLogger.Log("ERROR; Couldn't load settings window for some reason - " + ex.toString(), PriorityLogger.PriorityLevel.High);
-//        }
-//    }
 
     private <T extends Window> Window setupWindow(Class<T> windowClass, String fxml) {
         WindowLoader windowLoader = windowLoaderFactory.getWindowLoader(windowClass);
@@ -190,7 +169,7 @@ public class MainWindow extends View implements Initializable {
     public boolean CanHandle(Command command) {
         if (command instanceof ViewCommand) {
             // log success
-            PriorityLogger.Log(command.toString() + ": Success.", PriorityLogger.PriorityLevel.Medium);
+            PriorityLogger.Log(command.toString() + " Success.", PriorityLogger.PriorityLevel.Medium);
             return true;
         } else {
             // log failure
