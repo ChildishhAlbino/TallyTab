@@ -10,10 +10,9 @@ package com.albinodevelopment.View;
  * @author conno
  * @param <T>
  */
-public class WindowLoaderFactory<T extends Window> {
+public class WindowLoaderFactory {
 
-    public WindowLoader<T> getWindowLoader() {
+    public <T extends Window> WindowLoader<T> getWindowLoader(Class<T> windowClass) {
         return new WindowLoader<>();
     }
-
 }

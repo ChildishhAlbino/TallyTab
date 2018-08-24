@@ -32,15 +32,16 @@ import javafx.scene.layout.StackPane;
 public class MainWindow extends View implements Initializable {
 
     private ICommandHandler<ControllerCommand> commandHandler;
-    private final WindowLoaderFactory<SettingsWindow> windowLoaderFactory;
-    private SettingsWindow settingsWindow;
+    private final WindowLoaderFactory windowLoaderFactory;
+    private Window settingsWindow;
+    private Window drinksListBuilderWindow;
 
     @FXML
     private TabPane tabPane;
 
     public MainWindow() {
         super();
-        windowLoaderFactory = new WindowLoaderFactory<>();
+        windowLoaderFactory = new WindowLoaderFactory();
         SetupMVC();
     }
 
@@ -130,14 +131,25 @@ public class MainWindow extends View implements Initializable {
     }
 
     private void SetupSettingsWindow() {
-        WindowLoader windowLoader = windowLoaderFactory.getWindowLoader();
+        WindowLoader windowLoader = windowLoaderFactory.getWindowLoader(com.albinodevelopment.View.SettingsWindow.class);
         try {
-            settingsWindow = (SettingsWindow) windowLoader.NewWindow("SettingsWindowFXML.fxml", com.albinodevelopment.View.SettingsWindow.class);
+            settingsWindow = windowLoader.NewWindow("SettingsWindowFXML.fxml");
             settingsWindow.start();
         } catch (InstantiationException | IllegalAccessException ex) {
             PriorityLogger.Log("ERROR; Couldn't load settings window for some reason - " + ex.toString(), PriorityLogger.PriorityLevel.High);
         }
     }
+
+    private void SetupDrinksListBuilderWindow() {
+        WindowLoader windowLoader = windowLoaderFactory.getWindowLoader(com.albinodevelopment.View.DrinksListBuilder.DrinksListBuilderWindow.class);
+        try {
+            drinksListBuilderWindow = windowLoader.NewWindow("SettingsWindowFXML.fxml");
+            drinksListBuilderWindow.start();
+        } catch (InstantiationException | IllegalAccessException ex) {
+            PriorityLogger.Log("ERROR; Couldn't load settings window for some reason - " + ex.toString(), PriorityLogger.PriorityLevel.High);
+        }
+    }
+
 
     @Override
     public ICommandHandler GetCommandHandler() {

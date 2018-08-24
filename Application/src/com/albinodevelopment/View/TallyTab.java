@@ -3,15 +3,10 @@ package com.albinodevelopment.View;
 import com.albinodevelopment.IO.SerializerDeserializerFactory;
 import com.albinodevelopment.Logging.PriorityLogger;
 import com.albinodevelopment.Settings.ApplicationSettings;
-import com.albinodevelopment.Settings.ISettingsManager;
-import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -26,22 +21,20 @@ import javafx.stage.WindowEvent;
  */
 public class TallyTab extends Application {
 
-    private static WindowLoaderFactory<MainWindow> windowLoaderFactory = new WindowLoaderFactory<MainWindow>();
+    private static WindowLoaderFactory windowLoaderFactory = new WindowLoaderFactory();
 
     @Override
     public void start(Stage stage) {
         stage.setOnCloseRequest((WindowEvent event) -> {
             Platform.runLater(() -> {
                 PriorityLogger.Log("Application shutdown!", PriorityLogger.PriorityLevel.High);
-                SerializerDeserializerFactory<ApplicationSettings> 
-                        serializerDeserializerFactory = 
-                        new SerializerDeserializerFactory<>();
+                SerializerDeserializerFactory<ApplicationSettings> serializerDeserializerFactory
+                        = new SerializerDeserializerFactory<>();
                 serializerDeserializerFactory.getSerializer().serialize(
                         (ApplicationSettings) ApplicationSettings.GetInstance());
                 System.exit(0);
             });
         });
-        //SetupGUI(stage);
         LoadWindow(stage);
     }
 
@@ -52,31 +45,18 @@ public class TallyTab extends Application {
         launch(args);
     }
 
-    private void SetupGUI(Stage stage) {
-        Parent root;
-        try {
-            root = FXMLLoader.load(getClass().getResource("MainWindowFXML.fxml"));
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException ex) {
-            // log
-        }
-    }
-
     private void LoadWindow(Stage stage) {
-        WindowLoader windowLoader = windowLoaderFactory.getWindowLoader();
-
+        WindowLoader windowLoader = windowLoaderFactory
+                .getWindowLoader(com.albinodevelopment.View.MainWindow.class);
         try {
             MainWindow mainWindow = (MainWindow) windowLoader.NewWindow(
-                    "MainWindowFXML.fxml", com.albinodevelopment.View.MainWindow.class, stage);
+                    "MainWindowFXML.fxml", stage);
             mainWindow.Show();
             mainWindow.start();
         } catch (InstantiationException | IllegalAccessException ex) {
             Logger.getLogger(TallyTab.class.getName()).log(Level.SEVERE,
                     null, ex);
         }
-
     }
 
 }
