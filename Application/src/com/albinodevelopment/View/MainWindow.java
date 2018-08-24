@@ -32,15 +32,16 @@ import javafx.scene.layout.StackPane;
 public class MainWindow extends View implements Initializable {
 
     private ICommandHandler<ControllerCommand> commandHandler;
-    private final WindowLoaderFactory<SettingsWindow> windowLoaderFactory;
-    private SettingsWindow settingsWindow;
+    private final WindowLoaderFactory windowLoaderFactory;
+    private Window settingsWindow;
+    private Window drinksListBuilderWindow;
 
     @FXML
     private TabPane tabPane;
 
     public MainWindow() {
         super();
-        windowLoaderFactory = new WindowLoaderFactory<>();
+        windowLoaderFactory = new WindowLoaderFactory();
         SetupMVC();
     }
 
@@ -95,9 +96,27 @@ public class MainWindow extends View implements Initializable {
     @FXML
     private void handlePreferencesButton(ActionEvent event) {
         if (settingsWindow == null) {
-            SetupSettingsWindow();
+            Window window = setupWindow(com.albinodevelopment.View.SettingsWindow.class, "SettingsWindowFXML.fxml");
+            if (window != null) {
+                settingsWindow = window;
+            } else {
+                return;
+            }
         }
         settingsWindow.Show();
+    }
+
+    @FXML
+    private void handleDrinksListButton(ActionEvent event) {
+        if (drinksListBuilderWindow == null) {
+            Window window = setupWindow(com.albinodevelopment.View.DrinksListBuilder.DrinksListBuilderWindow.class, "DrinksListBuilder/DrinksListBuilderWindowFXML.fxml");
+            if (window != null) {
+                drinksListBuilderWindow = window;
+            } else {
+                return;
+            }
+        }
+        drinksListBuilderWindow.Show();
     }
 
     @Override
@@ -129,14 +148,16 @@ public class MainWindow extends View implements Initializable {
         controller.start();
     }
 
-    private void SetupSettingsWindow() {
-        WindowLoader windowLoader = windowLoaderFactory.getWindowLoader();
+    private <T extends Window> Window setupWindow(Class<T> windowClass, String fxml) {
+        WindowLoader windowLoader = windowLoaderFactory.getWindowLoader(windowClass);
         try {
-            settingsWindow = (SettingsWindow) windowLoader.NewWindow("SettingsWindowFXML.fxml", com.albinodevelopment.View.SettingsWindow.class);
-            settingsWindow.start();
+            Window window = windowLoader.NewWindow(fxml);
+            window.start();
+            return window;
         } catch (InstantiationException | IllegalAccessException ex) {
             PriorityLogger.Log("ERROR; Couldn't load settings window for some reason - " + ex.toString(), PriorityLogger.PriorityLevel.High);
         }
+        return null;
     }
 
     @Override
@@ -148,7 +169,7 @@ public class MainWindow extends View implements Initializable {
     public boolean CanHandle(Command command) {
         if (command instanceof ViewCommand) {
             // log success
-            PriorityLogger.Log(command.toString() + ": Success.", PriorityLogger.PriorityLevel.Medium);
+            PriorityLogger.Log(command.toString() + " Success.", PriorityLogger.PriorityLevel.Medium);
             return true;
         } else {
             // log failure

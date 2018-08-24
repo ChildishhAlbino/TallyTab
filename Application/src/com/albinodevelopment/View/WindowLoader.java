@@ -22,17 +22,18 @@ public class WindowLoader<T extends Window> {
 
     private final FXMLLoader loader = new FXMLLoader();
 
-    public T NewWindow(String fxml, Class<T> windowClass) throws InstantiationException, IllegalAccessException {
+    public T NewWindow(String fxml) throws InstantiationException, IllegalAccessException {
         Stage stage = new Stage();
-        return NewWindow(fxml, windowClass, stage);
+        return NewWindow(fxml, stage);
     }
 
-    public T NewWindow(String fxml, Class<T> windowClass, Stage stage) throws InstantiationException, IllegalAccessException {
+    public T NewWindow(String fxml, Stage stage) throws InstantiationException, IllegalAccessException {
         try {
             loader.setLocation(getClass().getResource(fxml));
             Parent root = loader.load();
             Scene scene = new Scene(root);
             stage.setScene(scene);
+            stage.setTitle("TallyTab");
 
         } catch (IOException ex) {
             PriorityLogger.Log("ERROR: Window Loader couldn't load your window - " + ex.toString(), PriorityLogger.PriorityLevel.High);
