@@ -14,11 +14,11 @@ import java.io.Serializable;
  */
 public class SerializerDeserializerFactory {
 
-    public <T extends Serializable> Serializer<T> getSerializer(Class<T> classPath) {
+    public static <T extends Serializable> Serializer<T> getSerializer(Class<T> classPath) {
         return new Serializer<>();
     }
 
-    public <T extends Serializable> Deserializer<T> getDeserializer(Class<T> classPath) {
+    public static <T extends Serializable> Deserializer<T> getDeserializer(Class<T> classPath) {
         return new Deserializer<>();
     }
 }

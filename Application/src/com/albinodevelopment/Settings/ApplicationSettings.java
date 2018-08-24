@@ -26,8 +26,7 @@ public class ApplicationSettings implements ISettingsManager, Serializable {
     public static ISettingsManager GetInstance() {
         if (instance == null) {
             //check for serialized version first
-            SerializerDeserializerFactory deserializerFactory = new SerializerDeserializerFactory();
-            ISettingsManager iSettingsManager = deserializerFactory
+            ISettingsManager iSettingsManager = SerializerDeserializerFactory
                     .getDeserializer(com.albinodevelopment.Settings.ApplicationSettings.class)
                     .Deserialize("ApplicationSettings.ser");
             if (iSettingsManager != null) {

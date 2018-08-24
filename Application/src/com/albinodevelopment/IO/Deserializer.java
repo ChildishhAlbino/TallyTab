@@ -5,8 +5,6 @@
  */
 package com.albinodevelopment.IO;
 
-import com.albinodevelopment.Settings.ApplicationSettings;
-import com.albinodevelopment.Settings.ISettingsManager;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
