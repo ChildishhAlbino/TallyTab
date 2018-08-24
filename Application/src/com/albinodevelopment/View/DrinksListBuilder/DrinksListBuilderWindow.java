@@ -10,6 +10,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
 /**
@@ -24,6 +27,18 @@ public class DrinksListBuilderWindow extends Window implements Initializable {
      */
     @FXML
     private VBox scrollVbox;
+
+    @FXML
+    private TextField drinkName;
+
+    @FXML
+    private TextField drinkPrice;
+
+    @FXML
+    private Button createDrinkButton;
+
+    @FXML
+    private Label output;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
