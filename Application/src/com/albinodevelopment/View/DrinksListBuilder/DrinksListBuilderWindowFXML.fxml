@@ -33,7 +33,7 @@
                   <Font size="18.0" />
                </font>
             </TextField>
-            <Button fx:id="createDrinkButton" mnemonicParsing="false" text="Create!" />
+            <Button fx:id="createDrinkButton" mnemonicParsing="false" onAction="#createButtonAction" text="Create!" />
          </children>
          <VBox.margin>
             <Insets left="20.0" right="20.0" />
@@ -45,10 +45,13 @@
          </font>
       </Label>
       <Separator opacity="0.0" prefHeight="500.0" prefWidth="200.0" />
-      <ScrollPane prefHeight="200.0" prefWidth="200.0">
+      <ScrollPane prefHeight="700.0" prefWidth="200.0">
          <content>
-            <VBox fx:id="scrollVbox" prefHeight="200.0" prefWidth="550.0" spacing="15.0" />
+            <VBox fx:id="scrollVbox" prefHeight="200.0" prefWidth="550.0" spacing="25.0" />
          </content>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
       </ScrollPane>
    </children>
 </VBox>

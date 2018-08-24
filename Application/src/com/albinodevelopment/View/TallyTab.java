@@ -52,7 +52,7 @@ public class TallyTab extends Application {
             MainWindow mainWindow = (MainWindow) windowLoader.NewWindow(
                     "MainWindowFXML.fxml", stage);
             mainWindow.Show();
-            mainWindow.start();
+            //mainWindow.start();
         } catch (InstantiationException | IllegalAccessException ex) {
             Logger.getLogger(TallyTab.class.getName()).log(Level.SEVERE,
                     null, ex);

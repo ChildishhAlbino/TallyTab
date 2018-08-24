@@ -13,7 +13,9 @@ import java.util.HashMap;
  *
  * @author conno
  */
-public class DrinksList implements Serializable{
+public class DrinksList implements Serializable {
+
+    private transient StringBuilder stringBuilder;
 
     private final HashMap<String, Drink> drinks = new HashMap<>();
 
@@ -33,5 +35,26 @@ public class DrinksList implements Serializable{
         Drink drink = (Drink) drinks.values().toArray()[index];
         PriorityLogger.Log(drink.GetName(), PriorityLogger.PriorityLevel.Low);
         return drink;
+    }
+
+    public void add(Drink drink) {
+        drinks.put(drink.GetName(), drink);
+    }
+
+    public void remove(Drink drink) {
+        drinks.remove(drink.GetName());
+    }
+
+    @Override
+    public String toString() {
+        if (stringBuilder == null) {
+            stringBuilder = new StringBuilder();
+        }
+        stringBuilder.delete(0, stringBuilder.length());
+        drinks.values().forEach((drink) -> {
+            stringBuilder.append(drink.toString()).append("\n");
+        });
+        String s = stringBuilder.toString();
+        return s;
     }
 }

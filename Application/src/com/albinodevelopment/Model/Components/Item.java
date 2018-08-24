@@ -11,8 +11,8 @@ package com.albinodevelopment.Model.Components;
  */
 public abstract class Item implements i_Item {
 
-    private final double price;
-    private final String name;
+    protected final double price;
+    protected final String name;
 
     public Item(double price, String name) {
         this.name = name;
@@ -27,5 +27,11 @@ public abstract class Item implements i_Item {
     @Override
     public String GetName() {
         return name;
+    }
+
+    @Override
+    public String toString() {
+        String s = "Drink: " + name + " Price: $" + price;
+        return s;
     }
 }

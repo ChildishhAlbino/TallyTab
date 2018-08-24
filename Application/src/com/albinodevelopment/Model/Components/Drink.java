@@ -11,7 +11,7 @@ import java.io.Serializable;
  *
  * @author conno
  */
-public class Drink extends Item implements Serializable{
+public class Drink extends Item implements Serializable {
 
     public Drink(double price, String name) {
         super(price, name);
