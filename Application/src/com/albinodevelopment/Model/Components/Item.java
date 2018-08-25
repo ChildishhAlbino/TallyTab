@@ -5,14 +5,16 @@
  */
 package com.albinodevelopment.Model.Components;
 
+import java.io.Serializable;
+
 /**
  *
  * @author conno
  */
-public abstract class Item implements i_Item {
+public abstract class Item implements i_Item, Serializable {
 
-    protected final double price;
-    protected final String name;
+    protected double price;
+    protected String name;
 
     public Item(double price, String name) {
         this.name = name;

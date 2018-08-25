@@ -29,10 +29,9 @@ public class TallyTab extends Application {
             Platform.runLater(() -> {
                 PriorityLogger.Log("Application shutdown!", 
                         PriorityLogger.PriorityLevel.High);
-                SerializerDeserializerFactory.getSerializer(
-                        com.albinodevelopment.Settings.ApplicationSettings.class)
-                        .serialize(
-                        (ApplicationSettings) ApplicationSettings.GetInstance());
+                  SerializerDeserializerFactory.getSerializer(
+                com.albinodevelopment.Settings.ApplicationSettings.class)
+                          .serializeApplicationSettings();
                 System.exit(0);
             });
         });

@@ -22,13 +22,11 @@ import java.util.logging.Logger;
  */
 public class Serializer<T> {
 
-    public void serialize(T object) {
-        String fileOutputDirectory = ApplicationSettings.GetInstance()
-                .getSetting(ISettingsManager.settingsList.TextFileDirectory).getValue().toString();
+    public void serialize(T object, String fileOutputDirectory, String fileName) {
         FileOutputStream fileOut;
         new File(fileOutputDirectory).mkdir();
         try {
-            fileOut = new FileOutputStream(fileOutputDirectory + "\\" + object.toString() + ".ser");
+            fileOut = new FileOutputStream(fileOutputDirectory + "\\" + fileName + ".ser");
             try (ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
                 out.writeObject(object);
                 out.close();
@@ -40,6 +38,16 @@ public class Serializer<T> {
             Logger.getLogger(Serializer.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+
+    public void serializeApplicationSettings() {
+        ApplicationSettings applicationSettings 
+                = (ApplicationSettings) ApplicationSettings.GetInstance();
+        SerializerDeserializerFactory.getSerializer(
+                com.albinodevelopment.Settings.ApplicationSettings.class)
+                .serialize(applicationSettings, 
+                        applicationSettings.getSetting(ISettingsManager.settingsList.TextFileDirectory).getValue().toString(), 
+                        applicationSettings.toString());
     }
 
 }
