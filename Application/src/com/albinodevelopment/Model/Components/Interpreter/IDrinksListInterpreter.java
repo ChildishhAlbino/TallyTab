@@ -14,4 +14,5 @@ import com.albinodevelopment.Model.Components.DrinksList;
 public interface IDrinksListInterpreter {
 
     DrinksList Interpret(String directoryt);
+    void Save(DrinksList drinksList);
 }

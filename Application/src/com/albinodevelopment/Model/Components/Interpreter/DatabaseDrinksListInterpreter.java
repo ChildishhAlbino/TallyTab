@@ -19,4 +19,9 @@ public class DatabaseDrinksListInterpreter implements IDrinksListInterpreter, Se
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
+    public void Save(DrinksList drinksList) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

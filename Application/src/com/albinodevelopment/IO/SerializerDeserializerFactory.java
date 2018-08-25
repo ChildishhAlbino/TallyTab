@@ -5,18 +5,20 @@
  */
 package com.albinodevelopment.IO;
 
+import java.io.Serializable;
+
 /**
  *
  * @author conno
  * @param <T>
  */
-public class SerializerDeserializerFactory<T> {
+public class SerializerDeserializerFactory {
 
-    public Serializer<T> getSerializer() {
+    public static <T extends Serializable> Serializer<T> getSerializer(Class<T> classPath) {
         return new Serializer<>();
     }
 
-    public Deserializer<T> getDeserializer() {
+    public static <T extends Serializable> Deserializer<T> getDeserializer(Class<T> classPath) {
         return new Deserializer<>();
     }
 }

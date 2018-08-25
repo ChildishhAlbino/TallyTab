@@ -5,7 +5,10 @@
  */
 package com.albinodevelopment.Model.Components.Interpreter;
 
+import com.albinodevelopment.IO.SerializerDeserializerFactory;
 import com.albinodevelopment.Model.Components.DrinksList;
+import com.albinodevelopment.Settings.ApplicationSettings;
+import com.albinodevelopment.Settings.ISettingsManager;
 import java.io.Serializable;
 
 /**
@@ -16,6 +19,23 @@ public class TextFileDrinksListInterpreter implements IDrinksListInterpreter, Se
 
     @Override
     public DrinksList Interpret(String directory) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        DrinksList drinksList = SerializerDeserializerFactory
+                .getDeserializer(com.albinodevelopment.Model.Components.DrinksList.class)
+                .DeserializeFromFilePath(directory);
+        if (drinksList != null) {
+            return drinksList;
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public void Save(DrinksList drinksList) {
+        SerializerDeserializerFactory.getSerializer(
+                com.albinodevelopment.Model.Components.DrinksList.class)
+                .serialize(drinksList,
+                        ApplicationSettings.GetInstance()
+                                .getSetting(
+                                        ISettingsManager.settingsList.TextFileDirectory).getValue().toString() + "\\DrinksList", drinksList.getName());
     }
 }

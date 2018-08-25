@@ -5,11 +5,17 @@
  */
 package com.albinodevelopment.View.DrinksListBuilder;
 
+import com.albinodevelopment.IO.FileIO;
+import com.albinodevelopment.IO.SerializerDeserializerFactory;
 import com.albinodevelopment.Logging.PriorityLogger;
 import com.albinodevelopment.Model.Components.Drink;
 import com.albinodevelopment.Model.Components.DrinksList;
+import com.albinodevelopment.Model.Components.Interpreter.IDrinksListInterpreter;
+import com.albinodevelopment.Settings.ApplicationSettings;
+import com.albinodevelopment.Settings.ISettingsManager;
 import com.albinodevelopment.View.Window;
 import java.net.URL;
+import java.util.PrimitiveIterator;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -32,6 +38,8 @@ public class DrinksListBuilderWindow extends Window implements Initializable {
 
     private final String BLANK_TEXT = "";
     private DrinksList temporary;
+    private IDrinksListInterpreter drinksListInterpreter = (IDrinksListInterpreter) ApplicationSettings.GetInstance()
+                    .getSetting(ISettingsManager.settingsList.DrinksListInterpreter).getValue();
 
     @FXML
     private VBox scrollVbox;
@@ -76,12 +84,56 @@ public class DrinksListBuilderWindow extends Window implements Initializable {
 
     @FXML
     private void saveButtonAction(ActionEvent event) {
-        
+        String name = drinksListName.getText();
+        if (textFieldEntered(name, "TEXT TO HACK THE METHOD")) {
+            temporary.setName(name);
+            saveDrinksList(temporary);
+            drinksListName.clear();
+            scrollVbox.getChildren().clear();
+            output.setText("Drinks list saved as: " + name + ".ser");
+        } else {
+            output.setText("Please enter a drink list name.");
+        }
     }
 
     @FXML
     private void openButtonAction(ActionEvent event) {
+        openDrinksList();
+    }
 
+    private void saveDrinksList(DrinksList drinksList) {
+        temporary = null;
+        drinksListInterpreter.Save(drinksList);
+    }
+
+    private void openDrinksList() {
+        String directory = FileIO.openFileExplorer(
+                ApplicationSettings.GetInstance()
+                        .getSetting(ISettingsManager.settingsList.TextFileDirectory)
+                        .getValue().toString() + "\\DrinksList");
+        if (directory != null) {
+            PriorityLogger.Log(directory, PriorityLogger.PriorityLevel.Low);
+            drinksListInterpreter = (IDrinksListInterpreter) ApplicationSettings.GetInstance()
+                    .getSetting(ISettingsManager.settingsList.DrinksListInterpreter).getValue();
+            
+            DrinksList drinksList = drinksListInterpreter.Interpret(directory);
+            if(drinksList != null){
+                loadDrinksList(drinksList);
+            }
+        }
+    }
+
+    private void loadDrinksList(DrinksList drinksList) {
+        drinksListName.setText(drinksList.getName());
+        createGUIFromDrinksList(drinksList);
+        temporary = drinksList;
+        output.setText("Loaded drinks list!");
+    }
+
+    private void createGUIFromDrinksList(DrinksList drinksList) {
+        drinksList.getDrinksList().values().forEach((drink) -> {
+            createGUIFromDrink(drink);
+        });
     }
 
     private void createGUIFromDrink(Drink drink) {

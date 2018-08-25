@@ -16,9 +16,9 @@ import java.util.HashMap;
 public class DrinksList implements Serializable {
 
     private String name;
-    
+
     private transient StringBuilder stringBuilder;
-    
+
     private final HashMap<String, Drink> drinks = new HashMap<>();
 
     public HashMap<String, Drink> getDrinksList() {
@@ -58,5 +58,13 @@ public class DrinksList implements Serializable {
         });
         String s = stringBuilder.toString();
         return s;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
