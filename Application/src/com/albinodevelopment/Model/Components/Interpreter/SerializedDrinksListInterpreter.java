@@ -15,7 +15,7 @@ import java.io.Serializable;
  *
  * @author conno
  */
-public class TextFileDrinksListInterpreter implements IDrinksListInterpreter, Serializable {
+public class SerializedDrinksListInterpreter implements IDrinksListInterpreter, Serializable {
 
     @Override
     public DrinksList Interpret(String directory) {
@@ -35,7 +35,6 @@ public class TextFileDrinksListInterpreter implements IDrinksListInterpreter, Se
                 com.albinodevelopment.Model.Components.DrinksList.class)
                 .serialize(drinksList,
                         ApplicationSettings.GetInstance()
-                                .getSetting(
-                                        ISettingsManager.settingsList.TextFileDirectory).getValue().toString() + "\\DrinksList", drinksList.getName());
+                                .getSetting(ISettingsManager.settingsList.SerializedDirectory).getValue().toString() + "\\DrinksList", drinksList.getName());
     }
 }

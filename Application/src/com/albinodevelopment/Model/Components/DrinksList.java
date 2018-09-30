@@ -6,6 +6,7 @@
 package com.albinodevelopment.Model.Components;
 
 import com.albinodevelopment.Logging.PriorityLogger;
+import com.albinodevelopment.Model.Components.Builders.IBuildable;
 import java.io.Serializable;
 import java.util.HashMap;
 
@@ -13,7 +14,7 @@ import java.util.HashMap;
  *
  * @author conno
  */
-public class DrinksList implements Serializable {
+public class DrinksList implements Serializable, IBuildable {
 
     private String name;
 

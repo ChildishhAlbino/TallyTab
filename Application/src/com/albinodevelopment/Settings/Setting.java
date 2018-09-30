@@ -7,7 +7,7 @@ package com.albinodevelopment.Settings;
 
 import com.albinodevelopment.Logging.PriorityLogger;
 import com.albinodevelopment.Model.Components.Interpreter.IDrinksListInterpreter;
-import com.albinodevelopment.Model.Components.Interpreter.TextFileDrinksListInterpreter;
+import com.albinodevelopment.Model.Components.Interpreter.SerializedDrinksListInterpreter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -35,9 +35,9 @@ public abstract class Setting<U> implements ISetting<U>, Serializable {
         change(defaultValue);
     }
 
-    public static class TextFileDirectorySetting extends Setting<String> {
+    public static class SerializedDirectorySetting extends Setting<String> {
 
-        public TextFileDirectorySetting() {
+        public SerializedDirectorySetting() {
             defaultValue = System.getenv("Appdata") + "\\TallyTab";
             setToDefault();
             WriteToFile();
@@ -75,7 +75,7 @@ public abstract class Setting<U> implements ISetting<U>, Serializable {
     public static class DrinksListInterpreterSetting extends Setting<IDrinksListInterpreter> {
 
         public DrinksListInterpreterSetting() {
-            defaultValue = new TextFileDrinksListInterpreter();
+            defaultValue = new SerializedDrinksListInterpreter();
             setToDefault();
         }
 

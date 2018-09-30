@@ -14,7 +14,7 @@ import com.albinodevelopment.Model.Components.Interpreter.IDrinksListInterpreter
 public interface ISettingsManager {
 
     public enum settingsList {
-        TextFileDirectory,
+        SerializedDirectory,
         DrinksListInterpreter,
     }
 
