@@ -36,7 +36,7 @@ public class Model implements ICommandHandler<ModelCommand> {
                 PriorityLogger.Log("COMMAND FAILURE: " + command.GetErrorCode(), PriorityLogger.PriorityLevel.High);
             }
         } else {
-            PriorityLogger.Log("Command couldn't be run for some reason " + command.GetErrorCode(), PriorityLogger.PriorityLevel.High);
+            PriorityLogger.Log("Command couldn't be run for some reason " + command.toString(), PriorityLogger.PriorityLevel.High);
         }
     }
 

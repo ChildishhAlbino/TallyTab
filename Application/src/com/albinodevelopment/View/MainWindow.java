@@ -126,6 +126,8 @@ public class MainWindow extends View implements Initializable {
             if (exectutionResult.equals(ExecutionResult.failure)) {
                 // log
                 PriorityLogger.Log(command.GetErrorCode(), PriorityLogger.PriorityLevel.High);
+            } else {
+                PriorityLogger.Log("Command: " + command.toString() + " was successful.", PriorityLogger.PriorityLevel.Zero);
             }
         }
     }

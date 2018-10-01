@@ -6,6 +6,7 @@
 package com.albinodevelopment.View.DrinksListBuilder;
 
 import com.albinodevelopment.Commands.ControllerCommand;
+import com.albinodevelopment.Commands.ViewCommand;
 import com.albinodevelopment.Logging.PriorityLogger;
 import com.albinodevelopment.Model.Components.Builders.DrinksListBuilder;
 import com.albinodevelopment.Model.Components.Drink;
@@ -34,7 +35,7 @@ import javafx.scene.text.Font;
 public class DrinksListBuilderWindow extends Window implements Initializable {
 
     private final String BLANK_TEXT = "";
-    private DrinksListBuilder drinksListBuilder = new DrinksListBuilder();
+    // private DrinksListBuilder drinksListBuilder = new DrinksListBuilder();
 
     @FXML
     private VBox scrollVbox;
@@ -81,9 +82,9 @@ public class DrinksListBuilderWindow extends Window implements Initializable {
     @FXML
     private void saveButtonAction(ActionEvent event) {
         String name = drinksListName.getText();
-        if (textFieldEntered(name, "TEXT TO HACK THE METHOD") && drinksListBuilder.get() != null) {
-            drinksListBuilder.get().setName(name);
-            saveDrinksList(drinksListBuilder.get());
+        if (textFieldEntered(name, "TEXT TO HACK THE METHOD") && DrinksListBuilder.getInstance().get() != null) {
+            DrinksListBuilder.getInstance().get().setName(name);
+            saveDrinksList(DrinksListBuilder.getInstance().get());
             drinksListName.clear();
             scrollVbox.getChildren().clear();
             output.setText("Drinks list saved as: " + name + ".ser");
@@ -98,12 +99,12 @@ public class DrinksListBuilderWindow extends Window implements Initializable {
     }
 
     private void saveDrinksList(DrinksList drinksList) {
-        drinksListBuilder.save();
+        DrinksListBuilder.getInstance().save();
     }
 
     private void openDrinksList() {
-        drinksListBuilder.open();
-        loadDrinksList(drinksListBuilder.get());
+        DrinksListBuilder.getInstance().open();
+        loadDrinksList(DrinksListBuilder.getInstance().get());
     }
 
     private void loadDrinksList(DrinksList drinksList) {
@@ -135,8 +136,7 @@ public class DrinksListBuilderWindow extends Window implements Initializable {
         PriorityLogger.Log("Removing item!", PriorityLogger.PriorityLevel.Low);
         Label drinkNameLabel = (Label) parent.getChildrenUnmodifiable().get(0);
         Label drinkPriceLabel = (Label) parent.getChildrenUnmodifiable().get(1);
-        //drinksListBuilder.get().remove(createDrink(drinkNameLabel.getText(),
-        // drinkPriceLabel.getText()));
+        main.Handle(new ViewCommand.PassToControllerCommand(new ControllerCommand.ValidateDrinkRemovalCommand(drinkNameLabel.getText(), drinkPriceLabel.getText())));
         scrollVbox.getChildren().remove(parent);
         output.setText("Item removed!");
     }
@@ -170,7 +170,7 @@ public class DrinksListBuilderWindow extends Window implements Initializable {
 
     @Override
     protected void Refresh() {
-        if (DrinksListBuilder.getInstance().get() != null) {
+        if (DrinksListBuilder.getInstance().get() != null && DrinksListBuilder.getInstance().get().GetListSize() > 0) {
             PriorityLogger.Log(DrinksListBuilder.getInstance().get().toString(), PriorityLogger.PriorityLevel.Low);
         }
         PriorityLogger.Log("Drinks List Window refreshed.", PriorityLogger.PriorityLevel.Zero);

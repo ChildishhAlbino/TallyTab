@@ -118,7 +118,7 @@ public abstract class ModelCommand extends Command<Model> {
 
         @Override
         public boolean CanExecute(Model commandHandler) {
-            return commandHandler.drinksListIsNull();
+            return (drink != null);
         }
 
         @Override
