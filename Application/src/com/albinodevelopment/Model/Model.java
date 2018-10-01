@@ -29,18 +29,6 @@ public class Model implements ICommandHandler<ModelCommand> {
     private final DrinksListBuilder drinksListBuilder = DrinksListBuilder.getInstance();
 
     @Override
-    public void Handle(ModelCommand command) {
-        if (command.CanExecute(this)) {
-            ICommand.ExecutionResult exectutionResult = command.Execute(this);
-            if (exectutionResult.equals(ICommand.ExecutionResult.failure)) {
-                PriorityLogger.Log("COMMAND FAILURE: " + command.GetErrorCode(), PriorityLogger.PriorityLevel.High);
-            }
-        } else {
-            PriorityLogger.Log("Command couldn't be run for some reason " + command.toString(), PriorityLogger.PriorityLevel.High);
-        }
-    }
-
-    @Override
     public void SetCommandHandler(ICommandHandler commandHandler) {
         if (this.commandHandler == null && commandHandler != null) {
             this.commandHandler = commandHandler;
@@ -55,10 +43,25 @@ public class Model implements ICommandHandler<ModelCommand> {
     }
 
     @Override
+    public void Handle(ModelCommand command) {
+        if (command.CanExecute(this)) {
+            ICommand.ExecutionResult exectutionResult = command.Execute(this);
+            if (exectutionResult.equals(ICommand.ExecutionResult.failure)) {
+                PriorityLogger.Log("COMMAND FAILURE: " + command.toString() 
+                        + "\n" + command.GetErrorCode(), PriorityLogger.PriorityLevel.High);
+            } else {
+                
+            }
+        } else {
+            PriorityLogger.Log("Command couldn't be run for some reason " + command.toString(), PriorityLogger.PriorityLevel.High);
+        }
+    }
+
+    @Override
     public boolean CanHandle(Command command) {
         if (command instanceof ModelCommand) {
             // log success
-            PriorityLogger.Log(command.toString() + ": Success.", PriorityLogger.PriorityLevel.Medium);
+            PriorityLogger.Log(command.toString() + "can be handled by this command handler - " + this.getClass().getName(), PriorityLogger.PriorityLevel.Medium);
             return true;
         } else {
             // log failure

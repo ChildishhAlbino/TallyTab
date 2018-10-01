@@ -23,12 +23,31 @@ public class Controller extends Thread implements ICommandHandler<ControllerComm
     private ICommandHandler<ModelCommand> commandHandler;
 
     @Override
+    public boolean CanHandle(Command command) {
+        if (command instanceof ControllerCommand) {
+            // log success
+            PriorityLogger.Log(command.toString() + "can be handled by this command handler - " + this.getClass().getName(), PriorityLogger.PriorityLevel.Medium);
+            return true;
+        } else {
+            // log failure
+            command.GenerateErrorCode("This command cannot be handled by this Command Handler.");
+            PriorityLogger.Log(command.GetErrorCode(), PriorityLogger.PriorityLevel.High);
+            return false;
+        }
+    }
+
+    @Override
     public void Handle(ControllerCommand command) {
         if (command.CanExecute(this)) {
             ICommand.ExecutionResult exectutionResult = command.Execute(this);
             if (exectutionResult.equals(ICommand.ExecutionResult.failure)) {
-                // log
+                PriorityLogger.Log("COMMAND FAILURE: " + command.toString()
+                        + "\n" + command.GetErrorCode(), PriorityLogger.PriorityLevel.High);
+            } else {
+
             }
+        } else {
+            PriorityLogger.Log("Command couldn't be run for some reason " + command.toString(), PriorityLogger.PriorityLevel.High);
         }
     }
 
@@ -60,20 +79,6 @@ public class Controller extends Thread implements ICommandHandler<ControllerComm
     @Override
     public ICommandHandler GetCommandHandler() {
         return commandHandler;
-    }
-
-    @Override
-    public boolean CanHandle(Command command) {
-        if (command instanceof ControllerCommand) {
-            // log success
-            PriorityLogger.Log(command.toString() + ": Success.", PriorityLogger.PriorityLevel.Medium);
-            return true;
-        } else {
-            // log failure
-            command.GenerateErrorCode("This command cannot be handled by this Command Handler.");
-            PriorityLogger.Log(command.GetErrorCode(), PriorityLogger.PriorityLevel.High);
-            return false;
-        }
     }
 
     public Drink validateDrinkCreation(String name, String price) {

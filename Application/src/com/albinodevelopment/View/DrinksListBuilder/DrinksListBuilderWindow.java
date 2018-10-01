@@ -64,19 +64,7 @@ public class DrinksListBuilderWindow extends Window implements Initializable {
         String name = drinkName.getText();
         String price = drinkPrice.getText();
         if (textFieldEntered(name, price)) {
-//            if (drinksListBuilder.get() == null) {
-//                drinksListBuilder.create();
-//            }
             main.GetCommandHandler().Handle(new ControllerCommand.ValidateDrinkCreationCommand(name, price));
-//            Drink drink = createDrink(name, price);
-//            if (drink != null) {
-//                createDrinkGUIElements(drink);
-//                drinksListBuilder.get().add(drink);
-//                output.setText("Drink created!");
-//                PriorityLogger.Log("Drink created succesfully!\n" + drink.toString(), PriorityLogger.PriorityLevel.Low);
-//            } else {
-//                PriorityLogger.Log("ERROR: Drink was null.", PriorityLogger.PriorityLevel.Low);
-//            }
         }
     }
 
@@ -98,15 +86,6 @@ public class DrinksListBuilderWindow extends Window implements Initializable {
     @FXML
     private void openButtonAction(ActionEvent event) {
         main.Handle(new ViewCommand.PassToControllerCommand(new ControllerCommand.PassToModelCommand(new ModelCommand.OpenDrinksListCommand())));
-    }
-
-    private void saveDrinksList(DrinksList drinksList) {
-        DrinksListBuilder.getInstance().save();
-    }
-
-    private void openDrinksList() {
-        DrinksListBuilder.getInstance().open();
-        loadDrinksList(DrinksListBuilder.getInstance().get());
     }
 
     public void loadDrinksList(DrinksList drinksList) {
@@ -173,7 +152,7 @@ public class DrinksListBuilderWindow extends Window implements Initializable {
     @Override
     protected void Refresh() {
         if (DrinksListBuilder.getInstance().get() != null && DrinksListBuilder.getInstance().get().GetListSize() > 0) {
-            PriorityLogger.Log(DrinksListBuilder.getInstance().get().toString(), PriorityLogger.PriorityLevel.Low);
+            PriorityLogger.Log(DrinksListBuilder.getInstance().get().toString(), PriorityLogger.PriorityLevel.Zero);
         }
         PriorityLogger.Log("Drinks List Window refreshed.", PriorityLogger.PriorityLevel.Zero);
     }
