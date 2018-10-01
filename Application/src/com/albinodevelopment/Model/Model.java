@@ -26,8 +26,8 @@ public class Model implements ICommandHandler<ModelCommand> {
 
     private ICommandHandler<ViewCommand> commandHandler;
     private final ArrayList<Function> functions = new ArrayList<>();
-    private DrinksListBuilder drinksListBuilder = new DrinksListBuilder();
-
+    private final DrinksListBuilder drinksListBuilder = DrinksListBuilder.getInstance();
+    
     @Override
     public void Handle(ModelCommand command) {
         if (command.CanExecute(this)) {

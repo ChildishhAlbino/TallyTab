@@ -170,8 +170,8 @@ public class DrinksListBuilderWindow extends Window implements Initializable {
 
     @Override
     protected void Refresh() {
-        if (drinksListBuilder.get() != null) {
-            PriorityLogger.Log(drinksListBuilder.get().toString(), PriorityLogger.PriorityLevel.Low);
+        if (DrinksListBuilder.getInstance().get() != null) {
+            PriorityLogger.Log(DrinksListBuilder.getInstance().get().toString(), PriorityLogger.PriorityLevel.Low);
         }
         PriorityLogger.Log("Drinks List Window refreshed.", PriorityLogger.PriorityLevel.Zero);
     }
