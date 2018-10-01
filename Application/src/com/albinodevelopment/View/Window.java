@@ -23,6 +23,7 @@ public abstract class Window extends Thread implements Initializable {
     protected Stage stage;
     protected Timer timer;
     protected final long REFRESH_RATE = 100L;
+    protected View main;
 
     public Window() {
         timer = new Timer();
@@ -66,5 +67,11 @@ public abstract class Window extends Thread implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // TODO
+    }
+
+    public void setMain(View main) {
+        if (this.main == null) {
+            this.main = main;
+        }
     }
 }

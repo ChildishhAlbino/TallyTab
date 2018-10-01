@@ -10,5 +10,5 @@ package com.albinodevelopment.Model.Components.Builders;
  * @author conno
  */
 public interface IBuildable {
-    
+
 }

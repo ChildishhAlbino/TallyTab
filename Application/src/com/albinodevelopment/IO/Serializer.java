@@ -41,12 +41,12 @@ public class Serializer<T> {
     }
 
     public void serializeApplicationSettings() {
-        ApplicationSettings applicationSettings 
+        ApplicationSettings applicationSettings
                 = (ApplicationSettings) ApplicationSettings.GetInstance();
         SerializerDeserializerFactory.getSerializer(
                 com.albinodevelopment.Settings.ApplicationSettings.class)
-                .serialize(applicationSettings, 
-                        applicationSettings.getSetting(ISettingsManager.settingsList.SerializedDirectory).getValue().toString(), 
+                .serialize(applicationSettings,
+                        applicationSettings.getSetting(ISettingsManager.settingsList.SerializedDirectory).getValue().toString(),
                         applicationSettings.toString());
     }
 

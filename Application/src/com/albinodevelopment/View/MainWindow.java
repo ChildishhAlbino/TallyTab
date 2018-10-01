@@ -152,6 +152,7 @@ public class MainWindow extends View implements Initializable {
         WindowLoader windowLoader = windowLoaderFactory.getWindowLoader(windowClass);
         try {
             Window window = windowLoader.NewWindow(fxml);
+            window.setMain(this);
             window.start();
             return window;
         } catch (InstantiationException | IllegalAccessException ex) {
@@ -180,7 +181,7 @@ public class MainWindow extends View implements Initializable {
     }
 
     @Override
-    public void CreateDrinkGUIElements(Drink drink) {
+    public void createDrinkGUIElements(Drink drink) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -243,4 +244,17 @@ public class MainWindow extends View implements Initializable {
         // read in a function file and open a tab with it's corresponding details
     }
 
+    @Override
+    public Window getWindowByName(String name) {
+        Window window = null;
+        switch (name) {
+            case "DrinksList":
+                window = drinksListBuilderWindow;
+                break;
+            case "Settings":
+                window = settingsWindow;
+                break;
+        }
+        return window;
+    }
 }

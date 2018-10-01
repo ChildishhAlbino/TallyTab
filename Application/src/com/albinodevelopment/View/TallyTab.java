@@ -27,11 +27,11 @@ public class TallyTab extends Application {
     public void start(Stage stage) {
         stage.setOnCloseRequest((WindowEvent event) -> {
             Platform.runLater(() -> {
-                PriorityLogger.Log("Application shutdown!", 
+                PriorityLogger.Log("Application shutdown!",
                         PriorityLogger.PriorityLevel.High);
-                  SerializerDeserializerFactory.getSerializer(
-                com.albinodevelopment.Settings.ApplicationSettings.class)
-                          .serializeApplicationSettings();
+                SerializerDeserializerFactory.getSerializer(
+                        com.albinodevelopment.Settings.ApplicationSettings.class)
+                        .serializeApplicationSettings();
                 System.exit(0);
             });
         });

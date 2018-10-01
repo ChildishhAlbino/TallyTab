@@ -11,7 +11,7 @@ import java.io.Serializable;
  *
  * @author conno
  */
-public class Function implements Serializable{
+public class Function implements Serializable {
 
     private final String name;
     private final DrinksTab tab;

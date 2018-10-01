@@ -49,7 +49,7 @@ public abstract class Setting<U> implements ISetting<U>, Serializable {
             if (value != null) {
                 // move files from oldDirectory to newDirectory
                 this.value = value;
-                if(this.value.contains("TallyTab") == false){
+                if (this.value.contains("TallyTab") == false) {
                     this.value += "\\TallyTab";
                 }
                 WriteToFile();

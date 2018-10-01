@@ -78,19 +78,5 @@ public class SettingsWindow extends Window {
     public void HandleMouseMoved(Event event) {
         //PriorityLogger.Log("Mouse Moved!", PriorityLogger.PriorityLevel.Low);
     }
-    
-// Deprecated. Moved into FileIO class
-//    private String OpenDirectoryWindow() {
-//        String s = null;
-//        JFileChooser jFileChooser = new JFileChooser();
-//        jFileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-//        int response = jFileChooser.showOpenDialog(null);
-//        if (response == JFileChooser.APPROVE_OPTION) {
-//            s = jFileChooser.getSelectedFile().toString();
-//        } else {
-//            PriorityLogger.Log("ERROR: Open file operation was cancelled.", PriorityLogger.PriorityLevel.Low);
-//        }
-//        return s;
-//    }
 
 }

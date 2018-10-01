@@ -5,6 +5,9 @@
  */
 package com.albinodevelopment.Commands;
 
+import com.albinodevelopment.Model.Components.Drink;
+import com.albinodevelopment.Model.Components.DrinksList;
+import com.albinodevelopment.View.DrinksListBuilder.DrinksListBuilderWindow;
 import com.albinodevelopment.View.View;
 
 /**
@@ -25,7 +28,7 @@ public abstract class ViewCommand extends Command<View> {
         public boolean CanExecute(View commandHandler) {
             return commandHandler.GetCommandHandler().CanHandle(controllerCommand);
         }
-
+        
         @Override
         public ExecutionResult Execute(View commandHandler) {
             if (CanExecute(commandHandler)) {
@@ -36,4 +39,28 @@ public abstract class ViewCommand extends Command<View> {
             }
         }
     }
+
+    public static class GenerateGUIFromDrinkCommand extends ViewCommand {
+
+        private final Drink drink;
+
+        public GenerateGUIFromDrinkCommand(Drink drink) {
+            this.drink = drink;
+        }
+
+        @Override
+        public boolean CanExecute(View commandHandler) {
+            return drink != null;
+        }
+
+        @Override
+        public ExecutionResult Execute(View commandHandler) {
+            DrinksListBuilderWindow drinksListBuilderWindow = (DrinksListBuilderWindow) commandHandler.getWindowByName("DrinksList");
+            drinksListBuilderWindow.createGUIFromDrink(drink);
+            return ExecutionResult.success;
+        }
+
+    }
+    
+
 }

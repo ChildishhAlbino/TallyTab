@@ -5,6 +5,7 @@
  */
 package com.albinodevelopment.Commands;
 
+import com.albinodevelopment.Model.Components.Drink;
 import com.albinodevelopment.Model.Components.DrinksList;
 import com.albinodevelopment.Model.Components.Interpreter.IDrinksListInterpreter;
 import com.albinodevelopment.Model.Model;
@@ -68,6 +69,64 @@ public abstract class ModelCommand extends Command<Model> {
                     drinksListInterpreter.Interpret(directory));
             return ExecutionResult.success;
         }
+    }
+
+    public static class CreateDrinksListCommand extends ModelCommand {
+
+        @Override
+        public boolean CanExecute(Model commandHandler) {
+            return commandHandler.drinksListIsNull();
+        }
+
+        @Override
+        public ExecutionResult Execute(Model commandHandler) {
+            commandHandler.createNewDrinksList();
+            return ExecutionResult.success;
+        }
+
+    }
+
+    public static class AddDrinkToDrinksListCommand extends ModelCommand {
+
+        private final Drink drink;
+
+        public AddDrinkToDrinksListCommand(Drink drink) {
+            this.drink = drink;
+        }
+
+        @Override
+        public boolean CanExecute(Model commandHandler) {
+            return (drink != null);
+        }
+
+        @Override
+        public ExecutionResult Execute(Model commandHandler) {
+            commandHandler.addDrinkToDrinksList(drink);
+            commandHandler.GetCommandHandler().Handle(new ViewCommand.GenerateGUIFromDrinkCommand(drink));
+            return ExecutionResult.success;
+        }
+
+    }
+
+    public static class RemoveDrinkFromDrinksListCommand extends ModelCommand {
+
+        private final Drink drink;
+
+        public RemoveDrinkFromDrinksListCommand(Drink drink) {
+            this.drink = drink;
+        }
+
+        @Override
+        public boolean CanExecute(Model commandHandler) {
+            return commandHandler.drinksListIsNull();
+        }
+
+        @Override
+        public ExecutionResult Execute(Model commandHandler) {
+            commandHandler.removeDrinkFromDrinksList(drink);
+            return ExecutionResult.success;
+        }
+
     }
 
 }

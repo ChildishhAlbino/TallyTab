@@ -5,7 +5,6 @@
  */
 package com.albinodevelopment.Model.Components.Builders;
 
-
 /**
  *
  * @author conno
@@ -20,6 +19,6 @@ public interface IComponentManager<T extends IBuildable> { // interface that out
     void save();
 
     T get();
-    
+
     void clear();
 }

@@ -11,6 +11,7 @@ import com.albinodevelopment.Commands.ICommand;
 import com.albinodevelopment.Commands.ICommandHandler;
 import com.albinodevelopment.Commands.ModelCommand;
 import com.albinodevelopment.Logging.PriorityLogger;
+import com.albinodevelopment.Model.Components.Drink;
 
 /**
  *
@@ -73,5 +74,15 @@ public class Controller extends Thread implements ICommandHandler<ControllerComm
             PriorityLogger.Log(command.GetErrorCode(), PriorityLogger.PriorityLevel.High);
             return false;
         }
+    }
+
+    public Drink validateDrinkCreation(String name, String price) {
+        try {
+            Double d_Price = Double.valueOf(price);
+            return new Drink(d_Price, name);
+        } catch (NumberFormatException ex) {
+            PriorityLogger.Log("ERROR: Price couldn't be converted to double - " + ex.toString(), PriorityLogger.PriorityLevel.Medium);
+        }
+        return null;
     }
 }

@@ -6,6 +6,7 @@
 package com.albinodevelopment.Commands;
 
 import com.albinodevelopment.Controller.Controller;
+import com.albinodevelopment.Model.Components.Drink;
 
 /**
  *
@@ -35,5 +36,33 @@ public abstract class ControllerCommand extends Command<Controller> {
                 return ExecutionResult.failure;
             }
         }
+    }
+
+    public static class ValidateDrinkCreationCommand extends ControllerCommand {
+
+        private final String name;
+        private final String price;
+
+        public ValidateDrinkCreationCommand(String name, String price) {
+            this.name = name;
+            this.price = price;
+        }
+
+        @Override
+        public boolean CanExecute(Controller commandHandler) {
+            return commandHandler.CanHandle(this);
+        }
+
+        @Override
+        public ExecutionResult Execute(Controller commandHandler) {
+            Drink drink = commandHandler.validateDrinkCreation(name, price);
+            if (drink != null) {
+                commandHandler.GetCommandHandler().Handle(new ModelCommand.AddDrinkToDrinksListCommand(drink));
+                return ExecutionResult.success;
+            } else {
+                return ExecutionResult.failure;
+            }
+        }
+
     }
 }
