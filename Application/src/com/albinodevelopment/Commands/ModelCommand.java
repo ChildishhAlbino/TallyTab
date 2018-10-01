@@ -6,7 +6,6 @@
 package com.albinodevelopment.Commands;
 
 import com.albinodevelopment.Model.Components.Drink;
-import com.albinodevelopment.Model.Components.DrinksList;
 import com.albinodevelopment.Model.Components.Interpreter.IDrinksListInterpreter;
 import com.albinodevelopment.Model.Model;
 import com.albinodevelopment.Settings.ApplicationSettings;
@@ -81,6 +80,37 @@ public abstract class ModelCommand extends Command<Model> {
         @Override
         public ExecutionResult Execute(Model commandHandler) {
             commandHandler.createNewDrinksList();
+            return ExecutionResult.success;
+        }
+
+    }
+
+    public static class OpenDrinksListCommand extends ModelCommand {
+
+        @Override
+        public boolean CanExecute(Model commandHandler) {
+            return commandHandler.CanHandle(this);
+        }
+
+        @Override
+        public ExecutionResult Execute(Model commandHandler) {
+            commandHandler.openDrinksList();
+            commandHandler.GetCommandHandler().Handle(new ViewCommand.LoadDrinksListCommand(commandHandler.getDrinksListBuilder().get()));
+            return ExecutionResult.success;
+        }
+
+    }
+
+    public static class SaveDrinksListCommand extends ModelCommand {
+
+        @Override
+        public boolean CanExecute(Model commandHandler) {
+            return commandHandler.CanHandle(this);
+        }
+
+        @Override
+        public ExecutionResult Execute(Model commandHandler) {
+            commandHandler.saveDrinksList();
             return ExecutionResult.success;
         }
 

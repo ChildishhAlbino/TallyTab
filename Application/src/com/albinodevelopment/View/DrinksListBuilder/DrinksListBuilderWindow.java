@@ -6,6 +6,7 @@
 package com.albinodevelopment.View.DrinksListBuilder;
 
 import com.albinodevelopment.Commands.ControllerCommand;
+import com.albinodevelopment.Commands.ModelCommand;
 import com.albinodevelopment.Commands.ViewCommand;
 import com.albinodevelopment.Logging.PriorityLogger;
 import com.albinodevelopment.Model.Components.Builders.DrinksListBuilder;
@@ -84,7 +85,8 @@ public class DrinksListBuilderWindow extends Window implements Initializable {
         String name = drinksListName.getText();
         if (textFieldEntered(name, "TEXT TO HACK THE METHOD") && DrinksListBuilder.getInstance().get() != null) {
             DrinksListBuilder.getInstance().get().setName(name);
-            saveDrinksList(DrinksListBuilder.getInstance().get());
+            //saveDrinksList(DrinksListBuilder.getInstance().get());
+            main.Handle(new ViewCommand.PassToControllerCommand(new ControllerCommand.PassToModelCommand(new ModelCommand.SaveDrinksListCommand())));
             drinksListName.clear();
             scrollVbox.getChildren().clear();
             output.setText("Drinks list saved as: " + name + ".ser");
@@ -95,7 +97,7 @@ public class DrinksListBuilderWindow extends Window implements Initializable {
 
     @FXML
     private void openButtonAction(ActionEvent event) {
-        openDrinksList();
+        main.Handle(new ViewCommand.PassToControllerCommand(new ControllerCommand.PassToModelCommand(new ModelCommand.OpenDrinksListCommand())));
     }
 
     private void saveDrinksList(DrinksList drinksList) {
@@ -107,13 +109,13 @@ public class DrinksListBuilderWindow extends Window implements Initializable {
         loadDrinksList(DrinksListBuilder.getInstance().get());
     }
 
-    private void loadDrinksList(DrinksList drinksList) {
+    public void loadDrinksList(DrinksList drinksList) {
         drinksListName.setText(drinksList.getName());
         createGUIFromDrinksList(drinksList);
         output.setText("Loaded drinks list!");
     }
 
-    public void createGUIFromDrinksList(DrinksList drinksList) {
+    private void createGUIFromDrinksList(DrinksList drinksList) {
         drinksList.getDrinksList().values().forEach((drink) -> {
             createGUIFromDrink(drink);
         });

@@ -64,7 +64,7 @@ public abstract class ControllerCommand extends Command<Controller> {
             }
         }
     }
-    
+
     public static class ValidateDrinkRemovalCommand extends ControllerCommand {
 
         private final String name;

@@ -27,7 +27,7 @@ public class Model implements ICommandHandler<ModelCommand> {
     private ICommandHandler<ViewCommand> commandHandler;
     private final ArrayList<Function> functions = new ArrayList<>();
     private final DrinksListBuilder drinksListBuilder = DrinksListBuilder.getInstance();
-    
+
     @Override
     public void Handle(ModelCommand command) {
         if (command.CanExecute(this)) {
@@ -89,6 +89,14 @@ public class Model implements ICommandHandler<ModelCommand> {
     public void removeDrinkFromDrinksList(Drink drink) {
         createNewDrinksList();
         drinksListBuilder.get().remove(drink);
+    }
+
+    public void openDrinksList() {
+        drinksListBuilder.open();
+    }
+
+    public void saveDrinksList() {
+        drinksListBuilder.save();
     }
 
     public DrinksListBuilder getDrinksListBuilder() {

@@ -17,11 +17,11 @@ import com.albinodevelopment.Settings.ISettingsManager;
  * @author conno
  */
 public class DrinksListBuilder implements IComponentManager<DrinksList> {
-    
+
     private static DrinksListBuilder instance;
     private DrinksList drinksList;
     private IDrinksListInterpreter drinksListInterpreter;
-    
+
     @Override
     public void create() {
         drinksList = new DrinksList();
@@ -66,12 +66,12 @@ public class DrinksListBuilder implements IComponentManager<DrinksList> {
     public void clear() {
         drinksList = null;
     }
-    
-    public static DrinksListBuilder getInstance(){
-        if(instance == null){
+
+    public static DrinksListBuilder getInstance() {
+        if (instance == null) {
             instance = new DrinksListBuilder();
-        } 
+        }
         return instance;
     }
-    
+
 }
