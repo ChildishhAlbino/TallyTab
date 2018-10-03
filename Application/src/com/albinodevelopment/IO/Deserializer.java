@@ -45,8 +45,8 @@ public class Deserializer<T> {
         }
         return null;
     }
-    
-    public T DeserializeFromFileName(String fileName){
+
+    public T DeserializeFromFileName(String fileName) {
         return DeserializeFromFilePath(fileDirectory + "\\" + fileName);
     }
 

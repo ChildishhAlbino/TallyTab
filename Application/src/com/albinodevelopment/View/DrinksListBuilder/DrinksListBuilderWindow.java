@@ -5,17 +5,16 @@
  */
 package com.albinodevelopment.View.DrinksListBuilder;
 
-import com.albinodevelopment.IO.FileIO;
-import com.albinodevelopment.IO.SerializerDeserializerFactory;
+import com.albinodevelopment.Commands.ControllerCommand;
+import com.albinodevelopment.Commands.ModelCommand;
+import com.albinodevelopment.Commands.ViewCommand;
 import com.albinodevelopment.Logging.PriorityLogger;
+import com.albinodevelopment.Model.Components.Builders.DrinksListBuilder;
 import com.albinodevelopment.Model.Components.Drink;
 import com.albinodevelopment.Model.Components.DrinksList;
-import com.albinodevelopment.Model.Components.Interpreter.IDrinksListInterpreter;
-import com.albinodevelopment.Settings.ApplicationSettings;
-import com.albinodevelopment.Settings.ISettingsManager;
+import com.albinodevelopment.View.View;
 import com.albinodevelopment.View.Window;
 import java.net.URL;
-import java.util.PrimitiveIterator;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -37,9 +36,7 @@ import javafx.scene.text.Font;
 public class DrinksListBuilderWindow extends Window implements Initializable {
 
     private final String BLANK_TEXT = "";
-    private DrinksList temporary;
-    private IDrinksListInterpreter drinksListInterpreter = (IDrinksListInterpreter) ApplicationSettings.GetInstance()
-                    .getSetting(ISettingsManager.settingsList.DrinksListInterpreter).getValue();
+    // private DrinksListBuilder drinksListBuilder = new DrinksListBuilder();
 
     @FXML
     private VBox scrollVbox;
@@ -67,27 +64,17 @@ public class DrinksListBuilderWindow extends Window implements Initializable {
         String name = drinkName.getText();
         String price = drinkPrice.getText();
         if (textFieldEntered(name, price)) {
-            if (temporary == null) {
-                temporary = newDrinksList();
-            }
-            Drink drink = createDrink(name, price);
-            if (drink != null) {
-                createGUIFromDrink(drink);
-                temporary.add(drink);
-                output.setText("Drink created!");
-                PriorityLogger.Log("Drink created succesfully!\n" + drink.toString(), PriorityLogger.PriorityLevel.Low);
-            } else {
-                PriorityLogger.Log("ERROR: Drink was null.", PriorityLogger.PriorityLevel.Low);
-            }
+            main.GetCommandHandler().Handle(new ControllerCommand.ValidateDrinkCreationCommand(name, price));
         }
     }
 
     @FXML
     private void saveButtonAction(ActionEvent event) {
         String name = drinksListName.getText();
-        if (textFieldEntered(name, "TEXT TO HACK THE METHOD")) {
-            temporary.setName(name);
-            saveDrinksList(temporary);
+        if (textFieldEntered(name, "TEXT TO HACK THE METHOD") && DrinksListBuilder.getInstance().get() != null) {
+            DrinksListBuilder.getInstance().get().setName(name);
+            //saveDrinksList(DrinksListBuilder.getInstance().get());
+            main.Handle(new ViewCommand.PassToControllerCommand(new ControllerCommand.PassToModelCommand(new ModelCommand.SaveDrinksListCommand())));
             drinksListName.clear();
             scrollVbox.getChildren().clear();
             output.setText("Drinks list saved as: " + name + ".ser");
@@ -98,35 +85,12 @@ public class DrinksListBuilderWindow extends Window implements Initializable {
 
     @FXML
     private void openButtonAction(ActionEvent event) {
-        openDrinksList();
+        main.Handle(new ViewCommand.PassToControllerCommand(new ControllerCommand.PassToModelCommand(new ModelCommand.OpenDrinksListCommand())));
     }
 
-    private void saveDrinksList(DrinksList drinksList) {
-        temporary = null;
-        drinksListInterpreter.Save(drinksList);
-    }
-
-    private void openDrinksList() {
-        String directory = FileIO.openFileExplorer(
-                ApplicationSettings.GetInstance()
-                        .getSetting(ISettingsManager.settingsList.TextFileDirectory)
-                        .getValue().toString() + "\\DrinksList");
-        if (directory != null) {
-            PriorityLogger.Log(directory, PriorityLogger.PriorityLevel.Low);
-            drinksListInterpreter = (IDrinksListInterpreter) ApplicationSettings.GetInstance()
-                    .getSetting(ISettingsManager.settingsList.DrinksListInterpreter).getValue();
-            
-            DrinksList drinksList = drinksListInterpreter.Interpret(directory);
-            if(drinksList != null){
-                loadDrinksList(drinksList);
-            }
-        }
-    }
-
-    private void loadDrinksList(DrinksList drinksList) {
+    public void loadDrinksList(DrinksList drinksList) {
         drinksListName.setText(drinksList.getName());
         createGUIFromDrinksList(drinksList);
-        temporary = drinksList;
         output.setText("Loaded drinks list!");
     }
 
@@ -136,7 +100,7 @@ public class DrinksListBuilderWindow extends Window implements Initializable {
         });
     }
 
-    private void createGUIFromDrink(Drink drink) {
+    public void createGUIFromDrink(Drink drink) {
         Button removeButton = new Button("Remove Item");
         removeButton.setOnAction((event) -> {
             removeItem(removeButton.getParent());
@@ -153,8 +117,7 @@ public class DrinksListBuilderWindow extends Window implements Initializable {
         PriorityLogger.Log("Removing item!", PriorityLogger.PriorityLevel.Low);
         Label drinkNameLabel = (Label) parent.getChildrenUnmodifiable().get(0);
         Label drinkPriceLabel = (Label) parent.getChildrenUnmodifiable().get(1);
-        temporary.remove(createDrink(drinkNameLabel.getText(),
-                drinkPriceLabel.getText()));
+        main.Handle(new ViewCommand.PassToControllerCommand(new ControllerCommand.ValidateDrinkRemovalCommand(drinkNameLabel.getText(), drinkPriceLabel.getText())));
         scrollVbox.getChildren().remove(parent);
         output.setText("Item removed!");
     }
@@ -181,20 +144,6 @@ public class DrinksListBuilderWindow extends Window implements Initializable {
         }
     }
 
-    private Drink createDrink(String name, String price) {
-        try {
-            Double d_Price = Double.valueOf(price);
-            return new Drink(d_Price, name);
-        } catch (NumberFormatException ex) {
-            PriorityLogger.Log("ERROR: Price couldn't be converted to double - " + ex.toString(), PriorityLogger.PriorityLevel.Medium);
-        }
-        return null;
-    }
-
-    private DrinksList newDrinksList() {
-        return new DrinksList();
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -202,8 +151,8 @@ public class DrinksListBuilderWindow extends Window implements Initializable {
 
     @Override
     protected void Refresh() {
-        if (temporary != null && temporary.GetListSize() > 0) {
-            PriorityLogger.Log(temporary.toString(), PriorityLogger.PriorityLevel.Low);
+        if (DrinksListBuilder.getInstance().get() != null && DrinksListBuilder.getInstance().get().GetListSize() > 0) {
+            PriorityLogger.Log(DrinksListBuilder.getInstance().get().toString(), PriorityLogger.PriorityLevel.Zero);
         }
         PriorityLogger.Log("Drinks List Window refreshed.", PriorityLogger.PriorityLevel.Zero);
     }

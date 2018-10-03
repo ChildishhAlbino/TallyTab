@@ -19,4 +19,7 @@ public abstract class View extends Window implements IView, ICommandHandler<View
 
     }
 
+    public Window getWindowByName(String name) {
+        return null;
+    }
 }

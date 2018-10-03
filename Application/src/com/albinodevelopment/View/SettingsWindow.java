@@ -53,7 +53,7 @@ public class SettingsWindow extends Window {
         PriorityLogger.Log("Settings Window Refreshed.", PriorityLogger.PriorityLevel.Zero);
         // returns a null pointer exception
         Platform.runLater(() -> {
-            directoryLabel.setText((String) ApplicationSettings.GetInstance().getSetting(ISettingsManager.settingsList.TextFileDirectory).getValue());
+            directoryLabel.setText((String) ApplicationSettings.GetInstance().getSetting(ISettingsManager.settingsList.SerializedDirectory).getValue());
         });
     }
 
@@ -62,7 +62,7 @@ public class SettingsWindow extends Window {
         PriorityLogger.Log("Handling directory change", PriorityLogger.PriorityLevel.Low);
         String directory = FileIO.OpenDirectoryWindow();
         if (directory != null) {
-            ApplicationSettings.GetInstance().getSetting(ISettingsManager.settingsList.TextFileDirectory).change(directory);
+            ApplicationSettings.GetInstance().getSetting(ISettingsManager.settingsList.SerializedDirectory).change(directory);
         } else {
             PriorityLogger.Log("ERROR: Driectory was null.", PriorityLogger.PriorityLevel.Low);
         }
@@ -70,7 +70,7 @@ public class SettingsWindow extends Window {
 
     @FXML
     public void handleResetDefaultButton(ActionEvent event) {
-        ApplicationSettings.GetInstance().getSetting(ISettingsManager.settingsList.TextFileDirectory).setToDefault();
+        ApplicationSettings.GetInstance().getSetting(ISettingsManager.settingsList.SerializedDirectory).setToDefault();
         PriorityLogger.Log("NOTE: FileDirectory set to default.", PriorityLogger.PriorityLevel.Low);
     }
 
@@ -78,19 +78,5 @@ public class SettingsWindow extends Window {
     public void HandleMouseMoved(Event event) {
         //PriorityLogger.Log("Mouse Moved!", PriorityLogger.PriorityLevel.Low);
     }
-    
-// Deprecated. Moved into FileIO class
-//    private String OpenDirectoryWindow() {
-//        String s = null;
-//        JFileChooser jFileChooser = new JFileChooser();
-//        jFileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-//        int response = jFileChooser.showOpenDialog(null);
-//        if (response == JFileChooser.APPROVE_OPTION) {
-//            s = jFileChooser.getSelectedFile().toString();
-//        } else {
-//            PriorityLogger.Log("ERROR: Open file operation was cancelled.", PriorityLogger.PriorityLevel.Low);
-//        }
-//        return s;
-//    }
 
 }

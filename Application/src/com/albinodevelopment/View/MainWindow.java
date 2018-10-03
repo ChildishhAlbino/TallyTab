@@ -7,6 +7,7 @@ package com.albinodevelopment.View;
 
 import com.albinodevelopment.Commands.Command;
 import com.albinodevelopment.Commands.ControllerCommand;
+import com.albinodevelopment.Commands.ICommand;
 import com.albinodevelopment.Commands.ICommand.ExecutionResult;
 import com.albinodevelopment.Commands.ICommandHandler;
 import com.albinodevelopment.Commands.ViewCommand;
@@ -122,11 +123,29 @@ public class MainWindow extends View implements Initializable {
     @Override
     public void Handle(ViewCommand command) {
         if (command.CanExecute(this)) {
-            ExecutionResult exectutionResult = command.Execute(this);
-            if (exectutionResult.equals(ExecutionResult.failure)) {
-                // log
-                PriorityLogger.Log(command.GetErrorCode(), PriorityLogger.PriorityLevel.High);
+            ICommand.ExecutionResult exectutionResult = command.Execute(this);
+            if (exectutionResult.equals(ICommand.ExecutionResult.failure)) {
+                PriorityLogger.Log("COMMAND FAILURE: " + command.toString()
+                        + "\n" + command.GetErrorCode(), PriorityLogger.PriorityLevel.High);
+            } else {
+
             }
+        } else {
+            PriorityLogger.Log("Command couldn't be run for some reason " + command.toString(), PriorityLogger.PriorityLevel.High);
+        }
+    }
+
+    @Override
+    public boolean CanHandle(Command command) {
+        if (command instanceof ViewCommand) {
+            // log success
+            PriorityLogger.Log(command.toString() + "can be handled by this command handler - " + this.getClass().getName(), PriorityLogger.PriorityLevel.Medium);
+            return true;
+        } else {
+            // log failure
+            command.GenerateErrorCode("This command cannot be handled by this Command Handler.");
+            PriorityLogger.Log(command.GetErrorCode(), PriorityLogger.PriorityLevel.High);
+            return false;
         }
     }
 
@@ -152,6 +171,7 @@ public class MainWindow extends View implements Initializable {
         WindowLoader windowLoader = windowLoaderFactory.getWindowLoader(windowClass);
         try {
             Window window = windowLoader.NewWindow(fxml);
+            window.setMain(this);
             window.start();
             return window;
         } catch (InstantiationException | IllegalAccessException ex) {
@@ -166,21 +186,7 @@ public class MainWindow extends View implements Initializable {
     }
 
     @Override
-    public boolean CanHandle(Command command) {
-        if (command instanceof ViewCommand) {
-            // log success
-            PriorityLogger.Log(command.toString() + " Success.", PriorityLogger.PriorityLevel.Medium);
-            return true;
-        } else {
-            // log failure
-            command.GenerateErrorCode("This command cannot be handled by this Command Handler.");
-            PriorityLogger.Log(command.GetErrorCode(), PriorityLogger.PriorityLevel.High);
-            return false;
-        }
-    }
-
-    @Override
-    public void CreateDrinkGUIElements(Drink drink) {
+    public void createDrinkGUIElements(Drink drink) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -243,4 +249,17 @@ public class MainWindow extends View implements Initializable {
         // read in a function file and open a tab with it's corresponding details
     }
 
+    @Override
+    public Window getWindowByName(String name) {
+        Window window = null;
+        switch (name) {
+            case "DrinksList":
+                window = drinksListBuilderWindow;
+                break;
+            case "Settings":
+                window = settingsWindow;
+                break;
+        }
+        return window;
+    }
 }

@@ -14,7 +14,7 @@ import javafx.scene.control.Button;
  */
 public interface IView {
 
-    void CreateDrinkGUIElements(Drink drink);
+    void createDrinkGUIElements(Drink drink);
 
     String GetDrinkNameFromGUI(Button button);
 

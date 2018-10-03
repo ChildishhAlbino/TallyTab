@@ -13,7 +13,7 @@ import java.util.HashMap;
  *
  * @author conno
  */
-public class DrinksTab implements Serializable{
+public class DrinksTab implements Serializable {
 
     private final DrinksList drinksList;
     private final HashMap<Drink, Integer> count = new HashMap<>();

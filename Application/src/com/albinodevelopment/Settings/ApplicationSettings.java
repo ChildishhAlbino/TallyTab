@@ -45,8 +45,8 @@ public class ApplicationSettings implements ISettingsManager, Serializable {
             switch (setting) {
                 case DrinksListInterpreter:
                     return new Setting.DrinksListInterpreterSetting();
-                case TextFileDirectory:
-                    return new Setting.TextFileDirectorySetting();
+                case SerializedDirectory:
+                    return new Setting.SerializedDirectorySetting();
                 default:
                     return null;
             }
