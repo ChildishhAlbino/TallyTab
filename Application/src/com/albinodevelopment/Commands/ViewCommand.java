@@ -15,20 +15,20 @@ import com.albinodevelopment.View.View;
  * @author conno
  */
 public abstract class ViewCommand extends Command<View> {
-    
+
     public static class PassToControllerCommand extends ViewCommand {
-        
+
         private final Command controllerCommand;
-        
+
         public PassToControllerCommand(ControllerCommand controllerCommand) {
             this.controllerCommand = controllerCommand;
         }
-        
+
         @Override
         public boolean CanExecute(View commandHandler) {
             return commandHandler.GetCommandHandler().CanHandle(controllerCommand);
         }
-        
+
         @Override
         public ExecutionResult Execute(View commandHandler) {
             if (CanExecute(commandHandler)) {
@@ -39,49 +39,59 @@ public abstract class ViewCommand extends Command<View> {
             }
         }
     }
-    
+
     public static class GenerateGUIFromDrinkCommand extends ViewCommand {
-        
+
         private final Drink drink;
-        
+
         public GenerateGUIFromDrinkCommand(Drink drink) {
             this.drink = drink;
         }
-        
+
         @Override
         public boolean CanExecute(View commandHandler) {
             return drink != null;
         }
-        
+
         @Override
         public ExecutionResult Execute(View commandHandler) {
             DrinksListBuilderWindow drinksListBuilderWindow = (DrinksListBuilderWindow) commandHandler.getWindowByName("DrinksList");
             drinksListBuilderWindow.createGUIFromDrink(drink);
             return ExecutionResult.success;
         }
-        
+
     }
-    
+
     public static class LoadDrinksListCommand extends ViewCommand {
-        
+
         private final DrinksList drinkList;
-        
+
         public LoadDrinksListCommand(DrinksList drinkList) {
             this.drinkList = drinkList;
         }
-        
+
         @Override
         public boolean CanExecute(View commandHandler) {
             return drinkList != null;
         }
-        
+
         @Override
         public ExecutionResult Execute(View commandHandler) {
             DrinksListBuilderWindow drinksListBuilderWindow = (DrinksListBuilderWindow) commandHandler.getWindowByName("DrinksList");
             drinksListBuilderWindow.loadDrinksList(drinkList);
             return ExecutionResult.success;
         }
-        
+
     }
-    
+
+    public static class OpenNewFunctionWindowCommand extends ViewCommand {
+
+        @Override
+        public ExecutionResult Execute(View commandHandler) {
+            commandHandler.openNewFunctionWindow();
+            return ExecutionResult.success;
+        }
+
+    }
+
 }

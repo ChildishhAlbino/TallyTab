@@ -159,4 +159,14 @@ public abstract class ModelCommand extends Command<Model> {
 
     }
 
+    public static class CallForNewFunctionWindowCommand extends ModelCommand {
+
+        @Override
+        public ExecutionResult Execute(Model commandHandler) {
+            commandHandler.GetCommandHandler().Handle(new ViewCommand.OpenNewFunctionWindowCommand());
+            return ExecutionResult.success;
+        }
+
+    }
+
 }

@@ -8,12 +8,13 @@ package com.albinodevelopment.View;
 import com.albinodevelopment.Commands.Command;
 import com.albinodevelopment.Commands.ControllerCommand;
 import com.albinodevelopment.Commands.ICommand;
-import com.albinodevelopment.Commands.ICommand.ExecutionResult;
 import com.albinodevelopment.Commands.ICommandHandler;
+import com.albinodevelopment.Commands.ModelCommand;
 import com.albinodevelopment.Commands.ViewCommand;
 import com.albinodevelopment.Controller.Controller;
 import com.albinodevelopment.Logging.PriorityLogger;
 import com.albinodevelopment.Model.Components.Drink;
+import com.albinodevelopment.Model.Components.Function;
 import com.albinodevelopment.Model.Model;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -36,6 +37,7 @@ public class MainWindow extends View implements Initializable {
     private final WindowLoaderFactory windowLoaderFactory;
     private Window settingsWindow;
     private Window drinksListBuilderWindow;
+    private Window functionWindow;
 
     @FXML
     private TabPane tabPane;
@@ -211,18 +213,10 @@ public class MainWindow extends View implements Initializable {
 
     @Override
     public void New() {
-        // open new function window
-        // create new tab with title == to name
-
-        Tab tab = new Tab("New Function");
-        tab.setOnClosed((Event event) -> {
-            TabClosed();
-        });
-        tab.contentProperty().set(GenerateNewFunctionPane("New Function"));
-        tabPane.getTabs().add(tab);
-
+        // send a new function command to the model
+        Handle(new ViewCommand.PassToControllerCommand(new ControllerCommand.PassToModelCommand(new ModelCommand.CallForNewFunctionWindowCommand())));
     }
-
+    
     private StackPane GenerateNewFunctionPane(String name) {
         StackPane stackPane = new StackPane();
         stackPane.getChildren().add(new Button("Lol"));
@@ -261,5 +255,18 @@ public class MainWindow extends View implements Initializable {
                 break;
         }
         return window;
+    }
+
+    @Override
+    public void openNewFunctionWindow() {
+        if (functionWindow == null) {
+            Window window = setupWindow(com.albinodevelopment.View.NewFunctionWindow.class, "NewFunctionWindowFXML.fxml");
+            if (window != null) {
+                functionWindow = window;
+            } else {
+                return;
+            }
+        }
+        functionWindow.Show();
     }
 }

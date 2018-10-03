@@ -12,6 +12,7 @@ import com.albinodevelopment.Commands.ICommandHandler;
 import com.albinodevelopment.Commands.ModelCommand;
 import com.albinodevelopment.Logging.PriorityLogger;
 import com.albinodevelopment.Model.Components.Drink;
+import com.albinodevelopment.Model.Components.Function;
 
 /**
  *
@@ -88,6 +89,10 @@ public class Controller extends Thread implements ICommandHandler<ControllerComm
         } catch (NumberFormatException ex) {
             PriorityLogger.Log("ERROR: Price couldn't be converted to double - " + ex.toString(), PriorityLogger.PriorityLevel.Medium);
         }
+        return null;
+    }
+    
+    public Function validateFunctionCreation(String name, String Limit, String drinksListPath){
         return null;
     }
 }
