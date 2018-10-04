@@ -74,8 +74,8 @@ public abstract class Window extends Thread implements Initializable {
             this.main = main;
         }
     }
-    
-    protected void output(String toBeOutput){
-        
+
+    protected void output(String toBeOutput) {
+
     }
 }

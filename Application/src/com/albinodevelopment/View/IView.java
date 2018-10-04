@@ -26,9 +26,9 @@ public interface IView {
     void Save();
 
     void TabClosed();
-    
+
     void generateFunctionGUI(Function function);
-    
+
     void closeNewFunctionWindow();
 
 }

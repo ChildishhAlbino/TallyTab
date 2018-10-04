@@ -25,7 +25,7 @@ public class Controller extends Thread implements ICommandHandler<ControllerComm
 
     private boolean running = true;
     private ICommandHandler<ModelCommand> commandHandler;
-    
+
     @Override
     public boolean CanHandle(Command command) {
         if (command instanceof ControllerCommand) {
@@ -94,7 +94,7 @@ public class Controller extends Thread implements ICommandHandler<ControllerComm
     }
 
     public Function validateFunctionCreation(String name, String limit, String drinksListPath) {
-        Double d_Limit =validateLimit(limit);
+        Double d_Limit = validateLimit(limit);
         if (DrinksListBuilder.getInstance().validate(drinksListPath) && d_Limit != null) {
             DrinksList drinksList = DrinksListBuilder.getInstance().openAndGet(drinksListPath);
             return new Function(name, new DrinksTab(drinksList, d_Limit));

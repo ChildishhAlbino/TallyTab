@@ -55,7 +55,7 @@ public class NewFunctionWindow extends Window implements Initializable {
         if ("".equals(selectedDrinksList.getText())) {
             boxEmpty = true;
         }
-        
+
         if (boxEmpty) {
             output("Please enter a function name or select a drinks list.");
         } else {
@@ -70,8 +70,9 @@ public class NewFunctionWindow extends Window implements Initializable {
 
     @FXML
     private void handleOpenDrinksListButton(ActionEvent event) {
-        String directory = FileIO.openFileExplorer((String) ApplicationSettings.GetInstance().getSetting(ISettingsManager.settingsList.SerializedDirectory).getValue() + "\\DrinksList");
-        if(directory != null){
+        String directory = FileIO.openFileExplorer((String) ApplicationSettings
+                .GetInstance().getSetting(ISettingsManager.settingsList.SerializedDirectory).getValue() + "\\DrinksList");
+        if (directory != null) {
             selectedDrinksList.setText(directory);
         }
     }
@@ -82,7 +83,8 @@ public class NewFunctionWindow extends Window implements Initializable {
 
     private void submit() {
         main.Handle(new ViewCommand.PassToControllerCommand(
-                new ControllerCommand.ValidateFunctionCommand(functionNameTF.getText(), functionLimitTF.getText(), selectedDrinksList.getText())));
+                new ControllerCommand.ValidateFunctionCommand(functionNameTF
+                        .getText(), functionLimitTF.getText(), selectedDrinksList.getText())));
     }
 
     @Override

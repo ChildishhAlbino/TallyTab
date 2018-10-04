@@ -93,7 +93,7 @@ public abstract class ViewCommand extends Command<View> {
         }
 
     }
-    
+
     public static class CloseNewFunctionWindowCommand extends ViewCommand {
 
         @Override

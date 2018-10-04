@@ -108,10 +108,10 @@ public abstract class ControllerCommand extends Command<Controller> {
         @Override
         public ExecutionResult Execute(Controller commandHandler) {
             Function function = commandHandler.validateFunctionCreation(name, limit, drinksListPath);
-            if(function == null){
+            if (function == null) {
                 GenerateErrorCode("Function couldn't be validated. Plese check logs for further explanation.");
                 return ExecutionResult.failure;
-            } 
+            }
             commandHandler.GetCommandHandler().Handle(new ModelCommand.NewFunctionCommand(function));
             return ExecutionResult.success;
         }
