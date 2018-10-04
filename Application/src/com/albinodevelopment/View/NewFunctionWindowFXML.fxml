@@ -9,10 +9,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane id="AnchorPane" prefHeight="550.0" prefWidth="550.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.albinodevelopment.View.NewFunctionWindow">
    <children>
-      <VBox prefHeight="550.0" prefWidth="550.0" spacing="20.0">
+      <VBox prefHeight="550.0" prefWidth="550.0">
          <children>
             <Label text="NEW FUNCTION" textAlignment="CENTER">
                <font>
@@ -37,6 +36,20 @@
                      </font>
                   </Label>
                   <TextField fx:id="functionLimitTF" prefHeight="50.0" prefWidth="200.0" promptText="Leave blank for no limit" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="222.0" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+               <children>
+                  <Button fx:id="openDrinksListButton" mnemonicParsing="false" onAction="#handleOpenDrinksListButton" prefHeight="70.0" prefWidth="225.0" text="Select Drinks List">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Button>
+                  <Label fx:id="selectedDrinksList" maxWidth="300.0" textAlignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="36.0" />
+                     </font>
+                  </Label>
                </children>
             </HBox>
             <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="202.0" prefHeight="100.0" prefWidth="200.0" spacing="20.0">

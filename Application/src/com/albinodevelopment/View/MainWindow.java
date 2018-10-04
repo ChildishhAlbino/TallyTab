@@ -216,12 +216,6 @@ public class MainWindow extends View implements Initializable {
         // send a new function command to the model
         Handle(new ViewCommand.PassToControllerCommand(new ControllerCommand.PassToModelCommand(new ModelCommand.CallForNewFunctionWindowCommand())));
     }
-    
-    private StackPane GenerateNewFunctionPane(String name) {
-        StackPane stackPane = new StackPane();
-        stackPane.getChildren().add(new Button("Lol"));
-        return stackPane;
-    }
 
     @Override
     public void Show() {
@@ -259,14 +253,31 @@ public class MainWindow extends View implements Initializable {
 
     @Override
     public void openNewFunctionWindow() {
-        if (functionWindow == null) {
-            Window window = setupWindow(com.albinodevelopment.View.NewFunctionWindow.class, "NewFunctionWindowFXML.fxml");
-            if (window != null) {
-                functionWindow = window;
-            } else {
-                return;
-            }
+        // creates a new newFunctionWindow each time (prevents data from being mutated between multiple new functions)
+        // opens it 
+        Window window = setupWindow(com.albinodevelopment.View.NewFunctionWindow.class, "NewFunctionWindowFXML.fxml");
+        if (window != null) {
+            functionWindow = window;
+        } else {
+            return;
         }
         functionWindow.Show();
+    }
+
+    @Override
+    public void generateFunctionGUI(Function function) {
+        Tab tab = new Tab(function.GetName());
+        tab.setOnClosed((Event event) -> {
+            TabClosed();
+        });
+        tab.contentProperty().set(null);
+        tabPane.getTabs().add(tab);
+    }
+
+    @Override
+    public void closeNewFunctionWindow() {
+        if (functionWindow != null) {
+            functionWindow.Close();
+        }
     }
 }

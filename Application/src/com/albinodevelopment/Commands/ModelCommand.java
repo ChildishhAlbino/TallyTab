@@ -6,6 +6,7 @@
 package com.albinodevelopment.Commands;
 
 import com.albinodevelopment.Model.Components.Drink;
+import com.albinodevelopment.Model.Components.Function;
 import com.albinodevelopment.Model.Components.Interpreter.IDrinksListInterpreter;
 import com.albinodevelopment.Model.Model;
 import com.albinodevelopment.Settings.ApplicationSettings;
@@ -43,29 +44,16 @@ public abstract class ModelCommand extends Command<Model> {
 
     public static class NewFunctionCommand extends ModelCommand {
 
-        private final String name;
-        private final double limit;
-        private final String directory;
+        private final Function function;
 
-        public NewFunctionCommand(String name, double limit, String directory) {
-            this.name = name;
-            this.limit = limit;
-            this.directory = directory;
-        }
-
-        @Override
-        public boolean CanExecute(Model commandHandler) {
-            return commandHandler.CanHandle(this);
+        public NewFunctionCommand(Function function) {
+            this.function = function;
         }
 
         @Override
         public ExecutionResult Execute(Model commandHandler) {
-            IDrinksListInterpreter drinksListInterpreter
-                    = (IDrinksListInterpreter) ApplicationSettings.GetInstance().
-                            getSetting(ISettingsManager.settingsList.DrinksListInterpreter).
-                            getValue();
-            commandHandler.NewFunction(name, limit,
-                    drinksListInterpreter.Interpret(directory));
+            commandHandler.NewFunction(function);
+            commandHandler.GetCommandHandler().Handle(new ViewCommand.CloseNewFunctionWindowCommand());
             return ExecutionResult.success;
         }
     }

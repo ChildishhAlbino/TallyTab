@@ -74,4 +74,18 @@ public class DrinksListBuilder implements IComponentManager<DrinksList> {
         return instance;
     }
 
+    @Override
+    public boolean validate(String path) {
+        checkInterpreter();
+        DrinksList temp = drinksListInterpreter.Interpret(path);
+        return temp != null;
+    }
+
+    @Override
+    public DrinksList openAndGet(String path) {
+        checkInterpreter();
+        DrinksList dl = drinksListInterpreter.Interpret(path);
+        return dl;
+    }
+
 }

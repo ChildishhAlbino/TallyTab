@@ -93,5 +93,15 @@ public abstract class ViewCommand extends Command<View> {
         }
 
     }
+    
+    public static class CloseNewFunctionWindowCommand extends ViewCommand {
+
+        @Override
+        public ExecutionResult Execute(View commandHandler) {
+            commandHandler.closeNewFunctionWindow();
+            return ExecutionResult.success;
+        }
+
+    }
 
 }

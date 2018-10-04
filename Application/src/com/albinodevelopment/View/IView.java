@@ -6,6 +6,7 @@
 package com.albinodevelopment.View;
 
 import com.albinodevelopment.Model.Components.Drink;
+import com.albinodevelopment.Model.Components.Function;
 import javafx.scene.control.Button;
 
 /**
@@ -25,5 +26,9 @@ public interface IView {
     void Save();
 
     void TabClosed();
+    
+    void generateFunctionGUI(Function function);
+    
+    void closeNewFunctionWindow();
 
 }

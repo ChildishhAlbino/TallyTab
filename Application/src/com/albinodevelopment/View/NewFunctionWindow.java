@@ -5,8 +5,13 @@
  */
 package com.albinodevelopment.View;
 
+import com.albinodevelopment.Commands.ControllerCommand;
+import com.albinodevelopment.Commands.ViewCommand;
+import com.albinodevelopment.IO.FileIO;
 import com.albinodevelopment.Logging.PriorityLogger;
 import com.albinodevelopment.Model.Components.Function;
+import com.albinodevelopment.Settings.ApplicationSettings;
+import com.albinodevelopment.Settings.ISettingsManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -30,14 +35,32 @@ public class NewFunctionWindow extends Window implements Initializable {
     private Label output;
 
     @FXML
+    private Label selectedDrinksList;
+
+    @FXML
     private Button submitButton;
 
     @FXML
     private Button cancelButton;
 
     @FXML
-    private void handleSubmitButton(ActionEvent event) {
+    private Button openDrinksListButton;
 
+    @FXML
+    private void handleSubmitButton(ActionEvent event) {
+        boolean boxEmpty = false;
+        if ("".equals(functionNameTF.getText())) {
+            boxEmpty = true;
+        }
+        if ("".equals(selectedDrinksList.getText())) {
+            boxEmpty = true;
+        }
+        
+        if (boxEmpty) {
+            output("Please enter a function name or select a drinks list.");
+        } else {
+            submit();
+        }
     }
 
     @FXML
@@ -45,7 +68,26 @@ public class NewFunctionWindow extends Window implements Initializable {
         cancel();
     }
 
-    private void cancel() {
-        
+    @FXML
+    private void handleOpenDrinksListButton(ActionEvent event) {
+        String directory = FileIO.openFileExplorer((String) ApplicationSettings.GetInstance().getSetting(ISettingsManager.settingsList.SerializedDirectory).getValue() + "\\DrinksList");
+        if(directory != null){
+            selectedDrinksList.setText(directory);
+        }
     }
+
+    private void cancel() {
+        Close();
+    }
+
+    private void submit() {
+        main.Handle(new ViewCommand.PassToControllerCommand(
+                new ControllerCommand.ValidateFunctionCommand(functionNameTF.getText(), functionLimitTF.getText(), selectedDrinksList.getText())));
+    }
+
+    @Override
+    public void output(String toBeOutput) {
+        output.setText(toBeOutput);
+    }
+
 }

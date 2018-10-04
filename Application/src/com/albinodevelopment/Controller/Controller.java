@@ -11,7 +11,10 @@ import com.albinodevelopment.Commands.ICommand;
 import com.albinodevelopment.Commands.ICommandHandler;
 import com.albinodevelopment.Commands.ModelCommand;
 import com.albinodevelopment.Logging.PriorityLogger;
+import com.albinodevelopment.Model.Components.Builders.DrinksListBuilder;
 import com.albinodevelopment.Model.Components.Drink;
+import com.albinodevelopment.Model.Components.DrinksList;
+import com.albinodevelopment.Model.Components.DrinksTab;
 import com.albinodevelopment.Model.Components.Function;
 
 /**
@@ -22,7 +25,7 @@ public class Controller extends Thread implements ICommandHandler<ControllerComm
 
     private boolean running = true;
     private ICommandHandler<ModelCommand> commandHandler;
-
+    
     @Override
     public boolean CanHandle(Command command) {
         if (command instanceof ControllerCommand) {
@@ -83,16 +86,41 @@ public class Controller extends Thread implements ICommandHandler<ControllerComm
     }
 
     public Drink validateDrinkCreation(String name, String price) {
+        Double d_Price = validateDouble(price);
+        if (d_Price == null) {
+            return null;
+        }
+        return new Drink(d_Price, name);
+    }
+
+    public Function validateFunctionCreation(String name, String limit, String drinksListPath) {
+        Double d_Limit =validateLimit(limit);
+        if (DrinksListBuilder.getInstance().validate(drinksListPath) && d_Limit != null) {
+            DrinksList drinksList = DrinksListBuilder.getInstance().openAndGet(drinksListPath);
+            return new Function(name, new DrinksTab(drinksList, d_Limit));
+        }
+
+        return null;
+    }
+
+    private Double validateDouble(String toBeValidated) {
         try {
-            Double d_Price = Double.valueOf(price);
-            return new Drink(d_Price, name);
+            Double d = Double.valueOf(toBeValidated);
+            return d;
         } catch (NumberFormatException ex) {
             PriorityLogger.Log("ERROR: Price couldn't be converted to double - " + ex.toString(), PriorityLogger.PriorityLevel.Medium);
         }
         return null;
     }
-    
-    public Function validateFunctionCreation(String name, String Limit, String drinksListPath){
-        return null;
+
+    private Double validateLimit(String limit) {
+        Double d_Limit;
+        if ("".equals(limit)) {
+            d_Limit = Double.POSITIVE_INFINITY;
+        } else {
+            d_Limit = validateDouble(limit);
+        }
+        return d_Limit;
     }
+
 }

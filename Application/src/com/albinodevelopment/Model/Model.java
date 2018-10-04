@@ -47,10 +47,10 @@ public class Model implements ICommandHandler<ModelCommand> {
         if (command.CanExecute(this)) {
             ICommand.ExecutionResult exectutionResult = command.Execute(this);
             if (exectutionResult.equals(ICommand.ExecutionResult.failure)) {
-                PriorityLogger.Log("COMMAND FAILURE: " + command.toString() 
+                PriorityLogger.Log("COMMAND FAILURE: " + command.toString()
                         + "\n" + command.GetErrorCode(), PriorityLogger.PriorityLevel.High);
             } else {
-                
+
             }
         } else {
             PriorityLogger.Log("Command couldn't be run for some reason " + command.toString(), PriorityLogger.PriorityLevel.High);
@@ -74,6 +74,11 @@ public class Model implements ICommandHandler<ModelCommand> {
     public void NewFunction(String name, double Limit, DrinksList drinksList) {
         Function newFunction = new Function(name, new DrinksTab(drinksList, Limit));
         functions.add(newFunction);
+    }
+
+    public void NewFunction(Function function) {
+        functions.add(function);
+        // call for view update
     }
 
     public void createNewDrinksList() {

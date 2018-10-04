@@ -21,4 +21,8 @@ public interface IComponentManager<T extends IBuildable> { // interface that out
     T get();
 
     void clear();
+    
+    boolean validate(String path);
+    
+    T openAndGet(String path);
 }
