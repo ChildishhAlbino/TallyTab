@@ -21,7 +21,9 @@ public class ContentLoader {
         try {
             fXMLLoader.setLocation(getClass().getResource(fxml));
             Parent parent = fXMLLoader.load();
-            return (TabContentController) fXMLLoader.getController();
+            TabContentController tabContentController = fXMLLoader.getController();
+            tabContentController.setFromFXML(parent);
+            return tabContentController;
         } catch (IOException ex) {
             // log 
             return null;

@@ -78,7 +78,7 @@ public class Model implements ICommandHandler<ModelCommand> {
 
     public void NewFunction(Function function) {
         functions.add(function);
-        // call for view update
+        commandHandler.Handle(new  ViewCommand.GenerateFunctionGUICommand(function));
     }
 
     public void createNewDrinksList() {

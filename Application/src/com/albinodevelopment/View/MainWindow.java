@@ -16,6 +16,7 @@ import com.albinodevelopment.Logging.PriorityLogger;
 import com.albinodevelopment.Model.Components.Drink;
 import com.albinodevelopment.Model.Components.Function;
 import com.albinodevelopment.Model.Model;
+import com.albinodevelopment.View.TabContent.ContentLoaderFactory;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -35,6 +36,7 @@ public class MainWindow extends View implements Initializable {
 
     private ICommandHandler<ControllerCommand> commandHandler;
     private final WindowLoaderFactory windowLoaderFactory;
+    private final ContentLoaderFactory contentLoaderFactory;
     private Window settingsWindow;
     private Window drinksListBuilderWindow;
     private Window functionWindow;
@@ -45,6 +47,7 @@ public class MainWindow extends View implements Initializable {
     public MainWindow() {
         super();
         windowLoaderFactory = new WindowLoaderFactory();
+        contentLoaderFactory = new ContentLoaderFactory();
         SetupMVC();
     }
 
@@ -265,19 +268,19 @@ public class MainWindow extends View implements Initializable {
     }
 
     @Override
+    public void closeNewFunctionWindow() {
+        if (functionWindow != null) {
+            functionWindow.Close();
+        }
+    }
+
+    @Override
     public void generateFunctionGUI(Function function) {
         Tab tab = new Tab(function.GetName());
         tab.setOnClosed((Event event) -> {
             TabClosed();
         });
-        tab.contentProperty().set(null);
+        tab.contentProperty().set(contentLoaderFactory.getBuilder().getTabController("TabContent.fxml").generateContent(function));
         tabPane.getTabs().add(tab);
-    }
-
-    @Override
-    public void closeNewFunctionWindow() {
-        if (functionWindow != null) {
-            functionWindow.Close();
-        }
     }
 }

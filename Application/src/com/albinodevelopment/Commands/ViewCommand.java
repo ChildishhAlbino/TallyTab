@@ -7,6 +7,7 @@ package com.albinodevelopment.Commands;
 
 import com.albinodevelopment.Model.Components.Drink;
 import com.albinodevelopment.Model.Components.DrinksList;
+import com.albinodevelopment.Model.Components.Function;
 import com.albinodevelopment.View.DrinksListBuilder.DrinksListBuilderWindow;
 import com.albinodevelopment.View.View;
 
@@ -99,6 +100,22 @@ public abstract class ViewCommand extends Command<View> {
         @Override
         public ExecutionResult Execute(View commandHandler) {
             commandHandler.closeNewFunctionWindow();
+            return ExecutionResult.success;
+        }
+
+    }
+
+    public static class GenerateFunctionGUICommand extends ViewCommand {
+
+        private final Function function;
+
+        public GenerateFunctionGUICommand(Function function) {
+            this.function = function;
+        }
+
+        @Override
+        public ExecutionResult Execute(View commandHandler) {
+            commandHandler.generateFunctionGUI(function);
             return ExecutionResult.success;
         }
 

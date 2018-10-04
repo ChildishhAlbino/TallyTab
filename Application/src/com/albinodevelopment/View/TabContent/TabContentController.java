@@ -25,6 +25,7 @@ public class TabContentController extends TabContent implements Initializable {
 
     private String tabName;
     private View main;
+    private Parent fromFXML;
 
     /**
      * Initializes the controller class.
@@ -42,7 +43,7 @@ public class TabContentController extends TabContent implements Initializable {
             // return Parent
         }
         
-        return null;
+        return fromFXML;
     }
     
     private HBox generateDrinkGUI(Drink drink){
@@ -51,6 +52,10 @@ public class TabContentController extends TabContent implements Initializable {
     
     private VBox generateDrinksListGUI(DrinksList drinksList){
         return null;
+    }
+    
+    public void setFromFXML(Parent parent){
+        this.fromFXML = parent;
     }
 
 }
