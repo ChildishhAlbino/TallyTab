@@ -6,15 +6,12 @@
 package com.albinodevelopment.View.TabContent;
 
 import com.albinodevelopment.Model.Components.Drink;
-import javafx.scene.Parent;
-import javafx.scene.layout.HBox;
+import com.albinodevelopment.Model.Components.DrinksTabItem;
 
 /**
  *
  * @author conno
  */
-public interface ITabContent<T> {
-    Parent generateContent(T input);
-    //HBox generateDrinkGUI(Drink drink)
+public abstract class DrinkItemContent extends Content implements IContent<DrinksTabItem>{
     
 }

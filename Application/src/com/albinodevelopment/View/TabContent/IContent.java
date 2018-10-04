@@ -5,13 +5,14 @@
  */
 package com.albinodevelopment.View.TabContent;
 
-import com.albinodevelopment.Model.Components.Function;
 import javafx.scene.Parent;
 
 /**
  *
  * @author conno
+ * @param <T> 
  */
-public abstract class TabContent extends Content implements IContent<Function> {
-
+public interface IContent<T> {
+    Parent generateContent(T input);
+    void setFromFXML(Parent fromFXML);
 }

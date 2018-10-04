@@ -12,18 +12,19 @@ import javafx.scene.Parent;
 /**
  *
  * @author conno
+ * @param <T> the type this content loader returns
  */
-public class ContentLoader {
+public class ContentLoader<T extends IContent<?>> {
 
     private final FXMLLoader fXMLLoader = new FXMLLoader();
 
-    public TabContentController getTabController(String fxml) {
+    public T getContentController(String fxml) {
         try {
             fXMLLoader.setLocation(getClass().getResource(fxml));
             Parent parent = fXMLLoader.load();
-            TabContentController tabContentController = fXMLLoader.getController();
-            tabContentController.setFromFXML(parent);
-            return tabContentController;
+            T t = (T) fXMLLoader.getController();
+            t.setFromFXML(parent);
+            return t;
         } catch (IOException ex) {
             // log 
             return null;

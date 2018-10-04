@@ -14,15 +14,43 @@ import java.io.Serializable;
 public class Function implements Serializable {
 
     private final String name;
-    private final DrinksTab tab;
+    private final DrinksTab drinksTab;
 
     public Function(String name, DrinksTab tab) {
         this.name = name;
-        this.tab = tab;
+        this.drinksTab = tab;
+        drinksTab.init();
     }
 
     public String GetName() {
         return name;
+    }
+    
+    public String GetLimit(){
+        Double d_limit = drinksTab.GetLimit();
+        return d_limit.toString();
+    }
+    
+    public String GetCurrentVal(){
+        Double d_Current = drinksTab.GetCurrentValue();
+        return d_Current.toString();
+    }
+    
+    public String GetPercent(){
+        Double d_Percent = drinksTab.GetPercentUsed();
+        return d_Percent.toString();
+    }
+    
+    public Double GetPercentAsDouble(){
+        return drinksTab.GetPercentUsed();
+    }
+    
+    public DrinksList getDrinksList(){
+        return drinksTab.getDrinksList();
+    }
+    
+    public DrinksTab getDrinksTab(){
+        return drinksTab;
     }
 
 }

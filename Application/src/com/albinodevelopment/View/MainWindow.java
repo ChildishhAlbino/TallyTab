@@ -280,7 +280,7 @@ public class MainWindow extends View implements Initializable {
         tab.setOnClosed((Event event) -> {
             TabClosed();
         });
-        tab.contentProperty().set(contentLoaderFactory.getBuilder().getTabController("TabContent.fxml").generateContent(function));
+        tab.contentProperty().set(contentLoaderFactory.getBuilder().getContentController("TabContent.fxml").generateContent(function));
         tabPane.getTabs().add(tab);
     }
 }

@@ -55,7 +55,7 @@ public class DrinksTab implements Serializable {
         double cost = Double.NaN;
         for (int i = 0; i < drinksList.GetListSize(); i++) {
             Drink drink = drinksList.GetDrink(i);
-            cost += (drink.GetPrice() * count.get(drink));
+            cost += (getDrinkSubtotal(drink));
             PriorityLogger.Log(Double.toString(cost), PriorityLogger.PriorityLevel.Low);
         }
         if (Double.isNaN(cost)) {
@@ -64,6 +64,10 @@ public class DrinksTab implements Serializable {
         } else {
             return cost;
         }
+    }
+
+    public double getDrinkSubtotal(Drink drink) {
+        return (drink.GetPrice() * count.get(drink));
     }
 
     private void CalculatePercentUsed() {
@@ -95,4 +99,15 @@ public class DrinksTab implements Serializable {
             PriorityLogger.Log("New limit was below current value. Cannot change.", PriorityLogger.PriorityLevel.Zero);
         }
     }
+
+    public DrinksList getDrinksList() {
+        return drinksList;
+    }
+
+    public void init() {
+        for (Drink drink : drinksList.getDrinksList().values()){
+            count.put(drink, 0);
+        }
+    }
+
 }

@@ -5,13 +5,17 @@
  */
 package com.albinodevelopment.View.TabContent;
 
-import com.albinodevelopment.Model.Components.Function;
 import javafx.scene.Parent;
 
 /**
  *
  * @author conno
  */
-public abstract class TabContent extends Content implements IContent<Function> {
+public abstract class Content {
 
+    protected Parent fromFXML;
+
+    public void setFromFXML(Parent parent) {
+        this.fromFXML = parent;
+    }
 }
