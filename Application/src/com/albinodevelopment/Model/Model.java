@@ -24,7 +24,7 @@ public class Model implements ICommandHandler<ModelCommand> {
     private ICommandHandler<ViewCommand> commandHandler;
     private final DrinksListBuilder drinksListBuilder = DrinksListBuilder.getInstance();
     public final FunctionManager functionManager = FunctionManager.getInstance();
-    
+
     @Override
     public void SetCommandHandler(ICommandHandler commandHandler) {
         if (this.commandHandler == null && commandHandler != null) {

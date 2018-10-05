@@ -10,9 +10,9 @@ package com.albinodevelopment.View.TabContent;
  * @author conno
  */
 public class ContentLoaderFactory {
-    
-    public ContentLoader getBuilder(){
+
+    public ContentLoader getBuilder() {
         return new ContentLoader();
     }
-    
+
 }

@@ -14,6 +14,7 @@ import com.albinodevelopment.Commands.ViewCommand;
 import com.albinodevelopment.Controller.Controller;
 import com.albinodevelopment.Logging.ConnorLogger;
 import com.albinodevelopment.Model.Components.Functions.Function;
+import com.albinodevelopment.Model.Components.Functions.FunctionManager;
 import com.albinodevelopment.Model.Model;
 import com.albinodevelopment.View.TabContent.ContentLoaderFactory;
 import com.albinodevelopment.View.TabContent.TabContent;
@@ -163,6 +164,7 @@ public class MainWindow extends View implements Initializable {
     @Override
     protected void Refresh() {
         ConnorLogger.Log("Main Window Refreshed.", ConnorLogger.PriorityLevel.Zero);
+        ConnorLogger.Log(FunctionManager.getInstance().currentFunctions(), ConnorLogger.PriorityLevel.Low);
     }
 
     @Override
@@ -184,7 +186,7 @@ public class MainWindow extends View implements Initializable {
     @Override
     public void closeTab(String title) {
         ConnorLogger.Log("Tab closed: " + title, ConnorLogger.PriorityLevel.Low);
-        //commandHandler.Handle(new ControllerCommand.RemoveTabContentValueCommand(title));
+        commandHandler.Handle(new ControllerCommand.PassToModelCommand(new ModelCommand.RemoveFunctionCommand(title)));
     }
 
     @Override
@@ -226,29 +228,6 @@ public class MainWindow extends View implements Initializable {
         }
     }
 
-//    @Override
-//    public void generateFunctionGUI(Function function) {
-//        Tab tab = new Tab(function.GetName());
-//
-//        tab.setOnClosed((Event event) -> {
-//            Tab source = (Tab) event.getSource();
-//            TabClosed(source.getText());
-//        });
-//        TabContent tabContent = createTabContent(function);
-//        tab.contentProperty().set(tabContent.generateContent(function));
-//        commandHandler.Handle(new ControllerCommand.CreateMapEntryCommand(function, tabContent));
-//        tabPane.getTabs().add(tab);
-//    }
-//
-//    public void updateFunctionGUI(Function function) {
-//        for (Tab tab : tabPane.getTabs()) {
-//            if (tab.getText() == function.GetName()) {
-//                TabContent tabContent = createTabContent(function);
-//                tab.contentProperty().set(tabContent.generateContent(function));
-//                commandHandler.Handle(new ControllerCommand.CreateMapEntryCommand(function, tabContent));
-//            }
-//        }
-//    }
     private TabContent createNewTabContent(Function function) {
         TabContent tabContent = (TabContent) contentLoaderFactory.getBuilder().getContentController("TabContent.fxml");
         tabContent.setMain(this);

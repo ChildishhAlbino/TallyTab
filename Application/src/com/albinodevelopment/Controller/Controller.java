@@ -118,23 +118,6 @@ public class Controller extends Thread implements ICommandHandler<ControllerComm
         return d_Limit;
     }
 
-//    public void addToMap(TabContent tabContent, Function function) {
-//        tabsToFunctionNames.put(tabContent, function.GetName());
-//    }
-//
-//    public void removeFromMap(TabContent tabContent) {
-//        tabsToFunctionNames.remove(tabContent);
-//    }
-//
-//    public void removeFromMap(String functionName) {
-//        tabsToFunctionNames.values().remove(functionName);
-//        ConnorLogger.Log(tabsToFunctionNames.toString(), ConnorLogger.PriorityLevel.Medium);
-//    }
-//
-//    public String getFromMap(TabContent tabContent) {
-//        return tabsToFunctionNames.get(tabContent);
-//    }
-
     public boolean validateDrinkAmountChange(String functionName) {
         return true;
     }

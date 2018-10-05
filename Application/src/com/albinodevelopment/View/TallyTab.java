@@ -21,7 +21,7 @@ import javafx.stage.WindowEvent;
  */
 public class TallyTab extends Application {
 
-    private static WindowLoaderFactory windowLoaderFactory = new WindowLoaderFactory();
+    private static final WindowLoaderFactory windowLoaderFactory = new WindowLoaderFactory();
 
     @Override
     public void start(Stage stage) {
@@ -52,7 +52,7 @@ public class TallyTab extends Application {
             MainWindow mainWindow = (MainWindow) windowLoader.NewWindow(
                     "MainWindowFXML.fxml", stage);
             mainWindow.Show();
-            //mainWindow.start();
+            mainWindow.start();
         } catch (InstantiationException | IllegalAccessException ex) {
             Logger.getLogger(TallyTab.class.getName()).log(Level.SEVERE,
                     null, ex);

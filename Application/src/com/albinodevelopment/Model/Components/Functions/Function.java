@@ -27,32 +27,32 @@ public class Function implements Serializable {
     public String GetName() {
         return name;
     }
-    
-    public String GetLimit(){
+
+    public String GetLimit() {
         Double d_limit = drinksTab.GetLimit();
         return d_limit.toString();
     }
-    
-    public String GetCurrentVal(){
+
+    public String GetCurrentVal() {
         Double d_Current = drinksTab.GetCurrentValue();
         return d_Current.toString();
     }
-    
-    public String GetPercent(){
+
+    public String GetPercent() {
         Double d_Percent = drinksTab.GetPercentUsed() * 100;
         return d_Percent.toString() + "%";
     }
-    
-    public Double GetPercentAsDouble(){
+
+    public Double GetPercentAsDouble() {
         return drinksTab.GetPercentUsed();
     }
-    
-    public DrinksList getDrinksList(){
+
+    public DrinksList getDrinksList() {
         return drinksTab.getDrinksList();
     }
-    
-    public DrinksTab getDrinksTab(){
+
+    public DrinksTab getDrinksTab() {
         return drinksTab;
     }
-    
+
 }

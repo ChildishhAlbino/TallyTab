@@ -181,4 +181,20 @@ public abstract class ModelCommand extends Command<Model> {
             return ExecutionResult.failure;
         }
     }
+
+    public static class RemoveFunctionCommand extends ModelCommand {
+
+        private final String functionName;
+
+        public RemoveFunctionCommand(String functionName) {
+            this.functionName = functionName;
+        }
+
+        @Override
+        public ExecutionResult Execute(Model commandHandler) {
+            commandHandler.functionManager.remove(functionName);
+            return ExecutionResult.success;
+        }
+
+    }
 }

@@ -24,7 +24,6 @@ public interface IView {
     void closeTab(String title);
 
     //void newTab(Function function);
-
     void updateTab(Function function);
 
     void closeNewFunctionWindow();

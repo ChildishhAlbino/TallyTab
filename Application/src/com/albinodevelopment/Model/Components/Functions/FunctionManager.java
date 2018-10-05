@@ -59,12 +59,21 @@ public class FunctionManager {
 
     public Function getFunction(String functionName) {
         Function function = functions.get(functionName);
-        return function;      
+        return function;
     }
-    
-    public void remove(String functionName){
+
+    public void remove(String functionName) {
         functions.remove(functionName);
-        ConnorLogger.Log("Remove Function: " + functionName + " from the list.", ConnorLogger.PriorityLevel.Zero);
+        ConnorLogger.Log("Remove Function: " + functionName + " from the list.", ConnorLogger.PriorityLevel.Low);
+    }
+
+    public String currentFunctions() {
+        String s = "Current Functions: " + functions.size() + "\n";
+        for (Function f : functions.values()) {
+            s += f.GetName() + ",\n";
+        }
+
+        return s;
     }
     //END// instance methods and variables
 }

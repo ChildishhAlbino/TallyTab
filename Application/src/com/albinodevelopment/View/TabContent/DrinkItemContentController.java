@@ -43,8 +43,6 @@ public class DrinkItemContentController extends DrinkItemContent implements Init
     @FXML
     private Button minusButton;
 
-    
-
     /**
      * Initializes the controller class.
      *

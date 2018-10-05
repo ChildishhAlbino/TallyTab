@@ -10,11 +10,15 @@ import javafx.scene.Parent;
 /**
  *
  * @author conno
- * @param <T> 
+ * @param <T>
  */
 public interface IContent<T> {
+
     Parent generateContent(T input);
+
     void setFromFXML(Parent fromFXML);
+
     public String getText();
+
     void update(T input);
 }

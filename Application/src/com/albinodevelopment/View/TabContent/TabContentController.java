@@ -108,10 +108,10 @@ public class TabContentController extends TabContent implements Initializable {
         // take function
         setupInfoPage(input);
         // generate GUI elements
-        if(drinkItemContents.isEmpty()){
+        if (drinkItemContents.isEmpty()) {
             generateDrinksListGUI(input.getDrinksTab());
         } else {
-            for (DrinkItemContent drinkItemContent : drinkItemContents.values()){
+            for (DrinkItemContent drinkItemContent : drinkItemContents.values()) {
                 drinkItemContent.update(input.getDrinksTab().getDrinksTabItem(drinkItemContent.drink));
             }
         }

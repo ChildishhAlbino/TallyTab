@@ -15,8 +15,8 @@ import javafx.scene.Parent;
  * @author conno
  */
 public abstract class TabContent extends Content implements IContent<Function> {
-    
-    public void updateDrinkContent(DrinksTabItem drinksTabItem){
-        
+
+    public void updateDrinkContent(DrinksTabItem drinksTabItem) {
+
     }
 }
