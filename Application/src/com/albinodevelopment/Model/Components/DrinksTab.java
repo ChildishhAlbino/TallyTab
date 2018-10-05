@@ -7,6 +7,8 @@ package com.albinodevelopment.Model.Components;
 
 import com.albinodevelopment.Logging.ConnorLogger;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.HashMap;
 
 /**
@@ -50,7 +52,7 @@ public class DrinksTab implements Serializable {
     }
 
     private Double getPriceForAmount(Drink drink, int amount) {
-        Double price = drink.GetPrice() * amount;
+        Double price = round((drink.GetPrice() * amount), 2);
         ConnorLogger.Log(drink.GetName() + ": " + String.valueOf(price), ConnorLogger.PriorityLevel.Zero);
         return price;
     }
@@ -80,7 +82,9 @@ public class DrinksTab implements Serializable {
 
     private void CalculatePercentUsed() {
         if (Double.isFinite(limit)) {
+            currentValue = round(currentValue, 4);
             percentUsed = currentValue / limit;
+            percentUsed = round(percentUsed, 4);
         } else {
             percentUsed = 0;
         }
@@ -120,6 +124,16 @@ public class DrinksTab implements Serializable {
     public DrinksTabItem getDrinksTabItem(Drink drink) {
         DrinksTabItem drinksTabItem = new DrinksTabItem(drink, GetCount(drink), getDrinkSubtotal(drink));
         return drinksTabItem;
+    }
+
+    public static double round(double value, int places) {
+        if (places < 0) {
+            throw new IllegalArgumentException();
+        }
+
+        BigDecimal bd = new BigDecimal(value);
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 
 }

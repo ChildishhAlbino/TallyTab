@@ -70,9 +70,9 @@ public class DrinkItemContentController extends DrinkItemContent implements Init
     public void update(DrinksTabItem input) {
         this.drink = input.getDrink();
         drinkName.setText(input.getDrink().GetName());
-        drinkPrice.setText(String.valueOf(input.getDrink().GetPrice()));
+        drinkPrice.setText("$" + String.valueOf(input.getDrink().GetPrice()));
         currentAmt.setText(String.valueOf(input.getAmountUsed()));
-        subtotal.setText(String.valueOf(input.getSubtotal()));
+        subtotal.setText("$" + String.valueOf(input.getSubtotal()));
     }
 
     @FXML

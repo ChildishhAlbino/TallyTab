@@ -40,6 +40,7 @@ public class Function implements Serializable {
 
     public String GetPercent() {
         Double d_Percent = drinksTab.GetPercentUsed() * 100;
+        d_Percent = DrinksTab.round(d_Percent, 4);
         return d_Percent.toString() + "%";
     }
 
