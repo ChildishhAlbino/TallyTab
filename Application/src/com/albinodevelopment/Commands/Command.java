@@ -10,7 +10,7 @@ package com.albinodevelopment.Commands;
  * @author conno
  * @param <U>
  */
-public abstract class Command<U> implements ICommand<U> {
+public abstract class Command<U extends ICommandHandler<?>> implements ICommand<U> {
 
     protected String errorCode;
 
@@ -29,4 +29,10 @@ public abstract class Command<U> implements ICommand<U> {
         String toString = this.getClass().getName() + ": ";
         return toString;
     }
+
+    @Override
+    public boolean CanExecute(U commandHandler) {
+        return commandHandler.CanHandle(this);
+    }
+
 }

@@ -1,7 +1,7 @@
 package com.albinodevelopment.View;
 
 import com.albinodevelopment.IO.SerializerDeserializerFactory;
-import com.albinodevelopment.Logging.PriorityLogger;
+import com.albinodevelopment.Logging.ConnorLogger;
 import com.albinodevelopment.Settings.ApplicationSettings;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,14 +21,14 @@ import javafx.stage.WindowEvent;
  */
 public class TallyTab extends Application {
 
-    private static WindowLoaderFactory windowLoaderFactory = new WindowLoaderFactory();
+    private static final WindowLoaderFactory windowLoaderFactory = new WindowLoaderFactory();
 
     @Override
     public void start(Stage stage) {
         stage.setOnCloseRequest((WindowEvent event) -> {
             Platform.runLater(() -> {
-                PriorityLogger.Log("Application shutdown!",
-                        PriorityLogger.PriorityLevel.High);
+                ConnorLogger.Log("Application shutdown!",
+                        ConnorLogger.PriorityLevel.High);
                 SerializerDeserializerFactory.getSerializer(
                         com.albinodevelopment.Settings.ApplicationSettings.class)
                         .serializeApplicationSettings();
@@ -52,7 +52,7 @@ public class TallyTab extends Application {
             MainWindow mainWindow = (MainWindow) windowLoader.NewWindow(
                     "MainWindowFXML.fxml", stage);
             mainWindow.Show();
-            //mainWindow.start();
+            mainWindow.start();
         } catch (InstantiationException | IllegalAccessException ex) {
             Logger.getLogger(TallyTab.class.getName()).log(Level.SEVERE,
                     null, ex);

@@ -10,13 +10,10 @@ import com.albinodevelopment.Commands.ICommand;
 import com.albinodevelopment.Commands.ICommandHandler;
 import com.albinodevelopment.Commands.ModelCommand;
 import com.albinodevelopment.Commands.ViewCommand;
-import com.albinodevelopment.Logging.PriorityLogger;
+import com.albinodevelopment.Logging.ConnorLogger;
 import com.albinodevelopment.Model.Components.Builders.DrinksListBuilder;
 import com.albinodevelopment.Model.Components.Drink;
-import com.albinodevelopment.Model.Components.DrinksList;
-import com.albinodevelopment.Model.Components.DrinksTab;
-import com.albinodevelopment.Model.Components.Function;
-import java.util.ArrayList;
+import com.albinodevelopment.Model.Components.Functions.FunctionManager;
 
 /**
  *
@@ -25,8 +22,8 @@ import java.util.ArrayList;
 public class Model implements ICommandHandler<ModelCommand> {
 
     private ICommandHandler<ViewCommand> commandHandler;
-    private final ArrayList<Function> functions = new ArrayList<>();
     private final DrinksListBuilder drinksListBuilder = DrinksListBuilder.getInstance();
+    public final FunctionManager functionManager = FunctionManager.getInstance();
 
     @Override
     public void SetCommandHandler(ICommandHandler commandHandler) {
@@ -47,13 +44,13 @@ public class Model implements ICommandHandler<ModelCommand> {
         if (command.CanExecute(this)) {
             ICommand.ExecutionResult exectutionResult = command.Execute(this);
             if (exectutionResult.equals(ICommand.ExecutionResult.failure)) {
-                PriorityLogger.Log("COMMAND FAILURE: " + command.toString() 
-                        + "\n" + command.GetErrorCode(), PriorityLogger.PriorityLevel.High);
+                ConnorLogger.Log("COMMAND FAILURE: " + command.toString()
+                        + "\n" + command.GetErrorCode(), ConnorLogger.PriorityLevel.High);
             } else {
-                
+
             }
         } else {
-            PriorityLogger.Log("Command couldn't be run for some reason " + command.toString(), PriorityLogger.PriorityLevel.High);
+            ConnorLogger.Log("Command couldn't be run for some reason " + command.toString(), ConnorLogger.PriorityLevel.High);
         }
     }
 
@@ -61,26 +58,21 @@ public class Model implements ICommandHandler<ModelCommand> {
     public boolean CanHandle(Command command) {
         if (command instanceof ModelCommand) {
             // log success
-            PriorityLogger.Log(command.toString() + "can be handled by this command handler - " + this.getClass().getName(), PriorityLogger.PriorityLevel.Medium);
+            ConnorLogger.Log(command.toString() + "can be handled by this command handler - " + this.getClass().getName(), ConnorLogger.PriorityLevel.Medium);
             return true;
         } else {
             // log failure
             command.GenerateErrorCode("This command cannot be handled by this Command Handler.");
-            PriorityLogger.Log(command.GetErrorCode(), PriorityLogger.PriorityLevel.High);
+            ConnorLogger.Log(command.GetErrorCode(), ConnorLogger.PriorityLevel.High);
             return false;
         }
-    }
-
-    public void NewFunction(String name, double Limit, DrinksList drinksList) {
-        Function newFunction = new Function(name, new DrinksTab(drinksList, Limit));
-        functions.add(newFunction);
     }
 
     public void createNewDrinksList() {
         if (drinksListIsNull()) {
             drinksListBuilder.create();
         } else {
-            PriorityLogger.Log("ERROR: Drinks list already being built. Cannot create new.", PriorityLogger.PriorityLevel.High);
+            ConnorLogger.Log("ERROR: Drinks list already being built. Cannot create new.", ConnorLogger.PriorityLevel.High);
         }
     }
 

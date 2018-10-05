@@ -5,7 +5,7 @@
  */
 package com.albinodevelopment.Model.Components;
 
-import com.albinodevelopment.Logging.PriorityLogger;
+import com.albinodevelopment.Logging.ConnorLogger;
 import java.io.Serializable;
 import java.util.HashMap;
 
@@ -31,19 +31,17 @@ public class DrinksTab implements Serializable {
         CalculatePercentUsed();
     }
 
-    public void Add(int amount, Drink drink) {
+    public void changeDrinkAmount(int delta, Drink drink) {
+        ConnorLogger.Log("Attempting to change value of " + drink.GetName(), ConnorLogger.PriorityLevel.Low);
         int currentAmount = count.get(drink);
-        int totalAmount = currentAmount + amount;
-        PriorityLogger.Log(Integer.toString(totalAmount), PriorityLogger.PriorityLevel.Low);
-        count.put(drink, totalAmount);
-        CheckValues();
-    }
+        int newAmount = currentAmount + delta;
+        Double potentialValue = currentValue + getPriceForAmount(drink, delta);
 
-    public void Remove(int amount, Drink drink) {
-        int currentAmount = count.get(drink);
-        int totalAmount = currentAmount - amount;
-        PriorityLogger.Log(Integer.toString(totalAmount), PriorityLogger.PriorityLevel.Low);
-        count.put(drink, totalAmount);
+        if (potentialValue <= limit) {
+            count.put(drink, newAmount);
+        } else {
+            ConnorLogger.Log("Drink would've put you over the limit mate!", ConnorLogger.PriorityLevel.Medium);
+        }
         CheckValues();
     }
 
@@ -51,19 +49,33 @@ public class DrinksTab implements Serializable {
         return count.get(drink);
     }
 
-    private double CalculateCost() throws NumberFormatException {
+    private Double getPriceForAmount(Drink drink, int amount) {
+        Double price = drink.GetPrice() * amount;
+        ConnorLogger.Log(drink.GetName() + ": " + String.valueOf(price), ConnorLogger.PriorityLevel.Zero);
+        return price;
+    }
+
+    private Double CalculateCost() throws NumberFormatException {
         double cost = Double.NaN;
         for (int i = 0; i < drinksList.GetListSize(); i++) {
             Drink drink = drinksList.GetDrink(i);
-            cost += (drink.GetPrice() * count.get(drink));
-            PriorityLogger.Log(Double.toString(cost), PriorityLogger.PriorityLevel.Low);
+            if (Double.isNaN(cost)) {
+                cost = getDrinkSubtotal(drink);
+            } else {
+                cost += getDrinkSubtotal(drink);
+            }
+            //ConnorLogger.Log(String.valueOf(cost), ConnorLogger.PriorityLevel.Low);
         }
         if (Double.isNaN(cost)) {
-            PriorityLogger.Log("ERROR: Cost was NaN.", PriorityLogger.PriorityLevel.Zero);
+            ConnorLogger.Log("ERROR: Cost was NaN.", ConnorLogger.PriorityLevel.High);
             throw new NumberFormatException();
         } else {
             return cost;
         }
+    }
+
+    public double getDrinkSubtotal(Drink drink) {
+        return getPriceForAmount(drink, GetCount(drink));
     }
 
     private void CalculatePercentUsed() {
@@ -72,7 +84,6 @@ public class DrinksTab implements Serializable {
         } else {
             percentUsed = 0;
         }
-        PriorityLogger.Log(Double.toString(percentUsed), PriorityLogger.PriorityLevel.Low);
     }
 
     public double GetPercentUsed() {
@@ -90,9 +101,25 @@ public class DrinksTab implements Serializable {
     public void ChangeLimit(double limit) {
         if (limit > currentValue) {
             this.limit = limit;
-            PriorityLogger.Log("Limit Changed.", PriorityLogger.PriorityLevel.Zero);
+            ConnorLogger.Log("Limit Changed.", ConnorLogger.PriorityLevel.Zero);
         } else {
-            PriorityLogger.Log("New limit was below current value. Cannot change.", PriorityLogger.PriorityLevel.Zero);
+            ConnorLogger.Log("New limit was below current value. Cannot change.", ConnorLogger.PriorityLevel.Zero);
         }
     }
+
+    public DrinksList getDrinksList() {
+        return drinksList;
+    }
+
+    public void init() {
+        drinksList.getDrinksList().values().forEach((drink) -> {
+            count.put(drink, 0);
+        });
+    }
+
+    public DrinksTabItem getDrinksTabItem(Drink drink) {
+        DrinksTabItem drinksTabItem = new DrinksTabItem(drink, GetCount(drink), getDrinkSubtotal(drink));
+        return drinksTabItem;
+    }
+
 }

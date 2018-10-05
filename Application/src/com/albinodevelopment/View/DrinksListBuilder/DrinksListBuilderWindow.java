@@ -8,7 +8,7 @@ package com.albinodevelopment.View.DrinksListBuilder;
 import com.albinodevelopment.Commands.ControllerCommand;
 import com.albinodevelopment.Commands.ModelCommand;
 import com.albinodevelopment.Commands.ViewCommand;
-import com.albinodevelopment.Logging.PriorityLogger;
+import com.albinodevelopment.Logging.ConnorLogger;
 import com.albinodevelopment.Model.Components.Builders.DrinksListBuilder;
 import com.albinodevelopment.Model.Components.Drink;
 import com.albinodevelopment.Model.Components.DrinksList;
@@ -114,7 +114,7 @@ public class DrinksListBuilderWindow extends Window implements Initializable {
     }
 
     private void removeItem(Parent parent) {
-        PriorityLogger.Log("Removing item!", PriorityLogger.PriorityLevel.Low);
+        ConnorLogger.Log("Removing item!", ConnorLogger.PriorityLevel.Low);
         Label drinkNameLabel = (Label) parent.getChildrenUnmodifiable().get(0);
         Label drinkPriceLabel = (Label) parent.getChildrenUnmodifiable().get(1);
         main.Handle(new ViewCommand.PassToControllerCommand(new ControllerCommand.ValidateDrinkRemovalCommand(drinkNameLabel.getText(), drinkPriceLabel.getText())));
@@ -152,8 +152,8 @@ public class DrinksListBuilderWindow extends Window implements Initializable {
     @Override
     protected void Refresh() {
         if (DrinksListBuilder.getInstance().get() != null && DrinksListBuilder.getInstance().get().GetListSize() > 0) {
-            PriorityLogger.Log(DrinksListBuilder.getInstance().get().toString(), PriorityLogger.PriorityLevel.Zero);
+            ConnorLogger.Log(DrinksListBuilder.getInstance().get().toString(), ConnorLogger.PriorityLevel.Zero);
         }
-        PriorityLogger.Log("Drinks List Window refreshed.", PriorityLogger.PriorityLevel.Zero);
+        ConnorLogger.Log("Drinks List Window refreshed.", ConnorLogger.PriorityLevel.Zero);
     }
 }

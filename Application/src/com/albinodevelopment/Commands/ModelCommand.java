@@ -6,10 +6,10 @@
 package com.albinodevelopment.Commands;
 
 import com.albinodevelopment.Model.Components.Drink;
-import com.albinodevelopment.Model.Components.Interpreter.IDrinksListInterpreter;
+import com.albinodevelopment.Model.Components.DrinksTab;
+import com.albinodevelopment.Model.Components.Functions.Function;
+import com.albinodevelopment.Model.Components.Functions.FunctionManager;
 import com.albinodevelopment.Model.Model;
-import com.albinodevelopment.Settings.ApplicationSettings;
-import com.albinodevelopment.Settings.ISettingsManager;
 
 /**
  *
@@ -44,28 +44,18 @@ public abstract class ModelCommand extends Command<Model> {
     public static class NewFunctionCommand extends ModelCommand {
 
         private final String name;
-        private final double limit;
-        private final String directory;
+        private final DrinksTab drinksTab;
 
-        public NewFunctionCommand(String name, double limit, String directory) {
+        public NewFunctionCommand(String name, DrinksTab drinksTab) {
             this.name = name;
-            this.limit = limit;
-            this.directory = directory;
-        }
-
-        @Override
-        public boolean CanExecute(Model commandHandler) {
-            return commandHandler.CanHandle(this);
+            this.drinksTab = drinksTab;
         }
 
         @Override
         public ExecutionResult Execute(Model commandHandler) {
-            IDrinksListInterpreter drinksListInterpreter
-                    = (IDrinksListInterpreter) ApplicationSettings.GetInstance().
-                            getSetting(ISettingsManager.settingsList.DrinksListInterpreter).
-                            getValue();
-            commandHandler.NewFunction(name, limit,
-                    drinksListInterpreter.Interpret(directory));
+            commandHandler.functionManager.newFunction(name, drinksTab);
+            commandHandler.GetCommandHandler().Handle(new ViewCommand.CloseNewFunctionWindowCommand());
+            commandHandler.GetCommandHandler().Handle(new ViewCommand.UpdateTabContentCommand(FunctionManager.getInstance().getFunction(name)));
             return ExecutionResult.success;
         }
     }
@@ -159,4 +149,52 @@ public abstract class ModelCommand extends Command<Model> {
 
     }
 
+    public static class CallForNewFunctionWindowCommand extends ModelCommand {
+
+        @Override
+        public ExecutionResult Execute(Model commandHandler) {
+            commandHandler.GetCommandHandler().Handle(new ViewCommand.OpenNewFunctionWindowCommand());
+            return ExecutionResult.success;
+        }
+
+    }
+
+    public static class ChangeDrinkAmountCommand extends ModelCommand {
+
+        private final int delta;
+        private final String functionName;
+        private final Drink drink;
+
+        public ChangeDrinkAmountCommand(int delta, String functionName, Drink drink) {
+            this.delta = delta;
+            this.functionName = functionName;
+            this.drink = drink;
+        }
+
+        @Override
+        public ExecutionResult Execute(Model commandHandler) {
+            Function function = commandHandler.functionManager.changeDrinkValue(functionName, drink, delta);
+            if (function != null) {
+                commandHandler.GetCommandHandler().Handle(new ViewCommand.UpdateTabContentCommand(function));
+                return ExecutionResult.success;
+            }
+            return ExecutionResult.failure;
+        }
+    }
+
+    public static class RemoveFunctionCommand extends ModelCommand {
+
+        private final String functionName;
+
+        public RemoveFunctionCommand(String functionName) {
+            this.functionName = functionName;
+        }
+
+        @Override
+        public ExecutionResult Execute(Model commandHandler) {
+            commandHandler.functionManager.remove(functionName);
+            return ExecutionResult.success;
+        }
+
+    }
 }

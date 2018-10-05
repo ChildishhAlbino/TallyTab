@@ -16,10 +16,14 @@ public abstract class View extends Window implements IView, ICommandHandler<View
 
     public View() {
         super();
-
     }
 
     public Window getWindowByName(String name) {
         return null;
+    }
+
+    public void openNewFunctionWindow() {
+        // overriden by subclasses
+        // should probably be in IView
     }
 }
