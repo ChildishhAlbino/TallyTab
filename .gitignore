@@ -15,7 +15,6 @@
 *.war
 *.nar
 *.ear
-*.zip
 *.tar.gz
 *.rar
 
@@ -23,4 +22,5 @@
 hs_err_pid*
 /Application/nbproject/private/
 /Application/build/
+/Application/dist/
 /JavaFXApplication6/nbproject/private/
