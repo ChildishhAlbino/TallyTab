@@ -164,7 +164,7 @@ public class MainWindow extends View implements Initializable {
     @Override
     protected void Refresh() {
         ConnorLogger.Log("Main Window Refreshed.", ConnorLogger.PriorityLevel.Zero);
-        ConnorLogger.Log(FunctionManager.getInstance().currentFunctions(), ConnorLogger.PriorityLevel.Low);
+        ConnorLogger.Log(FunctionManager.getInstance().currentFunctions(), ConnorLogger.PriorityLevel.Zero);
     }
 
     @Override
