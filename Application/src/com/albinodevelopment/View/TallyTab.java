@@ -1,7 +1,7 @@
 package com.albinodevelopment.View;
 
 import com.albinodevelopment.IO.SerializerDeserializerFactory;
-import com.albinodevelopment.Logging.PriorityLogger;
+import com.albinodevelopment.Logging.ConnorLogger;
 import com.albinodevelopment.Settings.ApplicationSettings;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,8 +27,8 @@ public class TallyTab extends Application {
     public void start(Stage stage) {
         stage.setOnCloseRequest((WindowEvent event) -> {
             Platform.runLater(() -> {
-                PriorityLogger.Log("Application shutdown!",
-                        PriorityLogger.PriorityLevel.High);
+                ConnorLogger.Log("Application shutdown!",
+                        ConnorLogger.PriorityLevel.High);
                 SerializerDeserializerFactory.getSerializer(
                         com.albinodevelopment.Settings.ApplicationSettings.class)
                         .serializeApplicationSettings();

@@ -10,12 +10,14 @@ import com.albinodevelopment.Commands.ControllerCommand;
 import com.albinodevelopment.Commands.ICommand;
 import com.albinodevelopment.Commands.ICommandHandler;
 import com.albinodevelopment.Commands.ModelCommand;
-import com.albinodevelopment.Logging.PriorityLogger;
+import com.albinodevelopment.Logging.ConnorLogger;
 import com.albinodevelopment.Model.Components.Builders.DrinksListBuilder;
 import com.albinodevelopment.Model.Components.Drink;
 import com.albinodevelopment.Model.Components.DrinksList;
 import com.albinodevelopment.Model.Components.DrinksTab;
-import com.albinodevelopment.Model.Components.Function;
+import com.albinodevelopment.Model.Components.Functions.Function;
+import com.albinodevelopment.View.TabContent.TabContent;
+import java.util.HashMap;
 
 /**
  *
@@ -23,19 +25,20 @@ import com.albinodevelopment.Model.Components.Function;
  */
 public class Controller extends Thread implements ICommandHandler<ControllerCommand> {
 
-    private boolean running = true;
+    //private boolean running = true;
     private ICommandHandler<ModelCommand> commandHandler;
+    //private final HashMap<TabContent, String> tabsToFunctionNames = new HashMap<>();
 
     @Override
     public boolean CanHandle(Command command) {
         if (command instanceof ControllerCommand) {
             // log success
-            PriorityLogger.Log(command.toString() + "can be handled by this command handler - " + this.getClass().getName(), PriorityLogger.PriorityLevel.Medium);
+            ConnorLogger.Log(command.toString() + "can be handled by this command handler - " + this.getClass().getName(), ConnorLogger.PriorityLevel.Medium);
             return true;
         } else {
             // log failure
             command.GenerateErrorCode("This command cannot be handled by this Command Handler.");
-            PriorityLogger.Log(command.GetErrorCode(), PriorityLogger.PriorityLevel.High);
+            ConnorLogger.Log(command.GetErrorCode(), ConnorLogger.PriorityLevel.High);
             return false;
         }
     }
@@ -45,30 +48,21 @@ public class Controller extends Thread implements ICommandHandler<ControllerComm
         if (command.CanExecute(this)) {
             ICommand.ExecutionResult exectutionResult = command.Execute(this);
             if (exectutionResult.equals(ICommand.ExecutionResult.failure)) {
-                PriorityLogger.Log("COMMAND FAILURE: " + command.toString()
-                        + "\n" + command.GetErrorCode(), PriorityLogger.PriorityLevel.High);
+                ConnorLogger.Log("COMMAND FAILURE: " + command.toString()
+                        + "\n" + command.GetErrorCode(), ConnorLogger.PriorityLevel.High);
             } else {
 
             }
         } else {
-            PriorityLogger.Log("Command couldn't be run for some reason " + command.toString(), PriorityLogger.PriorityLevel.High);
+            ConnorLogger.Log("Command couldn't be run for some reason " + command.toString(), ConnorLogger.PriorityLevel.High);
         }
     }
 
     @Override
     public void run() {
-        PriorityLogger.LoggingOnOrOff(true);
-        PriorityLogger.SetPriority(PriorityLogger.PriorityLevel.Low);
-        PriorityLogger.Log("Logging is on", PriorityLogger.PriorityLevel.High);
-
-        while (running) {
-            System.out.println("Controller");
-            try {
-                Thread.sleep(2500);
-            } catch (InterruptedException ex) {
-
-            }
-        }
+        ConnorLogger.LoggingOnOrOff(true);
+        ConnorLogger.SetPriority(ConnorLogger.PriorityLevel.Low);
+        ConnorLogger.Log("Logging is on", ConnorLogger.PriorityLevel.High);
     }
 
     @Override
@@ -93,11 +87,12 @@ public class Controller extends Thread implements ICommandHandler<ControllerComm
         return new Drink(d_Price, name);
     }
 
-    public Function validateFunctionCreation(String name, String limit, String drinksListPath) {
+    public DrinksTab validateFunctionCreation(String name, String limit, String drinksListPath) {
         Double d_Limit = validateLimit(limit);
         if (DrinksListBuilder.getInstance().validate(drinksListPath) && d_Limit != null) {
             DrinksList drinksList = DrinksListBuilder.getInstance().openAndGet(drinksListPath);
-            return new Function(name, new DrinksTab(drinksList, d_Limit));
+            DrinksTab drinksTab = new DrinksTab(drinksList, d_Limit);
+            return drinksTab;
         }
 
         return null;
@@ -108,7 +103,7 @@ public class Controller extends Thread implements ICommandHandler<ControllerComm
             Double d = Double.valueOf(toBeValidated);
             return d;
         } catch (NumberFormatException ex) {
-            PriorityLogger.Log("ERROR: Price couldn't be converted to double - " + ex.toString(), PriorityLogger.PriorityLevel.Medium);
+            ConnorLogger.Log("ERROR: Price couldn't be converted to double - " + ex.toString(), ConnorLogger.PriorityLevel.Medium);
         }
         return null;
     }
@@ -121,6 +116,27 @@ public class Controller extends Thread implements ICommandHandler<ControllerComm
             d_Limit = validateDouble(limit);
         }
         return d_Limit;
+    }
+
+//    public void addToMap(TabContent tabContent, Function function) {
+//        tabsToFunctionNames.put(tabContent, function.GetName());
+//    }
+//
+//    public void removeFromMap(TabContent tabContent) {
+//        tabsToFunctionNames.remove(tabContent);
+//    }
+//
+//    public void removeFromMap(String functionName) {
+//        tabsToFunctionNames.values().remove(functionName);
+//        ConnorLogger.Log(tabsToFunctionNames.toString(), ConnorLogger.PriorityLevel.Medium);
+//    }
+//
+//    public String getFromMap(TabContent tabContent) {
+//        return tabsToFunctionNames.get(tabContent);
+//    }
+
+    public boolean validateDrinkAmountChange(String functionName) {
+        return true;
     }
 
 }

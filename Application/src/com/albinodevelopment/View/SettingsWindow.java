@@ -6,7 +6,7 @@
 package com.albinodevelopment.View;
 
 import com.albinodevelopment.IO.FileIO;
-import com.albinodevelopment.Logging.PriorityLogger;
+import com.albinodevelopment.Logging.ConnorLogger;
 import com.albinodevelopment.Settings.ApplicationSettings;
 import com.albinodevelopment.Settings.ISettingsManager;
 import javafx.application.Platform;
@@ -50,7 +50,7 @@ public class SettingsWindow extends Window {
 
     @Override
     protected void Refresh() {
-        PriorityLogger.Log("Settings Window Refreshed.", PriorityLogger.PriorityLevel.Zero);
+        ConnorLogger.Log("Settings Window Refreshed.", ConnorLogger.PriorityLevel.Zero);
         // returns a null pointer exception
         Platform.runLater(() -> {
             directoryLabel.setText((String) ApplicationSettings.GetInstance().getSetting(ISettingsManager.settingsList.SerializedDirectory).getValue());
@@ -59,19 +59,19 @@ public class SettingsWindow extends Window {
 
     @FXML
     public void HandleDirectoryChangeButton(ActionEvent event) {
-        PriorityLogger.Log("Handling directory change", PriorityLogger.PriorityLevel.Low);
+        ConnorLogger.Log("Handling directory change", ConnorLogger.PriorityLevel.Low);
         String directory = FileIO.OpenDirectoryWindow();
         if (directory != null) {
             ApplicationSettings.GetInstance().getSetting(ISettingsManager.settingsList.SerializedDirectory).change(directory);
         } else {
-            PriorityLogger.Log("ERROR: Driectory was null.", PriorityLogger.PriorityLevel.Low);
+            ConnorLogger.Log("ERROR: Driectory was null.", ConnorLogger.PriorityLevel.Low);
         }
     }
 
     @FXML
     public void handleResetDefaultButton(ActionEvent event) {
         ApplicationSettings.GetInstance().getSetting(ISettingsManager.settingsList.SerializedDirectory).setToDefault();
-        PriorityLogger.Log("NOTE: FileDirectory set to default.", PriorityLogger.PriorityLevel.Low);
+        ConnorLogger.Log("NOTE: FileDirectory set to default.", ConnorLogger.PriorityLevel.Low);
     }
 
     @FXML

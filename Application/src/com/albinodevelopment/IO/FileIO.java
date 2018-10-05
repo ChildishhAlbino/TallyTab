@@ -5,7 +5,7 @@
  */
 package com.albinodevelopment.IO;
 
-import com.albinodevelopment.Logging.PriorityLogger;
+import com.albinodevelopment.Logging.ConnorLogger;
 import javax.swing.JFileChooser;
 
 /**
@@ -22,7 +22,7 @@ public class FileIO {
         if (response == JFileChooser.APPROVE_OPTION) {
             s = jFileChooser.getSelectedFile().toString();
         } else {
-            PriorityLogger.Log("ERROR: Open file operation was cancelled.", PriorityLogger.PriorityLevel.Low);
+            ConnorLogger.Log("ERROR: Open file operation was cancelled.", ConnorLogger.PriorityLevel.Low);
         }
         return s;
     }
@@ -39,7 +39,7 @@ public class FileIO {
         if (response == JFileChooser.APPROVE_OPTION) {
             s = jFileChooser.getSelectedFile().toString();
         } else {
-            PriorityLogger.Log("ERROR: Open file operation was cancelled.", PriorityLogger.PriorityLevel.Low);
+            ConnorLogger.Log("ERROR: Open file operation was cancelled.", ConnorLogger.PriorityLevel.Low);
         }
         return s;
     }

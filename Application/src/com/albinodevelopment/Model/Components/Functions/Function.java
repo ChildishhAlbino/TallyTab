@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.albinodevelopment.Model.Components;
+package com.albinodevelopment.Model.Components.Functions;
 
+import com.albinodevelopment.Model.Components.DrinksList;
+import com.albinodevelopment.Model.Components.DrinksTab;
 import java.io.Serializable;
 
 /**
@@ -37,8 +39,8 @@ public class Function implements Serializable {
     }
     
     public String GetPercent(){
-        Double d_Percent = drinksTab.GetPercentUsed();
-        return d_Percent.toString();
+        Double d_Percent = drinksTab.GetPercentUsed() * 100;
+        return d_Percent.toString() + "%";
     }
     
     public Double GetPercentAsDouble(){
@@ -52,5 +54,5 @@ public class Function implements Serializable {
     public DrinksTab getDrinksTab(){
         return drinksTab;
     }
-
+    
 }

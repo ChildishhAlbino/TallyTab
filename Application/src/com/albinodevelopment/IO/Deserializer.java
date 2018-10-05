@@ -5,7 +5,7 @@
  */
 package com.albinodevelopment.IO;
 
-import com.albinodevelopment.Logging.PriorityLogger;
+import com.albinodevelopment.Logging.ConnorLogger;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -39,9 +39,9 @@ public class Deserializer<T> {
             fileInputStream.close();
             return t;
         } catch (FileNotFoundException ex) {
-            PriorityLogger.Log("ERROR: File: " + filePath + " not found - " + ex.getLocalizedMessage(), PriorityLogger.PriorityLevel.Medium);
+            ConnorLogger.Log("ERROR: File: " + filePath + " not found - " + ex.getLocalizedMessage(), ConnorLogger.PriorityLevel.Medium);
         } catch (IOException | ClassNotFoundException ex) {
-            PriorityLogger.Log("ERROR IO or ClassNotFound exception - " + ex.getLocalizedMessage(), PriorityLogger.PriorityLevel.Medium);
+            ConnorLogger.Log("ERROR IO or ClassNotFound exception - " + ex.getLocalizedMessage(), ConnorLogger.PriorityLevel.Medium);
         }
         return null;
     }

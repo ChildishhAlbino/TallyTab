@@ -12,6 +12,12 @@ import com.albinodevelopment.Model.Components.DrinksTabItem;
  *
  * @author conno
  */
-public abstract class DrinkItemContent extends Content implements IContent<DrinksTabItem>{
-    
+public abstract class DrinkItemContent extends Content implements IContent<DrinksTabItem> {
+    protected Drink drink;
+    protected TabContent tabContent;
+
+    public void setTabContent(TabContent tabContent) {
+        this.tabContent = tabContent;
+    }
+
 }

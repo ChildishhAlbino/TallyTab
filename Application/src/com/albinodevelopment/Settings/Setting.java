@@ -5,7 +5,7 @@
  */
 package com.albinodevelopment.Settings;
 
-import com.albinodevelopment.Logging.PriorityLogger;
+import com.albinodevelopment.Logging.ConnorLogger;
 import com.albinodevelopment.Model.Components.Interpreter.IDrinksListInterpreter;
 import com.albinodevelopment.Model.Components.Interpreter.SerializedDrinksListInterpreter;
 import java.io.File;
@@ -64,7 +64,7 @@ public abstract class Setting<U> implements ISetting<U>, Serializable {
             try {
                 PrintWriter printWriter = new PrintWriter(file);
                 printWriter.println(value);
-                PriorityLogger.Log("NOTE: userDirectory.txt written with value = " + value, PriorityLogger.PriorityLevel.Low);
+                ConnorLogger.Log("NOTE: userDirectory.txt written with value = " + value, ConnorLogger.PriorityLevel.Low);
                 printWriter.close();
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(Setting.class.getName()).log(Level.SEVERE, null, ex);

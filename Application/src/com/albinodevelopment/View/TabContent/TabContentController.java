@@ -9,9 +9,11 @@ import com.albinodevelopment.Model.Components.Drink;
 import com.albinodevelopment.Model.Components.DrinksList;
 import com.albinodevelopment.Model.Components.DrinksTab;
 import com.albinodevelopment.Model.Components.DrinksTabItem;
-import com.albinodevelopment.Model.Components.Function;
+import com.albinodevelopment.Model.Components.Functions.Function;
 import com.albinodevelopment.View.View;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -28,9 +30,8 @@ import javafx.scene.layout.VBox;
  */
 public class TabContentController extends TabContent implements Initializable {
 
-    private String tabName;
-    private View main;
-    private ContentLoaderFactory contentLoaderFactory = new ContentLoaderFactory();
+    private final ContentLoaderFactory contentLoaderFactory = new ContentLoaderFactory();
+    private final HashMap<DrinksTabItem, DrinkItemContent> drinkItemContents = new HashMap<>();
 
     @FXML
     private Label title;
@@ -61,13 +62,9 @@ public class TabContentController extends TabContent implements Initializable {
     @Override
     public Parent generateContent(Function input) {
         if (input != null) {
-            // take function
-            setupInfoPage(input);
-            // generate GUI elements
-            generateDrinksListGUI(input.getDrinksTab());
+            update(input);
             // return Parent
         }
-
         return fromFXML;
     }
 
@@ -80,13 +77,44 @@ public class TabContentController extends TabContent implements Initializable {
     }
 
     private void generateDrinksListGUI(DrinksTab drinksTab) {
-        drinksTab.getDrinksList().getDrinksList().values().forEach((drink) -> {
+        drinksTab.getDrinksList().getDrinksList().values().forEach((Drink drink) -> {
             DrinksTabItem drinksTabItem = new DrinksTabItem(drink, drinksTab.GetCount(drink), drinksTab.getDrinkSubtotal(drink));
-            Parent drinkContent = contentLoaderFactory.getBuilder().getContentController("DrinkItemContentFXML.fxml").generateContent(drinksTabItem);
+            DrinkItemContent drinkItemContent = generateDrinkItemContent(drinksTabItem);
+            Parent drinkContent = drinkItemContent.generateContent(drinksTabItem);
             drinksVbox.getChildren().add(drinkContent);
         });
     }
 
-   
+    private DrinkItemContent generateDrinkItemContent(DrinksTabItem drinksTabItem) {
+        DrinkItemContent drinkItemContent = (DrinkItemContent) contentLoaderFactory.getBuilder().getContentController("DrinkItemContentFXML.fxml");
+        drinkItemContent.setMain(view);
+        drinkItemContent.setTabContent(this);
+        drinkItemContents.put(drinksTabItem, drinkItemContent);
+        return drinkItemContent;
+    }
+
+    @Override
+    public void updateDrinkContent(DrinksTabItem drinksTabItem) {
+        drinkItemContents.get(drinksTabItem.getDrink()).update(drinksTabItem);
+    }
+
+    @Override
+    public String getText() {
+        return title.getText();
+    }
+
+    @Override
+    public void update(Function input) {
+        // take function
+        setupInfoPage(input);
+        // generate GUI elements
+        if(drinkItemContents.isEmpty()){
+            generateDrinksListGUI(input.getDrinksTab());
+        } else {
+            for (DrinkItemContent drinkItemContent : drinkItemContents.values()){
+                drinkItemContent.update(input.getDrinksTab().getDrinksTabItem(drinkItemContent.drink));
+            }
+        }
+    }
 
 }

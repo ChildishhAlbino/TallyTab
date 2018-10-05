@@ -12,12 +12,12 @@ package com.albinodevelopment.Model.Components;
 public class DrinksTabItem {
 
     private final Drink drink;
-    private final int amountUsed;
+    private final int amount;
     private final Double subtotal;
 
-    public DrinksTabItem(Drink drink, int amountUsed, Double subtotal) {
+    public DrinksTabItem(Drink drink, int amount, Double subtotal) {
         this.drink = drink;
-        this.amountUsed = amountUsed;
+        this.amount = amount;
         this.subtotal = subtotal;
     }
 
@@ -26,7 +26,7 @@ public class DrinksTabItem {
     }
 
     public int getAmountUsed() {
-        return amountUsed;
+        return amount;
     }
 
     public Double getSubtotal() {

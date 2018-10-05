@@ -5,9 +5,10 @@
  */
 package com.albinodevelopment.Commands;
 
+import com.albinodevelopment.Controller.Controller;
 import com.albinodevelopment.Model.Components.Drink;
 import com.albinodevelopment.Model.Components.DrinksList;
-import com.albinodevelopment.Model.Components.Function;
+import com.albinodevelopment.Model.Components.Functions.Function;
 import com.albinodevelopment.View.DrinksListBuilder.DrinksListBuilderWindow;
 import com.albinodevelopment.View.View;
 
@@ -60,7 +61,6 @@ public abstract class ViewCommand extends Command<View> {
             drinksListBuilderWindow.createGUIFromDrink(drink);
             return ExecutionResult.success;
         }
-
     }
 
     public static class LoadDrinksListCommand extends ViewCommand {
@@ -105,20 +105,18 @@ public abstract class ViewCommand extends Command<View> {
 
     }
 
-    public static class GenerateFunctionGUICommand extends ViewCommand {
+    public static class UpdateTabContentCommand extends ViewCommand {
 
         private final Function function;
 
-        public GenerateFunctionGUICommand(Function function) {
+        public UpdateTabContentCommand(Function function) {
             this.function = function;
         }
 
         @Override
         public ExecutionResult Execute(View commandHandler) {
-            commandHandler.generateFunctionGUI(function);
+            commandHandler.updateTab(function);
             return ExecutionResult.success;
         }
-
     }
-
 }

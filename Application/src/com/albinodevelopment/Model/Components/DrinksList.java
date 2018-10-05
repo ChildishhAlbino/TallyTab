@@ -5,7 +5,7 @@
  */
 package com.albinodevelopment.Model.Components;
 
-import com.albinodevelopment.Logging.PriorityLogger;
+import com.albinodevelopment.Logging.ConnorLogger;
 import com.albinodevelopment.Model.Components.Builders.IBuildable;
 import java.io.Serializable;
 import java.util.HashMap;
@@ -36,7 +36,7 @@ public class DrinksList implements Serializable, IBuildable {
 
     public Drink GetDrink(int index) {
         Drink drink = (Drink) drinks.values().toArray()[index];
-        PriorityLogger.Log(drink.GetName(), PriorityLogger.PriorityLevel.Low);
+        //ConnorLogger.Log(drink.GetName(), ConnorLogger.PriorityLevel.Low);
         return drink;
     }
 

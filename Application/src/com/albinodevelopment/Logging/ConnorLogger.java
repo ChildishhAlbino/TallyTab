@@ -11,7 +11,7 @@ import java.io.PrintStream;
  *
  * @author conno
  */
-public class PriorityLogger extends Thread {
+public class ConnorLogger extends Thread {
 
     private static PriorityLevel currentPriority = PriorityLevel.Unset;
     private static boolean on;

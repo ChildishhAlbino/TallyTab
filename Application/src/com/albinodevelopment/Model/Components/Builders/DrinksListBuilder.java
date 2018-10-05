@@ -6,7 +6,7 @@
 package com.albinodevelopment.Model.Components.Builders;
 
 import com.albinodevelopment.IO.FileIO;
-import com.albinodevelopment.Logging.PriorityLogger;
+import com.albinodevelopment.Logging.ConnorLogger;
 import com.albinodevelopment.Model.Components.DrinksList;
 import com.albinodevelopment.Model.Components.Interpreter.IDrinksListInterpreter;
 import com.albinodevelopment.Settings.ApplicationSettings;
@@ -34,13 +34,13 @@ public class DrinksListBuilder implements IComponentManager<DrinksList> {
                         .getSetting(ISettingsManager.settingsList.SerializedDirectory)
                         .getValue().toString() + "\\DrinksList");
         if (directory != null) {
-            PriorityLogger.Log(directory, PriorityLogger.PriorityLevel.Low);
+            ConnorLogger.Log(directory, ConnorLogger.PriorityLevel.Low);
             checkInterpreter();
 
             DrinksList temp = drinksListInterpreter.Interpret(directory);
             if (temp != null) {
                 drinksList = temp;
-                PriorityLogger.Log("Drinks List opened correctly.", PriorityLogger.PriorityLevel.Low);
+                ConnorLogger.Log("Drinks List opened correctly.", ConnorLogger.PriorityLevel.Low);
             }
         }
     }

@@ -5,6 +5,7 @@
  */
 package com.albinodevelopment.View.TabContent;
 
+import com.albinodevelopment.View.View;
 import javafx.scene.Parent;
 
 /**
@@ -12,10 +13,14 @@ import javafx.scene.Parent;
  * @author conno
  */
 public abstract class Content {
-
+    protected View view;
     protected Parent fromFXML;
 
     public void setFromFXML(Parent parent) {
         this.fromFXML = parent;
+    }
+    
+    public void setMain(View view){
+        this.view = view;
     }
 }

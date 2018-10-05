@@ -6,7 +6,7 @@
 package com.albinodevelopment.View;
 
 import com.albinodevelopment.Model.Components.Drink;
-import com.albinodevelopment.Model.Components.Function;
+import com.albinodevelopment.Model.Components.Functions.Function;
 import javafx.scene.control.Button;
 
 /**
@@ -15,19 +15,17 @@ import javafx.scene.control.Button;
  */
 public interface IView {
 
-    void createDrinkGUIElements(Drink drink);
+    void newFunction();
 
-    String GetDrinkNameFromGUI(Button button);
+    void open();
 
-    void New();
+    void save();
 
-    void Open();
+    void closeTab(String title);
 
-    void Save();
+    //void newTab(Function function);
 
-    void TabClosed();
-
-    void generateFunctionGUI(Function function);
+    void updateTab(Function function);
 
     void closeNewFunctionWindow();
 

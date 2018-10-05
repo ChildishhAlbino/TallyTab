@@ -6,10 +6,9 @@
 package com.albinodevelopment.View;
 
 import com.albinodevelopment.Commands.ControllerCommand;
+import com.albinodevelopment.Commands.ModelCommand;
 import com.albinodevelopment.Commands.ViewCommand;
 import com.albinodevelopment.IO.FileIO;
-import com.albinodevelopment.Logging.PriorityLogger;
-import com.albinodevelopment.Model.Components.Function;
 import com.albinodevelopment.Settings.ApplicationSettings;
 import com.albinodevelopment.Settings.ISettingsManager;
 import javafx.event.ActionEvent;
@@ -83,7 +82,7 @@ public class NewFunctionWindow extends Window implements Initializable {
 
     private void submit() {
         main.Handle(new ViewCommand.PassToControllerCommand(
-                new ControllerCommand.ValidateFunctionCommand(functionNameTF
+                new ControllerCommand.ValidateNewFunctionCommand(functionNameTF
                         .getText(), functionLimitTF.getText(), selectedDrinksList.getText())));
     }
 

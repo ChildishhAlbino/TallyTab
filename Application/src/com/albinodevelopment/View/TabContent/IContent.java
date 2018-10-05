@@ -15,4 +15,6 @@ import javafx.scene.Parent;
 public interface IContent<T> {
     Parent generateContent(T input);
     void setFromFXML(Parent fromFXML);
+    public String getText();
+    void update(T input);
 }

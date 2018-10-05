@@ -5,7 +5,7 @@
  */
 package com.albinodevelopment.View;
 
-import com.albinodevelopment.Logging.PriorityLogger;
+import com.albinodevelopment.Logging.ConnorLogger;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -36,7 +36,7 @@ public class WindowLoader<T extends Window> {
             stage.setTitle("TallyTab");
 
         } catch (IOException ex) {
-            PriorityLogger.Log("ERROR: Window Loader couldn't load your window - " + ex.toString(), PriorityLogger.PriorityLevel.High);
+            ConnorLogger.Log("ERROR: Window Loader couldn't load your window - " + ex.toString(), ConnorLogger.PriorityLevel.High);
         }
         T t = (T) loader.getController();
         stage.setOnShowing((WindowEvent event) -> {
