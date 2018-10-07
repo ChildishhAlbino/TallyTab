@@ -69,11 +69,11 @@ public class TabContentController extends TabContent implements Initializable {
     }
 
     private void setupInfoPage(Function input) {
-        title.setText(input.GetName());
-        limit.setText(input.GetLimit());
-        currentVal.setText(input.GetCurrentVal());
-        percentage.setText(input.GetPercent());
-        progressBar.setProgress(input.GetPercentAsDouble());
+        title.setText(input.getName());
+        limit.setText(input.getLimit());
+        currentVal.setText(input.getCurrentValue());
+        percentage.setText(input.getPercentUsed());
+        progressBar.setProgress(input.getPercentAsDouble());
     }
 
     private void generateDrinksListGUI(DrinksTab drinksTab) {

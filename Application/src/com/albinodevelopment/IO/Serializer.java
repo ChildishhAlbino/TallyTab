@@ -42,7 +42,7 @@ public class Serializer<T> {
 
     public void serializeApplicationSettings() {
         ApplicationSettings applicationSettings
-                = (ApplicationSettings) ApplicationSettings.GetInstance();
+                = (ApplicationSettings) ApplicationSettings.getInstance();
         SerializerDeserializerFactory.getSerializer(
                 com.albinodevelopment.Settings.ApplicationSettings.class)
                 .serialize(applicationSettings,

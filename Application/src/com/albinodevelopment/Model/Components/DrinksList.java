@@ -41,11 +41,11 @@ public class DrinksList implements Serializable, IBuildable {
     }
 
     public void add(Drink drink) {
-        drinks.put(drink.GetName(), drink);
+        drinks.put(drink.getName(), drink);
     }
 
     public void remove(Drink drink) {
-        drinks.remove(drink.GetName());
+        drinks.remove(drink.getName());
     }
 
     @Override

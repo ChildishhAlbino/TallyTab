@@ -12,7 +12,6 @@ import com.albinodevelopment.Logging.ConnorLogger;
 import com.albinodevelopment.Model.Components.Builders.DrinksListBuilder;
 import com.albinodevelopment.Model.Components.Drink;
 import com.albinodevelopment.Model.Components.DrinksList;
-import com.albinodevelopment.View.View;
 import com.albinodevelopment.View.Window;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -64,7 +63,7 @@ public class DrinksListBuilderWindow extends Window implements Initializable {
         String name = drinkName.getText();
         String price = drinkPrice.getText();
         if (textFieldEntered(name, price)) {
-            main.GetCommandHandler().Handle(new ControllerCommand.ValidateDrinkCreationCommand(name, price));
+            main.getCommandHandler().handle(new ControllerCommand.ValidateDrinkCreationCommand(name, price));
         }
     }
 
@@ -74,7 +73,7 @@ public class DrinksListBuilderWindow extends Window implements Initializable {
         if (textFieldEntered(name, "TEXT TO HACK THE METHOD") && DrinksListBuilder.getInstance().get() != null) {
             DrinksListBuilder.getInstance().get().setName(name);
             //saveDrinksList(DrinksListBuilder.getInstance().get());
-            main.Handle(new ViewCommand.PassToControllerCommand(new ControllerCommand.PassToModelCommand(new ModelCommand.SaveDrinksListCommand())));
+            main.handle(new ViewCommand.PassToControllerCommand(new ControllerCommand.PassToModelCommand(new ModelCommand.SaveDrinksListCommand())));
             drinksListName.clear();
             scrollVbox.getChildren().clear();
             output.setText("Drinks list saved as: " + name + ".ser");
@@ -85,7 +84,7 @@ public class DrinksListBuilderWindow extends Window implements Initializable {
 
     @FXML
     private void openButtonAction(ActionEvent event) {
-        main.Handle(new ViewCommand.PassToControllerCommand(new ControllerCommand.PassToModelCommand(new ModelCommand.OpenDrinksListCommand())));
+        main.handle(new ViewCommand.PassToControllerCommand(new ControllerCommand.PassToModelCommand(new ModelCommand.OpenDrinksListCommand())));
     }
 
     public void loadDrinksList(DrinksList drinksList) {
@@ -105,8 +104,8 @@ public class DrinksListBuilderWindow extends Window implements Initializable {
         removeButton.setOnAction((event) -> {
             removeItem(removeButton.getParent());
         });
-        Label drinkNameLabel = new Label(drink.GetName());
-        Label drinkPriceLabel = new Label(String.valueOf(drink.GetPrice()));
+        Label drinkNameLabel = new Label(drink.getName());
+        Label drinkPriceLabel = new Label(String.valueOf(drink.getPrice()));
         HBox hBox = new HBox(75, setLabelSize(drinkNameLabel),
                 setLabelSize(drinkPriceLabel), removeButton);
         VBox.setMargin(hBox, new Insets(10, 0, 0, 10));
@@ -114,10 +113,10 @@ public class DrinksListBuilderWindow extends Window implements Initializable {
     }
 
     private void removeItem(Parent parent) {
-        ConnorLogger.Log("Removing item!", ConnorLogger.PriorityLevel.Low);
+        ConnorLogger.log("Removing item!", ConnorLogger.PriorityLevel.Low);
         Label drinkNameLabel = (Label) parent.getChildrenUnmodifiable().get(0);
         Label drinkPriceLabel = (Label) parent.getChildrenUnmodifiable().get(1);
-        main.Handle(new ViewCommand.PassToControllerCommand(new ControllerCommand.ValidateDrinkRemovalCommand(drinkNameLabel.getText(), drinkPriceLabel.getText())));
+        main.handle(new ViewCommand.PassToControllerCommand(new ControllerCommand.ValidateDrinkRemovalCommand(drinkNameLabel.getText(), drinkPriceLabel.getText())));
         scrollVbox.getChildren().remove(parent);
         output.setText("Item removed!");
     }
@@ -150,10 +149,10 @@ public class DrinksListBuilderWindow extends Window implements Initializable {
     }
 
     @Override
-    protected void Refresh() {
+    protected void refresh() {
         if (DrinksListBuilder.getInstance().get() != null && DrinksListBuilder.getInstance().get().GetListSize() > 0) {
-            ConnorLogger.Log(DrinksListBuilder.getInstance().get().toString(), ConnorLogger.PriorityLevel.Zero);
+            ConnorLogger.log(DrinksListBuilder.getInstance().get().toString(), ConnorLogger.PriorityLevel.Zero);
         }
-        ConnorLogger.Log("Drinks List Window refreshed.", ConnorLogger.PriorityLevel.Zero);
+        ConnorLogger.log("Drinks List Window refreshed.", ConnorLogger.PriorityLevel.Zero);
     }
 }

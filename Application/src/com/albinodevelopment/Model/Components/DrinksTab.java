@@ -34,7 +34,7 @@ public class DrinksTab implements Serializable {
     }
 
     public void changeDrinkAmount(int delta, Drink drink) {
-        ConnorLogger.Log("Attempting to change value of " + drink.GetName(), ConnorLogger.PriorityLevel.Low);
+        ConnorLogger.log("Attempting to change value of " + drink.getName(), ConnorLogger.PriorityLevel.Low);
         int currentAmount = count.get(drink);
         int newAmount = currentAmount + delta;
         Double potentialValue = currentValue + getPriceForAmount(drink, delta);
@@ -42,7 +42,7 @@ public class DrinksTab implements Serializable {
         if (potentialValue <= limit) {
             count.put(drink, newAmount);
         } else {
-            ConnorLogger.Log("Drink would've put you over the limit mate!", ConnorLogger.PriorityLevel.Medium);
+            ConnorLogger.log("Drink would've put you over the limit mate!", ConnorLogger.PriorityLevel.Medium);
         }
         CheckValues();
     }
@@ -52,8 +52,8 @@ public class DrinksTab implements Serializable {
     }
 
     private Double getPriceForAmount(Drink drink, int amount) {
-        Double price = round((drink.GetPrice() * amount), 2);
-        ConnorLogger.Log(drink.GetName() + ": " + String.valueOf(price), ConnorLogger.PriorityLevel.Zero);
+        Double price = round((drink.getPrice() * amount), 2);
+        ConnorLogger.log(drink.getName() + ": " + String.valueOf(price), ConnorLogger.PriorityLevel.Zero);
         return price;
     }
 
@@ -69,7 +69,7 @@ public class DrinksTab implements Serializable {
             //ConnorLogger.Log(String.valueOf(cost), ConnorLogger.PriorityLevel.Low);
         }
         if (Double.isNaN(cost)) {
-            ConnorLogger.Log("ERROR: Cost was NaN.", ConnorLogger.PriorityLevel.High);
+            ConnorLogger.log("ERROR: Cost was NaN.", ConnorLogger.PriorityLevel.High);
             throw new NumberFormatException();
         } else {
             return cost;
@@ -105,9 +105,9 @@ public class DrinksTab implements Serializable {
     public void ChangeLimit(double limit) {
         if (limit > currentValue) {
             this.limit = limit;
-            ConnorLogger.Log("Limit Changed.", ConnorLogger.PriorityLevel.Zero);
+            ConnorLogger.log("Limit Changed.", ConnorLogger.PriorityLevel.Zero);
         } else {
-            ConnorLogger.Log("New limit was below current value. Cannot change.", ConnorLogger.PriorityLevel.Zero);
+            ConnorLogger.log("New limit was below current value. Cannot change.", ConnorLogger.PriorityLevel.Zero);
         }
     }
 

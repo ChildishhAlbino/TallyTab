@@ -29,7 +29,7 @@ public class Deserializer<T> {
         fileDirectory = readDirectoryFile();
     }
 
-    public T DeserializeFromFilePath(String filePath) {
+    public T deserializeFromFilePath(String filePath) {
         try {
             FileInputStream fileInputStream;
             fileInputStream = new FileInputStream(filePath);
@@ -39,15 +39,15 @@ public class Deserializer<T> {
             fileInputStream.close();
             return t;
         } catch (FileNotFoundException ex) {
-            ConnorLogger.Log("ERROR: File: " + filePath + " not found - " + ex.getLocalizedMessage(), ConnorLogger.PriorityLevel.Medium);
+            ConnorLogger.log("ERROR: File: " + filePath + " not found - " + ex.getLocalizedMessage(), ConnorLogger.PriorityLevel.Medium);
         } catch (IOException | ClassNotFoundException ex) {
-            ConnorLogger.Log("ERROR IO or ClassNotFound exception - " + ex.getLocalizedMessage(), ConnorLogger.PriorityLevel.Medium);
+            ConnorLogger.log("ERROR IO or ClassNotFound exception - " + ex.getLocalizedMessage(), ConnorLogger.PriorityLevel.Medium);
         }
         return null;
     }
 
-    public T DeserializeFromFileName(String fileName) {
-        return DeserializeFromFilePath(fileDirectory + "\\" + fileName);
+    public T deserializeFromFileName(String fileName) {
+        return deserializeFromFilePath(fileDirectory + "\\" + fileName);
     }
 
     private String readDirectoryFile() {

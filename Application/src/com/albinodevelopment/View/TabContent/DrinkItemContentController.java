@@ -69,27 +69,27 @@ public class DrinkItemContentController extends DrinkItemContent implements Init
     @Override
     public void update(DrinksTabItem input) {
         this.drink = input.getDrink();
-        drinkName.setText(input.getDrink().GetName());
-        drinkPrice.setText("$" + String.valueOf(input.getDrink().GetPrice()));
+        drinkName.setText(input.getDrink().getName());
+        drinkPrice.setText("$" + String.valueOf(input.getDrink().getPrice()));
         currentAmt.setText(String.valueOf(input.getAmountUsed()));
         subtotal.setText("$" + String.valueOf(input.getSubtotal()));
     }
 
     @FXML
     private void handlePlusButton(ActionEvent event) {
-        ConnorLogger.Log("+1 " + drink.GetName(), ConnorLogger.PriorityLevel.Medium);
-        view.Handle(new ViewCommand.PassToControllerCommand(new ControllerCommand.ValidateDrinkAmountChangeCommand(+1, drink, tabContent.getText())));
+        ConnorLogger.log("+1 " + drink.getName(), ConnorLogger.PriorityLevel.Medium);
+        view.handle(new ViewCommand.PassToControllerCommand(new ControllerCommand.ValidateDrinkAmountChangeCommand(+1, drink, tabContent.getText())));
     }
 
     @FXML
     private void handleMinusButton(ActionEvent event) {
-        ConnorLogger.Log("-1 " + drink.GetName(), ConnorLogger.PriorityLevel.Medium);
-        view.Handle(new ViewCommand.PassToControllerCommand(new ControllerCommand.ValidateDrinkAmountChangeCommand(-1, drink, tabContent.getText())));
+        ConnorLogger.log("-1 " + drink.getName(), ConnorLogger.PriorityLevel.Medium);
+        view.handle(new ViewCommand.PassToControllerCommand(new ControllerCommand.ValidateDrinkAmountChangeCommand(-1, drink, tabContent.getText())));
     }
 
     @Override
     public String getText() {
-        return drink.GetName();
+        return drink.getName();
     }
 
 }

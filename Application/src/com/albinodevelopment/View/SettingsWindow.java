@@ -49,29 +49,29 @@ public class SettingsWindow extends Window {
     }
 
     @Override
-    protected void Refresh() {
-        ConnorLogger.Log("Settings Window Refreshed.", ConnorLogger.PriorityLevel.Zero);
+    protected void refresh() {
+        ConnorLogger.log("Settings Window Refreshed.", ConnorLogger.PriorityLevel.Zero);
         // returns a null pointer exception
         Platform.runLater(() -> {
-            directoryLabel.setText((String) ApplicationSettings.GetInstance().getSetting(ISettingsManager.settingsList.SerializedDirectory).getValue());
+            directoryLabel.setText((String) ApplicationSettings.getInstance().getSetting(ISettingsManager.settingsList.SerializedDirectory).getValue());
         });
     }
 
     @FXML
     public void HandleDirectoryChangeButton(ActionEvent event) {
-        ConnorLogger.Log("Handling directory change", ConnorLogger.PriorityLevel.Low);
-        String directory = FileIO.OpenDirectoryWindow();
+        ConnorLogger.log("Handling directory change", ConnorLogger.PriorityLevel.Low);
+        String directory = FileIO.openDirectoryWindow();
         if (directory != null) {
-            ApplicationSettings.GetInstance().getSetting(ISettingsManager.settingsList.SerializedDirectory).change(directory);
+            ApplicationSettings.getInstance().getSetting(ISettingsManager.settingsList.SerializedDirectory).change(directory);
         } else {
-            ConnorLogger.Log("ERROR: Driectory was null.", ConnorLogger.PriorityLevel.Low);
+            ConnorLogger.log("ERROR: Driectory was null.", ConnorLogger.PriorityLevel.Low);
         }
     }
 
     @FXML
     public void handleResetDefaultButton(ActionEvent event) {
-        ApplicationSettings.GetInstance().getSetting(ISettingsManager.settingsList.SerializedDirectory).setToDefault();
-        ConnorLogger.Log("NOTE: FileDirectory set to default.", ConnorLogger.PriorityLevel.Low);
+        ApplicationSettings.getInstance().getSetting(ISettingsManager.settingsList.SerializedDirectory).setToDefault();
+        ConnorLogger.log("NOTE: FileDirectory set to default.", ConnorLogger.PriorityLevel.Low);
     }
 
     @FXML

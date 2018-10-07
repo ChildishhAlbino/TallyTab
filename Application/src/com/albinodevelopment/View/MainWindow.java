@@ -47,7 +47,7 @@ public class MainWindow extends View implements Initializable {
         super();
         windowLoaderFactory = new WindowLoaderFactory();
         contentLoaderFactory = new ContentLoaderFactory();
-        SetupMVC();
+        setupMVC();
     }
 
     @FXML
@@ -57,7 +57,7 @@ public class MainWindow extends View implements Initializable {
 
     @FXML
     private void handleOpenButton(ActionEvent event) {
-        Show();
+        show();
     }
 
     @FXML
@@ -80,7 +80,7 @@ public class MainWindow extends View implements Initializable {
                 return;
             }
         }
-        settingsWindow.Show();
+        settingsWindow.show();
     }
 
     @FXML
@@ -93,40 +93,40 @@ public class MainWindow extends View implements Initializable {
                 return;
             }
         }
-        drinksListBuilderWindow.Show();
+        drinksListBuilderWindow.show();
     }
 
     @Override
-    public void Handle(ViewCommand command) {
-        if (command.CanExecute(this)) {
-            ICommand.ExecutionResult exectutionResult = command.Execute(this);
+    public void handle(ViewCommand command) {
+        if (command.canExecute(this)) {
+            ICommand.ExecutionResult exectutionResult = command.execute(this);
             if (exectutionResult.equals(ICommand.ExecutionResult.failure)) {
-                ConnorLogger.Log("COMMAND FAILURE: " + command.toString()
-                        + "\n" + command.GetErrorCode(), ConnorLogger.PriorityLevel.High);
+                ConnorLogger.log("COMMAND FAILURE: " + command.toString()
+                        + "\n" + command.getErrorCode(), ConnorLogger.PriorityLevel.High);
             } else {
 
             }
         } else {
-            ConnorLogger.Log("Command couldn't be run for some reason " + command.toString(), ConnorLogger.PriorityLevel.High);
+            ConnorLogger.log("Command couldn't be run for some reason " + command.toString(), ConnorLogger.PriorityLevel.High);
         }
     }
 
     @Override
-    public boolean CanHandle(Command command) {
+    public boolean canHandle(Command command) {
         if (command instanceof ViewCommand) {
             // log success
-            ConnorLogger.Log(command.toString() + "can be handled by this command handler - " + this.getClass().getName(), ConnorLogger.PriorityLevel.Medium);
+            ConnorLogger.log(command.toString() + "can be handled by this command handler - " + this.getClass().getName(), ConnorLogger.PriorityLevel.Medium);
             return true;
         } else {
             // log failure
-            command.GenerateErrorCode("This command cannot be handled by this Command Handler.");
-            ConnorLogger.Log(command.GetErrorCode(), ConnorLogger.PriorityLevel.High);
+            command.generateErrorCode("This command cannot be handled by this Command Handler.");
+            ConnorLogger.log(command.getErrorCode(), ConnorLogger.PriorityLevel.High);
             return false;
         }
     }
 
     @Override
-    public void SetCommandHandler(ICommandHandler commandHandler) {
+    public void setCommandHandler(ICommandHandler commandHandler) {
         if (this.commandHandler == null && commandHandler != null) {
             this.commandHandler = commandHandler;
         } else {
@@ -134,47 +134,47 @@ public class MainWindow extends View implements Initializable {
         }
     }
 
-    private void SetupMVC() {
+    private void setupMVC() {
         Controller controller = new Controller();
         Model model = new Model();
-        model.SetCommandHandler(this);
-        this.SetCommandHandler(controller);
-        controller.SetCommandHandler(model);
+        model.setCommandHandler(this);
+        this.setCommandHandler(controller);
+        controller.setCommandHandler(model);
         controller.start();
     }
 
     private <T extends Window> Window setupWindow(Class<T> windowClass, String fxml) {
         WindowLoader windowLoader = windowLoaderFactory.getWindowLoader(windowClass);
         try {
-            Window window = windowLoader.NewWindow(fxml);
+            Window window = windowLoader.newWindow(fxml);
             window.setMain(this);
             window.start();
             return window;
         } catch (InstantiationException | IllegalAccessException ex) {
-            ConnorLogger.Log("ERROR; Couldn't load settings window for some reason - " + ex.toString(), ConnorLogger.PriorityLevel.High);
+            ConnorLogger.log("ERROR; Couldn't load settings window for some reason - " + ex.toString(), ConnorLogger.PriorityLevel.High);
         }
         return null;
     }
 
     @Override
-    public ICommandHandler GetCommandHandler() {
+    public ICommandHandler getCommandHandler() {
         return commandHandler;
     }
 
     @Override
-    protected void Refresh() {
-        ConnorLogger.Log("Main Window Refreshed.", ConnorLogger.PriorityLevel.Zero);
-        ConnorLogger.Log(FunctionManager.getInstance().currentFunctions(), ConnorLogger.PriorityLevel.Zero);
+    protected void refresh() {
+        ConnorLogger.log("Main Window Refreshed.", ConnorLogger.PriorityLevel.Zero);
+        ConnorLogger.log(FunctionManager.getInstance().currentFunctions(), ConnorLogger.PriorityLevel.Zero);
     }
 
     @Override
     public void newFunction() {
         // send a new function command to the model
-        Handle(new ViewCommand.PassToControllerCommand(new ControllerCommand.PassToModelCommand(new ModelCommand.CallForNewFunctionWindowCommand())));
+        handle(new ViewCommand.PassToControllerCommand(new ControllerCommand.PassToModelCommand(new ModelCommand.CallForNewFunctionWindowCommand())));
     }
 
     @Override
-    public void Show() {
+    public void show() {
         stage.show();
     }
 
@@ -185,15 +185,15 @@ public class MainWindow extends View implements Initializable {
 
     @Override
     public void closeTab(String title) {
-        ConnorLogger.Log("Tab closed: " + title, ConnorLogger.PriorityLevel.Low);
-        commandHandler.Handle(new ControllerCommand.PassToModelCommand(new ModelCommand.RemoveFunctionCommand(title)));
+        ConnorLogger.log("Tab closed: " + title, ConnorLogger.PriorityLevel.Low);
+        commandHandler.handle(new ControllerCommand.PassToModelCommand(new ModelCommand.RemoveFunctionCommand(title)));
     }
 
     @Override
     public void open() {
         // read in a function file and open a tab with it's corresponding details
     }
-
+    
     @Override
     public Window getWindowByName(String name) {
         Window window = null;
@@ -218,13 +218,13 @@ public class MainWindow extends View implements Initializable {
         } else {
             return;
         }
-        functionWindow.Show();
+        functionWindow.show();
     }
 
     @Override
     public void closeNewFunctionWindow() {
         if (functionWindow != null) {
-            functionWindow.Close();
+            functionWindow.close();
         }
     }
 
@@ -236,10 +236,11 @@ public class MainWindow extends View implements Initializable {
     }
 
     private void newTab(Function function) {
-        ConnorLogger.Log("New Tab!", ConnorLogger.PriorityLevel.Low);
-        Tab tab = generateTab(function.GetName());
+        ConnorLogger.log("New Tab!", ConnorLogger.PriorityLevel.Low);
+        Tab tab = generateTab(function.getName());
         tab.contentProperty().set(generateTabGUI(function).generateContent(function));
         tabPane.getTabs().add(tab);
+        tabPane.getSelectionModel().select(tab);
     }
 
     @Override
@@ -248,7 +249,7 @@ public class MainWindow extends View implements Initializable {
         if (tabContent == null) {
             newTab(function);
         } else {
-            ConnorLogger.Log("Updating Tab!", ConnorLogger.PriorityLevel.Low);
+            ConnorLogger.log("Updating Tab!", ConnorLogger.PriorityLevel.Low);
             tabContent.update(function);
         }
     }

@@ -50,7 +50,7 @@ public class FunctionManager {
 
     private boolean functionAlreadyExists(String name) {
         for (Function function : functions.values()) {
-            if (function.GetName().equals(name)) {
+            if (function.getName().equals(name)) {
                 return true;
             }
         }
@@ -64,13 +64,13 @@ public class FunctionManager {
 
     public void remove(String functionName) {
         functions.remove(functionName);
-        ConnorLogger.Log("Remove Function: " + functionName + " from the list.", ConnorLogger.PriorityLevel.Low);
+        ConnorLogger.log("Remove Function: " + functionName + " from the list.", ConnorLogger.PriorityLevel.Low);
     }
 
     public String currentFunctions() {
         String s = "Current Functions: " + functions.size() + "\n";
         for (Function f : functions.values()) {
-            s += f.GetName() + ",\n";
+            s += f.getName() + ",\n";
         }
 
         return s;

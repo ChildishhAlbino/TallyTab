@@ -14,7 +14,7 @@ import java.io.PrintStream;
 public class ConnorLogger extends Thread {
 
     private static PriorityLevel currentPriority = PriorityLevel.Unset;
-    private static boolean on;
+    private static boolean loggingState;
     private static PrintStream output = System.out;
 
     public static enum PriorityLevel {
@@ -25,24 +25,24 @@ public class ConnorLogger extends Thread {
         Unset,
     }
 
-    public static void Log(String toBeLogged, PriorityLevel priorityLevel) {
-        if (on) {
+    public static void log(String toBeLogged, PriorityLevel priorityLevel) {
+        if (loggingState) {
             if (currentPriority.compareTo(priorityLevel) <= 0) {
                 output.println(toBeLogged);
             }
         }
     }
 
-    public static void SetPriority(PriorityLevel priorityLevel) {
+    public static void setPriority(PriorityLevel priorityLevel) {
         if (currentPriority == PriorityLevel.Unset) {
             currentPriority = priorityLevel;
         } else {
-            Log("Priority already set", PriorityLevel.High);
+            log("Priority already set", PriorityLevel.High);
         }
     }
 
-    public static void LoggingOnOrOff(boolean onOrOff) {
-        on = onOrOff;
+    public static void setLoggingState(boolean loggingState) {
+        loggingState = loggingState;
     }
 
 }

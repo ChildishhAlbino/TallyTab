@@ -26,7 +26,7 @@ public class Model implements ICommandHandler<ModelCommand> {
     public final FunctionManager functionManager = FunctionManager.getInstance();
 
     @Override
-    public void SetCommandHandler(ICommandHandler commandHandler) {
+    public void setCommandHandler(ICommandHandler commandHandler) {
         if (this.commandHandler == null && commandHandler != null) {
             this.commandHandler = commandHandler;
         } else {
@@ -35,35 +35,35 @@ public class Model implements ICommandHandler<ModelCommand> {
     }
 
     @Override
-    public ICommandHandler GetCommandHandler() {
+    public ICommandHandler getCommandHandler() {
         return commandHandler;
     }
 
     @Override
-    public void Handle(ModelCommand command) {
-        if (command.CanExecute(this)) {
-            ICommand.ExecutionResult exectutionResult = command.Execute(this);
+    public void handle(ModelCommand command) {
+        if (command.canExecute(this)) {
+            ICommand.ExecutionResult exectutionResult = command.execute(this);
             if (exectutionResult.equals(ICommand.ExecutionResult.failure)) {
-                ConnorLogger.Log("COMMAND FAILURE: " + command.toString()
-                        + "\n" + command.GetErrorCode(), ConnorLogger.PriorityLevel.High);
+                ConnorLogger.log("COMMAND FAILURE: " + command.toString()
+                        + "\n" + command.getErrorCode(), ConnorLogger.PriorityLevel.High);
             } else {
 
             }
         } else {
-            ConnorLogger.Log("Command couldn't be run for some reason " + command.toString(), ConnorLogger.PriorityLevel.High);
+            ConnorLogger.log("Command couldn't be run for some reason " + command.toString(), ConnorLogger.PriorityLevel.High);
         }
     }
 
     @Override
-    public boolean CanHandle(Command command) {
+    public boolean canHandle(Command command) {
         if (command instanceof ModelCommand) {
             // log success
-            ConnorLogger.Log(command.toString() + "can be handled by this command handler - " + this.getClass().getName(), ConnorLogger.PriorityLevel.Medium);
+            ConnorLogger.log(command.toString() + "can be handled by this command handler - " + this.getClass().getName(), ConnorLogger.PriorityLevel.Medium);
             return true;
         } else {
             // log failure
-            command.GenerateErrorCode("This command cannot be handled by this Command Handler.");
-            ConnorLogger.Log(command.GetErrorCode(), ConnorLogger.PriorityLevel.High);
+            command.generateErrorCode("This command cannot be handled by this Command Handler.");
+            ConnorLogger.log(command.getErrorCode(), ConnorLogger.PriorityLevel.High);
             return false;
         }
     }
@@ -72,7 +72,7 @@ public class Model implements ICommandHandler<ModelCommand> {
         if (drinksListIsNull()) {
             drinksListBuilder.create();
         } else {
-            ConnorLogger.Log("ERROR: Drinks list already being built. Cannot create new.", ConnorLogger.PriorityLevel.High);
+            ConnorLogger.log("ERROR: Drinks list already being built. Cannot create new.", ConnorLogger.PriorityLevel.High);
         }
     }
 

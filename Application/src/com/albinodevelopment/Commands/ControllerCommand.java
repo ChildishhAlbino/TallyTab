@@ -26,14 +26,14 @@ public abstract class ControllerCommand extends Command<Controller> {
         }
 
         @Override
-        public boolean CanExecute(Controller commandHandler) {
-            return commandHandler.GetCommandHandler().CanHandle(modelCommand);
+        public boolean canExecute(Controller commandHandler) {
+            return commandHandler.getCommandHandler().canHandle(modelCommand);
         }
 
         @Override
-        public ExecutionResult Execute(Controller commandHandler) {
-            if (CanExecute(commandHandler)) {
-                commandHandler.GetCommandHandler().Handle(modelCommand);
+        public ExecutionResult execute(Controller commandHandler) {
+            if (canExecute(commandHandler)) {
+                commandHandler.getCommandHandler().handle(modelCommand);
                 return ExecutionResult.success;
             } else {
                 return ExecutionResult.failure;
@@ -52,15 +52,15 @@ public abstract class ControllerCommand extends Command<Controller> {
         }
 
         @Override
-        public boolean CanExecute(Controller commandHandler) {
-            return commandHandler.CanHandle(this);
+        public boolean canExecute(Controller commandHandler) {
+            return commandHandler.canHandle(this);
         }
 
         @Override
-        public ExecutionResult Execute(Controller commandHandler) {
+        public ExecutionResult execute(Controller commandHandler) {
             Drink drink = commandHandler.validateDrinkCreation(name, price);
             if (drink != null) {
-                commandHandler.GetCommandHandler().Handle(new ModelCommand.AddDrinkToDrinksListCommand(drink));
+                commandHandler.getCommandHandler().handle(new ModelCommand.AddDrinkToDrinksListCommand(drink));
                 return ExecutionResult.success;
             } else {
                 return ExecutionResult.failure;
@@ -79,15 +79,15 @@ public abstract class ControllerCommand extends Command<Controller> {
         }
 
         @Override
-        public boolean CanExecute(Controller commandHandler) {
-            return commandHandler.CanHandle(this);
+        public boolean canExecute(Controller commandHandler) {
+            return commandHandler.canHandle(this);
         }
 
         @Override
-        public ExecutionResult Execute(Controller commandHandler) {
+        public ExecutionResult execute(Controller commandHandler) {
             Drink drink = commandHandler.validateDrinkCreation(name, price);
             if (drink != null) {
-                commandHandler.GetCommandHandler().Handle(new ModelCommand.RemoveDrinkFromDrinksListCommand(drink));
+                commandHandler.getCommandHandler().handle(new ModelCommand.RemoveDrinkFromDrinksListCommand(drink));
                 return ExecutionResult.success;
             } else {
                 return ExecutionResult.failure;
@@ -108,13 +108,13 @@ public abstract class ControllerCommand extends Command<Controller> {
         }
 
         @Override
-        public ExecutionResult Execute(Controller commandHandler) {
+        public ExecutionResult execute(Controller commandHandler) {
             DrinksTab drinksTab = commandHandler.validateFunctionCreation(name, limit, drinksListPath);
             if (drinksTab == null) {
-                GenerateErrorCode("Function couldn't be validated. Plese check logs for further explanation.");
+                generateErrorCode("Function couldn't be validated. Plese check logs for further explanation.");
                 return ExecutionResult.failure;
             }
-            commandHandler.GetCommandHandler().Handle(new ModelCommand.NewFunctionCommand(name, drinksTab));
+            commandHandler.getCommandHandler().handle(new ModelCommand.NewFunctionCommand(name, drinksTab));
             return ExecutionResult.success;
         }
     }
@@ -149,17 +149,17 @@ public abstract class ControllerCommand extends Command<Controller> {
         }
 
         @Override
-        public boolean CanExecute(Controller commandHandler) {
+        public boolean canExecute(Controller commandHandler) {
             return drink != null && functionName != null;
         }
 
         @Override
-        public ExecutionResult Execute(Controller commandHandler) {
+        public ExecutionResult execute(Controller commandHandler) {
             if (commandHandler.validateDrinkAmountChange(functionName)) {
-                commandHandler.GetCommandHandler().Handle(new ModelCommand.ChangeDrinkAmountCommand(amountChange, functionName, drink));
+                commandHandler.getCommandHandler().handle(new ModelCommand.ChangeDrinkAmountCommand(amountChange, functionName, drink));
                 return ExecutionResult.success;
             } else {
-                GenerateErrorCode("Drink amount change was not valid.");
+                generateErrorCode("Drink amount change was not valid.");
             }
             return ExecutionResult.failure;
         }
