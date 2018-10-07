@@ -15,12 +15,12 @@ import java.io.Serializable;
 public class DatabaseDrinksListInterpreter implements IDrinksListInterpreter, Serializable {
 
     @Override
-    public DrinksList Interpret(String directory) {
+    public DrinksList interpret(String directory) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void Save(DrinksList drinksList) {
+    public void save(DrinksList drinksList) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

@@ -6,11 +6,12 @@
 package com.albinodevelopment.Model.Components.Builders;
 
 /**
+ * interface that outlines basic methods from creating a "buildable" object
  *
  * @author conno
  * @param <T>
  */
-public interface IComponentManager<T extends IBuildable> { // interface that outlines basic methods from creating a "buildable" object
+public interface IComponentManager<T extends IBuildable> { // 
 
     void create();
 

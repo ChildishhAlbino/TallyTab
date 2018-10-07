@@ -22,12 +22,12 @@ public class WindowLoader<T extends Window> {
 
     private final FXMLLoader loader = new FXMLLoader();
 
-    public T NewWindow(String fxml) throws InstantiationException, IllegalAccessException {
+    public T newWindow(String fxml) throws InstantiationException, IllegalAccessException {
         Stage stage = new Stage();
-        return NewWindow(fxml, stage);
+        return newWindow(fxml, stage);
     }
 
-    public T NewWindow(String fxml, Stage stage) throws InstantiationException, IllegalAccessException {
+    public T newWindow(String fxml, Stage stage) throws InstantiationException, IllegalAccessException {
         try {
             loader.setLocation(getClass().getResource(fxml));
             Parent root = loader.load();
@@ -36,13 +36,13 @@ public class WindowLoader<T extends Window> {
             stage.setTitle("TallyTab");
 
         } catch (IOException ex) {
-            ConnorLogger.Log("ERROR: Window Loader couldn't load your window - " + ex.toString(), ConnorLogger.PriorityLevel.High);
+            ConnorLogger.log("ERROR: Window Loader couldn't load your window - " + ex.toString(), ConnorLogger.PriorityLevel.High);
         }
         T t = (T) loader.getController();
         stage.setOnShowing((WindowEvent event) -> {
-            t.Refresh();
+            t.refresh();
         });
-        t.SetStage(stage);
+        t.setStage(stage);
         return t;
     }
 }

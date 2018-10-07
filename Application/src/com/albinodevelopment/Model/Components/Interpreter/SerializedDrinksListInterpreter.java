@@ -18,10 +18,10 @@ import java.io.Serializable;
 public class SerializedDrinksListInterpreter implements IDrinksListInterpreter, Serializable {
 
     @Override
-    public DrinksList Interpret(String directory) {
+    public DrinksList interpret(String directory) {
         DrinksList drinksList = SerializerDeserializerFactory
                 .getDeserializer(com.albinodevelopment.Model.Components.DrinksList.class)
-                .DeserializeFromFilePath(directory);
+                .deserializeFromFilePath(directory);
         if (drinksList != null) {
             return drinksList;
         } else {
@@ -30,11 +30,11 @@ public class SerializedDrinksListInterpreter implements IDrinksListInterpreter, 
     }
 
     @Override
-    public void Save(DrinksList drinksList) {
+    public void save(DrinksList drinksList) {
         SerializerDeserializerFactory.getSerializer(
                 com.albinodevelopment.Model.Components.DrinksList.class)
                 .serialize(drinksList,
-                        ApplicationSettings.GetInstance()
+                        ApplicationSettings.getInstance()
                                 .getSetting(ISettingsManager.settingsList.SerializedDirectory).getValue().toString() + "\\DrinksList", drinksList.getName());
     }
 }

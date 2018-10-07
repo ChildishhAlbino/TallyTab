@@ -23,12 +23,12 @@ public class ApplicationSettings implements ISettingsManager, Serializable {
         setupSettings();
     }
 
-    public static ISettingsManager GetInstance() {
+    public static ISettingsManager getInstance() {
         if (instance == null) {
             //check for serialized version first
             ISettingsManager iSettingsManager = SerializerDeserializerFactory
                     .getDeserializer(com.albinodevelopment.Settings.ApplicationSettings.class)
-                    .DeserializeFromFileName("ApplicationSettings.ser");
+                    .deserializeFromFileName("ApplicationSettings.ser");
             if (iSettingsManager != null) {
                 instance = iSettingsManager;
             } else {

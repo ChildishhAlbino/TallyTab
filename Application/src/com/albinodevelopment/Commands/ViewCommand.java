@@ -27,14 +27,14 @@ public abstract class ViewCommand extends Command<View> {
         }
 
         @Override
-        public boolean CanExecute(View commandHandler) {
-            return commandHandler.GetCommandHandler().CanHandle(controllerCommand);
+        public boolean canExecute(View commandHandler) {
+            return commandHandler.getCommandHandler().canHandle(controllerCommand);
         }
 
         @Override
-        public ExecutionResult Execute(View commandHandler) {
-            if (CanExecute(commandHandler)) {
-                commandHandler.GetCommandHandler().Handle(controllerCommand);
+        public ExecutionResult execute(View commandHandler) {
+            if (canExecute(commandHandler)) {
+                commandHandler.getCommandHandler().handle(controllerCommand);
                 return ExecutionResult.success;
             } else {
                 return ExecutionResult.failure;
@@ -51,12 +51,12 @@ public abstract class ViewCommand extends Command<View> {
         }
 
         @Override
-        public boolean CanExecute(View commandHandler) {
+        public boolean canExecute(View commandHandler) {
             return drink != null;
         }
 
         @Override
-        public ExecutionResult Execute(View commandHandler) {
+        public ExecutionResult execute(View commandHandler) {
             DrinksListBuilderWindow drinksListBuilderWindow = (DrinksListBuilderWindow) commandHandler.getWindowByName("DrinksList");
             drinksListBuilderWindow.createGUIFromDrink(drink);
             return ExecutionResult.success;
@@ -72,12 +72,12 @@ public abstract class ViewCommand extends Command<View> {
         }
 
         @Override
-        public boolean CanExecute(View commandHandler) {
+        public boolean canExecute(View commandHandler) {
             return drinkList != null;
         }
 
         @Override
-        public ExecutionResult Execute(View commandHandler) {
+        public ExecutionResult execute(View commandHandler) {
             DrinksListBuilderWindow drinksListBuilderWindow = (DrinksListBuilderWindow) commandHandler.getWindowByName("DrinksList");
             drinksListBuilderWindow.loadDrinksList(drinkList);
             return ExecutionResult.success;
@@ -88,7 +88,7 @@ public abstract class ViewCommand extends Command<View> {
     public static class OpenNewFunctionWindowCommand extends ViewCommand {
 
         @Override
-        public ExecutionResult Execute(View commandHandler) {
+        public ExecutionResult execute(View commandHandler) {
             commandHandler.openNewFunctionWindow();
             return ExecutionResult.success;
         }
@@ -98,7 +98,7 @@ public abstract class ViewCommand extends Command<View> {
     public static class CloseNewFunctionWindowCommand extends ViewCommand {
 
         @Override
-        public ExecutionResult Execute(View commandHandler) {
+        public ExecutionResult execute(View commandHandler) {
             commandHandler.closeNewFunctionWindow();
             return ExecutionResult.success;
         }
@@ -114,7 +114,7 @@ public abstract class ViewCommand extends Command<View> {
         }
 
         @Override
-        public ExecutionResult Execute(View commandHandler) {
+        public ExecutionResult execute(View commandHandler) {
             commandHandler.updateTab(function);
             return ExecutionResult.success;
         }

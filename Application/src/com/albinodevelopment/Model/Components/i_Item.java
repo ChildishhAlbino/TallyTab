@@ -11,7 +11,7 @@ package com.albinodevelopment.Model.Components;
  */
 public interface i_Item {
 
-    public double GetPrice();
+    public double getPrice();
 
-    public String GetName();
+    public String getName();
 }

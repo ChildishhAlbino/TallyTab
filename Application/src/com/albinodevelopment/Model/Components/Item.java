@@ -22,12 +22,12 @@ public abstract class Item implements i_Item, Serializable {
     }
 
     @Override
-    public double GetPrice() {
+    public double getPrice() {
         return price;
     }
 
     @Override
-    public String GetName() {
+    public String getName() {
         return name;
     }
 

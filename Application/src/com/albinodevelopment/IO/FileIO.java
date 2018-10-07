@@ -14,7 +14,7 @@ import javax.swing.JFileChooser;
  */
 public class FileIO {
 
-    public static String OpenDirectoryWindow(String directory) {
+    public static String openDirectoryWindow(String directory) {
         String s = null;
         JFileChooser jFileChooser = new JFileChooser(directory);
         jFileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
@@ -22,13 +22,13 @@ public class FileIO {
         if (response == JFileChooser.APPROVE_OPTION) {
             s = jFileChooser.getSelectedFile().toString();
         } else {
-            ConnorLogger.Log("ERROR: Open file operation was cancelled.", ConnorLogger.PriorityLevel.Low);
+            ConnorLogger.log("ERROR: Open file operation was cancelled.", ConnorLogger.PriorityLevel.Low);
         }
         return s;
     }
 
-    public static String OpenDirectoryWindow() {
-        return OpenDirectoryWindow("");
+    public static String openDirectoryWindow() {
+        return FileIO.openDirectoryWindow("");
     }
 
     public static String openFileExplorer(String directory) {
@@ -39,7 +39,7 @@ public class FileIO {
         if (response == JFileChooser.APPROVE_OPTION) {
             s = jFileChooser.getSelectedFile().toString();
         } else {
-            ConnorLogger.Log("ERROR: Open file operation was cancelled.", ConnorLogger.PriorityLevel.Low);
+            ConnorLogger.log("ERROR: Open file operation was cancelled.", ConnorLogger.PriorityLevel.Low);
         }
         return s;
     }

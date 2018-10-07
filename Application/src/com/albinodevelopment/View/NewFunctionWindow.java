@@ -70,18 +70,18 @@ public class NewFunctionWindow extends Window implements Initializable {
     @FXML
     private void handleOpenDrinksListButton(ActionEvent event) {
         String directory = FileIO.openFileExplorer((String) ApplicationSettings
-                .GetInstance().getSetting(ISettingsManager.settingsList.SerializedDirectory).getValue() + "\\DrinksList");
+                .getInstance().getSetting(ISettingsManager.settingsList.SerializedDirectory).getValue() + "\\DrinksList");
         if (directory != null) {
             selectedDrinksList.setText(directory);
         }
     }
 
     private void cancel() {
-        Close();
+        close();
     }
 
     private void submit() {
-        main.Handle(new ViewCommand.PassToControllerCommand(
+        main.handle(new ViewCommand.PassToControllerCommand(
                 new ControllerCommand.ValidateNewFunctionCommand(functionNameTF
                         .getText(), functionLimitTF.getText(), selectedDrinksList.getText())));
     }
