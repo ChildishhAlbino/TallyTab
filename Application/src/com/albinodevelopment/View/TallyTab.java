@@ -27,7 +27,7 @@ public class TallyTab extends Application {
     public void start(Stage stage) {
         stage.setOnCloseRequest((WindowEvent event) -> {
             Platform.runLater(() -> {
-                ConnorLogger.Log("Application shutdown!",
+                ConnorLogger.log("Application shutdown!",
                         ConnorLogger.PriorityLevel.High);
                 SerializerDeserializerFactory.getSerializer(
                         com.albinodevelopment.Settings.ApplicationSettings.class)
@@ -35,7 +35,7 @@ public class TallyTab extends Application {
                 System.exit(0);
             });
         });
-        LoadWindow(stage);
+        loadWindow(stage);
     }
 
     /**
@@ -45,13 +45,13 @@ public class TallyTab extends Application {
         launch(args);
     }
 
-    private void LoadWindow(Stage stage) {
+    private void loadWindow(Stage stage) {
         WindowLoader windowLoader = windowLoaderFactory
                 .getWindowLoader(com.albinodevelopment.View.MainWindow.class);
         try {
-            MainWindow mainWindow = (MainWindow) windowLoader.NewWindow(
+            MainWindow mainWindow = (MainWindow) windowLoader.newWindow(
                     "MainWindowFXML.fxml", stage);
-            mainWindow.Show();
+            mainWindow.show();
             mainWindow.start();
         } catch (InstantiationException | IllegalAccessException ex) {
             Logger.getLogger(TallyTab.class.getName()).log(Level.SEVERE,

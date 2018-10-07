@@ -30,17 +30,17 @@ public class DrinksListBuilder implements IComponentManager<DrinksList> {
     @Override
     public void open() {
         String directory = FileIO.openFileExplorer(
-                ApplicationSettings.GetInstance()
+                ApplicationSettings.getInstance()
                         .getSetting(ISettingsManager.settingsList.SerializedDirectory)
                         .getValue().toString() + "\\DrinksList");
         if (directory != null) {
-            ConnorLogger.Log(directory, ConnorLogger.PriorityLevel.Low);
+            ConnorLogger.log(directory, ConnorLogger.PriorityLevel.Low);
             checkInterpreter();
 
-            DrinksList temp = drinksListInterpreter.Interpret(directory);
+            DrinksList temp = drinksListInterpreter.interpret(directory);
             if (temp != null) {
                 drinksList = temp;
-                ConnorLogger.Log("Drinks List opened correctly.", ConnorLogger.PriorityLevel.Low);
+                ConnorLogger.log("Drinks List opened correctly.", ConnorLogger.PriorityLevel.Low);
             }
         }
     }
@@ -48,7 +48,7 @@ public class DrinksListBuilder implements IComponentManager<DrinksList> {
     @Override
     public void save() {
         checkInterpreter();
-        drinksListInterpreter.Save(drinksList);
+        drinksListInterpreter.save(drinksList);
         clear();
     }
 
@@ -58,7 +58,7 @@ public class DrinksListBuilder implements IComponentManager<DrinksList> {
     }
 
     private void checkInterpreter() {
-        drinksListInterpreter = (IDrinksListInterpreter) ApplicationSettings.GetInstance()
+        drinksListInterpreter = (IDrinksListInterpreter) ApplicationSettings.getInstance()
                 .getSetting(ISettingsManager.settingsList.DrinksListInterpreter).getValue();
     }
 
@@ -77,14 +77,14 @@ public class DrinksListBuilder implements IComponentManager<DrinksList> {
     @Override
     public boolean validate(String path) {
         checkInterpreter();
-        DrinksList temp = drinksListInterpreter.Interpret(path);
+        DrinksList temp = drinksListInterpreter.interpret(path);
         return temp != null;
     }
 
     @Override
     public DrinksList openAndGet(String path) {
         checkInterpreter();
-        DrinksList dl = drinksListInterpreter.Interpret(path);
+        DrinksList dl = drinksListInterpreter.interpret(path);
         return dl;
     }
 

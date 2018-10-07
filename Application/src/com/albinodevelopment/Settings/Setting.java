@@ -40,7 +40,7 @@ public abstract class Setting<U> implements ISetting<U>, Serializable {
         public SerializedDirectorySetting() {
             defaultValue = System.getenv("Appdata") + "\\TallyTab";
             setToDefault();
-            WriteToFile();
+            writeToFile();
         }
 
         // static class that holds the value of the Text File Directory
@@ -52,19 +52,19 @@ public abstract class Setting<U> implements ISetting<U>, Serializable {
                 if (this.value.contains("TallyTab") == false) {
                     this.value += "\\TallyTab";
                 }
-                WriteToFile();
+                writeToFile();
                 return true;
             } else {
                 return false;
             }
         }
 
-        private void WriteToFile() {
+        private void writeToFile() {
             File file = new File("userDirectory.txt");
             try {
                 PrintWriter printWriter = new PrintWriter(file);
                 printWriter.println(value);
-                ConnorLogger.Log("NOTE: userDirectory.txt written with value = " + value, ConnorLogger.PriorityLevel.Low);
+                ConnorLogger.log("NOTE: userDirectory.txt written with value = " + value, ConnorLogger.PriorityLevel.Low);
                 printWriter.close();
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(Setting.class.getName()).log(Level.SEVERE, null, ex);

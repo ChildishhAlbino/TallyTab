@@ -29,38 +29,37 @@ public abstract class Window extends Thread implements Initializable {
         timer = new Timer();
     }
 
-    public void SetStage(Stage stage) {
+    public void setStage(Stage stage) {
         this.stage = stage;
     }
 
-    protected void Refresh() {
+    protected void refresh() {
 
     }
 
-    public void Show() {
+    public void show() {
         stage.show();
     }
 
-    public void Close() {
+    public void close() {
         stage.hide();
     }
 
-    public void SetupTimer() {
+    public void setupTimer() {
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                Refresh();
+                refresh();
             }
         }, 1000L, REFRESH_RATE);
     }
 
     @Override
     public void run() {
-        //PriorityLogger.Log(stage.getScene().getRoot().getChildrenUnmodifiable().toString(), PriorityLogger.PriorityLevel.Medium);
-        SetupTimer();
+        setupTimer();
     }
 
-    protected void AddNode(Node node, Parent parent) {
+    protected void addNode(Node node, Parent parent) {
         parent.getChildrenUnmodifiable().add(node);
     }
 

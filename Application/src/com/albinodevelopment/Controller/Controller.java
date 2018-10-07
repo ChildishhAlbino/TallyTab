@@ -30,43 +30,43 @@ public class Controller extends Thread implements ICommandHandler<ControllerComm
     //private final HashMap<TabContent, String> tabsToFunctionNames = new HashMap<>();
 
     @Override
-    public boolean CanHandle(Command command) {
+    public boolean canHandle(Command command) {
         if (command instanceof ControllerCommand) {
             // log success
-            ConnorLogger.Log(command.toString() + "can be handled by this command handler - " + this.getClass().getName(), ConnorLogger.PriorityLevel.Medium);
+            ConnorLogger.log(command.toString() + "can be handled by this command handler - " + this.getClass().getName(), ConnorLogger.PriorityLevel.Medium);
             return true;
         } else {
             // log failure
-            command.GenerateErrorCode("This command cannot be handled by this Command Handler.");
-            ConnorLogger.Log(command.GetErrorCode(), ConnorLogger.PriorityLevel.High);
+            command.generateErrorCode("This command cannot be handled by this Command Handler.");
+            ConnorLogger.log(command.getErrorCode(), ConnorLogger.PriorityLevel.High);
             return false;
         }
     }
 
     @Override
-    public void Handle(ControllerCommand command) {
-        if (command.CanExecute(this)) {
-            ICommand.ExecutionResult exectutionResult = command.Execute(this);
+    public void handle(ControllerCommand command) {
+        if (command.canExecute(this)) {
+            ICommand.ExecutionResult exectutionResult = command.execute(this);
             if (exectutionResult.equals(ICommand.ExecutionResult.failure)) {
-                ConnorLogger.Log("COMMAND FAILURE: " + command.toString()
-                        + "\n" + command.GetErrorCode(), ConnorLogger.PriorityLevel.High);
+                ConnorLogger.log("COMMAND FAILURE: " + command.toString()
+                        + "\n" + command.getErrorCode(), ConnorLogger.PriorityLevel.High);
             } else {
 
             }
         } else {
-            ConnorLogger.Log("Command couldn't be run for some reason " + command.toString(), ConnorLogger.PriorityLevel.High);
+            ConnorLogger.log("Command couldn't be run for some reason " + command.toString(), ConnorLogger.PriorityLevel.High);
         }
     }
 
     @Override
     public void run() {
-        ConnorLogger.LoggingOnOrOff(true);
-        ConnorLogger.SetPriority(ConnorLogger.PriorityLevel.Low);
-        ConnorLogger.Log("Logging is on", ConnorLogger.PriorityLevel.High);
+        ConnorLogger.setLoggingState(true);
+        ConnorLogger.setPriority(ConnorLogger.PriorityLevel.Low);
+        ConnorLogger.log("Logging is on", ConnorLogger.PriorityLevel.High);
     }
 
     @Override
-    public void SetCommandHandler(ICommandHandler commandHandler) {
+    public void setCommandHandler(ICommandHandler commandHandler) {
         if (this.commandHandler == null && commandHandler != null) {
             this.commandHandler = commandHandler;
         } else {
@@ -75,7 +75,7 @@ public class Controller extends Thread implements ICommandHandler<ControllerComm
     }
 
     @Override
-    public ICommandHandler GetCommandHandler() {
+    public ICommandHandler getCommandHandler() {
         return commandHandler;
     }
 
@@ -103,7 +103,7 @@ public class Controller extends Thread implements ICommandHandler<ControllerComm
             Double d = Double.valueOf(toBeValidated);
             return d;
         } catch (NumberFormatException ex) {
-            ConnorLogger.Log("ERROR: Price couldn't be converted to double - " + ex.toString(), ConnorLogger.PriorityLevel.Medium);
+            ConnorLogger.log("ERROR: Price couldn't be converted to double - " + ex.toString(), ConnorLogger.PriorityLevel.Medium);
         }
         return null;
     }

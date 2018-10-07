@@ -26,14 +26,14 @@ public abstract class ModelCommand extends Command<Model> {
         }
 
         @Override
-        public boolean CanExecute(Model commandHandler) {
-            return commandHandler.GetCommandHandler().CanHandle(viewCommand);
+        public boolean canExecute(Model commandHandler) {
+            return commandHandler.getCommandHandler().canHandle(viewCommand);
         }
 
         @Override
-        public ExecutionResult Execute(Model commandHandler) {
-            if (CanExecute(commandHandler)) {
-                commandHandler.GetCommandHandler().Handle(viewCommand);
+        public ExecutionResult execute(Model commandHandler) {
+            if (canExecute(commandHandler)) {
+                commandHandler.getCommandHandler().handle(viewCommand);
                 return ExecutionResult.success;
             } else {
                 return ExecutionResult.failure;
@@ -52,10 +52,10 @@ public abstract class ModelCommand extends Command<Model> {
         }
 
         @Override
-        public ExecutionResult Execute(Model commandHandler) {
+        public ExecutionResult execute(Model commandHandler) {
             commandHandler.functionManager.newFunction(name, drinksTab);
-            commandHandler.GetCommandHandler().Handle(new ViewCommand.CloseNewFunctionWindowCommand());
-            commandHandler.GetCommandHandler().Handle(new ViewCommand.UpdateTabContentCommand(FunctionManager.getInstance().getFunction(name)));
+            commandHandler.getCommandHandler().handle(new ViewCommand.CloseNewFunctionWindowCommand());
+            commandHandler.getCommandHandler().handle(new ViewCommand.UpdateTabContentCommand(FunctionManager.getInstance().getFunction(name)));
             return ExecutionResult.success;
         }
     }
@@ -63,12 +63,12 @@ public abstract class ModelCommand extends Command<Model> {
     public static class CreateDrinksListCommand extends ModelCommand {
 
         @Override
-        public boolean CanExecute(Model commandHandler) {
+        public boolean canExecute(Model commandHandler) {
             return commandHandler.drinksListIsNull();
         }
 
         @Override
-        public ExecutionResult Execute(Model commandHandler) {
+        public ExecutionResult execute(Model commandHandler) {
             commandHandler.createNewDrinksList();
             return ExecutionResult.success;
         }
@@ -78,14 +78,14 @@ public abstract class ModelCommand extends Command<Model> {
     public static class OpenDrinksListCommand extends ModelCommand {
 
         @Override
-        public boolean CanExecute(Model commandHandler) {
-            return commandHandler.CanHandle(this);
+        public boolean canExecute(Model commandHandler) {
+            return commandHandler.canHandle(this);
         }
 
         @Override
-        public ExecutionResult Execute(Model commandHandler) {
+        public ExecutionResult execute(Model commandHandler) {
             commandHandler.openDrinksList();
-            commandHandler.GetCommandHandler().Handle(new ViewCommand.LoadDrinksListCommand(commandHandler.getDrinksListBuilder().get()));
+            commandHandler.getCommandHandler().handle(new ViewCommand.LoadDrinksListCommand(commandHandler.getDrinksListBuilder().get()));
             return ExecutionResult.success;
         }
 
@@ -94,12 +94,12 @@ public abstract class ModelCommand extends Command<Model> {
     public static class SaveDrinksListCommand extends ModelCommand {
 
         @Override
-        public boolean CanExecute(Model commandHandler) {
-            return commandHandler.CanHandle(this);
+        public boolean canExecute(Model commandHandler) {
+            return commandHandler.canHandle(this);
         }
 
         @Override
-        public ExecutionResult Execute(Model commandHandler) {
+        public ExecutionResult execute(Model commandHandler) {
             commandHandler.saveDrinksList();
             return ExecutionResult.success;
         }
@@ -115,14 +115,14 @@ public abstract class ModelCommand extends Command<Model> {
         }
 
         @Override
-        public boolean CanExecute(Model commandHandler) {
+        public boolean canExecute(Model commandHandler) {
             return (drink != null);
         }
 
         @Override
-        public ExecutionResult Execute(Model commandHandler) {
+        public ExecutionResult execute(Model commandHandler) {
             commandHandler.addDrinkToDrinksList(drink);
-            commandHandler.GetCommandHandler().Handle(new ViewCommand.GenerateGUIFromDrinkCommand(drink));
+            commandHandler.getCommandHandler().handle(new ViewCommand.GenerateGUIFromDrinkCommand(drink));
             return ExecutionResult.success;
         }
 
@@ -137,12 +137,12 @@ public abstract class ModelCommand extends Command<Model> {
         }
 
         @Override
-        public boolean CanExecute(Model commandHandler) {
+        public boolean canExecute(Model commandHandler) {
             return (drink != null);
         }
 
         @Override
-        public ExecutionResult Execute(Model commandHandler) {
+        public ExecutionResult execute(Model commandHandler) {
             commandHandler.removeDrinkFromDrinksList(drink);
             return ExecutionResult.success;
         }
@@ -152,8 +152,8 @@ public abstract class ModelCommand extends Command<Model> {
     public static class CallForNewFunctionWindowCommand extends ModelCommand {
 
         @Override
-        public ExecutionResult Execute(Model commandHandler) {
-            commandHandler.GetCommandHandler().Handle(new ViewCommand.OpenNewFunctionWindowCommand());
+        public ExecutionResult execute(Model commandHandler) {
+            commandHandler.getCommandHandler().handle(new ViewCommand.OpenNewFunctionWindowCommand());
             return ExecutionResult.success;
         }
 
@@ -172,10 +172,10 @@ public abstract class ModelCommand extends Command<Model> {
         }
 
         @Override
-        public ExecutionResult Execute(Model commandHandler) {
+        public ExecutionResult execute(Model commandHandler) {
             Function function = commandHandler.functionManager.changeDrinkValue(functionName, drink, delta);
             if (function != null) {
-                commandHandler.GetCommandHandler().Handle(new ViewCommand.UpdateTabContentCommand(function));
+                commandHandler.getCommandHandler().handle(new ViewCommand.UpdateTabContentCommand(function));
                 return ExecutionResult.success;
             }
             return ExecutionResult.failure;
@@ -191,7 +191,7 @@ public abstract class ModelCommand extends Command<Model> {
         }
 
         @Override
-        public ExecutionResult Execute(Model commandHandler) {
+        public ExecutionResult execute(Model commandHandler) {
             commandHandler.functionManager.remove(functionName);
             return ExecutionResult.success;
         }

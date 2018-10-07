@@ -24,27 +24,27 @@ public class Function implements Serializable {
         drinksTab.init();
     }
 
-    public String GetName() {
+    public String getName() {
         return name;
     }
 
-    public String GetLimit() {
+    public String getLimit() {
         Double d_limit = drinksTab.GetLimit();
         return d_limit.toString();
     }
 
-    public String GetCurrentVal() {
+    public String getCurrentValue() {
         Double d_Current = drinksTab.GetCurrentValue();
         return d_Current.toString();
     }
 
-    public String GetPercent() {
+    public String getPercentUsed() {
         Double d_Percent = drinksTab.GetPercentUsed() * 100;
         d_Percent = DrinksTab.round(d_Percent, 4);
         return d_Percent.toString() + "%";
     }
 
-    public Double GetPercentAsDouble() {
+    public Double getPercentAsDouble() {
         return drinksTab.GetPercentUsed();
     }
 
