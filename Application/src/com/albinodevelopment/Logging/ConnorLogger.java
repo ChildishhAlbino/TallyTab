@@ -42,7 +42,7 @@ public class ConnorLogger extends Thread {
     }
 
     public static void setLoggingState(boolean loggingState) {
-        loggingState = loggingState;
+        ConnorLogger.loggingState = loggingState;
     }
 
 }

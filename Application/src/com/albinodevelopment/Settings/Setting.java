@@ -40,7 +40,7 @@ public abstract class Setting<U> implements ISetting<U>, Serializable {
         public SerializedDirectorySetting() {
             defaultValue = System.getenv("Appdata") + "\\TallyTab";
             setToDefault();
-            writeToFile();
+            restructure();
         }
 
         // static class that holds the value of the Text File Directory
@@ -52,7 +52,7 @@ public abstract class Setting<U> implements ISetting<U>, Serializable {
                 if (this.value.contains("TallyTab") == false) {
                     this.value += "\\TallyTab";
                 }
-                writeToFile();
+                restructure();
                 return true;
             } else {
                 return false;
@@ -69,6 +69,16 @@ public abstract class Setting<U> implements ISetting<U>, Serializable {
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(Setting.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
+
+        private void setupDirectory() {
+            new File(value).mkdir();
+            new File(value + "\\DrinksLists").mkdir();
+        }
+
+        private void restructure() {
+            writeToFile();
+            setupDirectory();
         }
     }
 

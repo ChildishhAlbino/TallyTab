@@ -39,6 +39,7 @@ public abstract class Window extends Thread implements Initializable {
 
     public void show() {
         stage.show();
+        stage.requestFocus();
     }
 
     public void close() {
