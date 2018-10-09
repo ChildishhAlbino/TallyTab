@@ -61,6 +61,7 @@ public class SettingsWindow extends Window {
     public void HandleDirectoryChangeButton(ActionEvent event) {
         ConnorLogger.log("Handling directory change", ConnorLogger.PriorityLevel.Low);
         String directory = FileIO.openDirectoryWindow();
+        stage.requestFocus();
         if (directory != null) {
             ApplicationSettings.getInstance().getSetting(ISettingsManager.settingsList.SerializedDirectory).change(directory);
         } else {

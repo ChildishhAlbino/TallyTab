@@ -35,6 +35,6 @@ public class SerializedDrinksListInterpreter implements IDrinksListInterpreter, 
                 com.albinodevelopment.Model.Components.DrinksList.class)
                 .serialize(drinksList,
                         ApplicationSettings.getInstance()
-                                .getSetting(ISettingsManager.settingsList.SerializedDirectory).getValue().toString() + "\\DrinksList", drinksList.getName());
+                                .getSetting(ISettingsManager.settingsList.SerializedDirectory).getValue().toString() + "\\DrinksLists", drinksList.getName());
     }
 }
