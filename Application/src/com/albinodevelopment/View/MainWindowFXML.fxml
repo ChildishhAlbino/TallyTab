@@ -41,18 +41,31 @@
          <tabs>
             <Tab closable="false" text="HOME">
                <content>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="50.0">
                      <children>
                         <Label text="TALLYTAB">
                            <font>
-                              <Font size="36.0" />
+                              <Font name="System Bold Italic" size="96.0" />
                            </font>
                         </Label>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                            <children>
-                              <Button mnemonicParsing="false" onAction="#handleNewButton" text="NEW" />
-                              <Button mnemonicParsing="false" onAction="#handleOpenButton" text="OPEN" />
-                              <Button mnemonicParsing="false" onAction="#handleDrinksListButton" text="DRINKS LIST EDITOR" />
+                              <Button mnemonicParsing="false" onAction="#handleNewButton" prefHeight="100.0" prefWidth="200.0" text="NEW" textAlignment="CENTER" wrapText="true">
+                                 <font>
+                                    <Font name="System Bold" size="25.0" />
+                                 </font></Button>
+                              <Button mnemonicParsing="false" onAction="#handleOpenButton" prefHeight="100.0" prefWidth="200.0" text="OPEN" textAlignment="CENTER" wrapText="true">
+                                 <font>
+                                    <Font name="System Bold" size="25.0" />
+                                 </font></Button>
+                              <Button mnemonicParsing="false" onAction="#handleDrinksListButton" prefHeight="100.0" prefWidth="200.0" text="DRINKS LIST EDITOR" textAlignment="CENTER" wrapText="true">
+                                 <font>
+                                    <Font name="System Bold" size="25.0" />
+                                 </font></Button>
+                              <Button layoutX="642.0" layoutY="48.0" mnemonicParsing="false" onAction="#handlePreferencesButton" prefHeight="100.0" prefWidth="200.0" text="PREFERENCES" textAlignment="CENTER" wrapText="true">
+                                 <font>
+                                    <Font name="System Bold" size="25.0" />
+                                 </font></Button>
                            </children>
                         </HBox>
                         <Label text="Connor Williams 2018" />
