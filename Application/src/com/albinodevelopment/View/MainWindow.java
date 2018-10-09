@@ -58,6 +58,7 @@ public class MainWindow extends View implements Initializable {
     @FXML
     private void handleOpenButton(ActionEvent event) {
         show();
+        ConnorLogger.log(System.getProperty("user.home"), ConnorLogger.PriorityLevel.High);
     }
 
     @FXML

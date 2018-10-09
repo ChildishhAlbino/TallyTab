@@ -38,7 +38,7 @@ public abstract class Setting<U> implements ISetting<U>, Serializable {
     public static class SerializedDirectorySetting extends Setting<String> {
 
         public SerializedDirectorySetting() {
-            defaultValue = System.getenv("Appdata") + "\\TallyTab";
+            defaultValue = getLocalAppFolder();
             setToDefault();
             restructure();
         }
@@ -79,6 +79,20 @@ public abstract class Setting<U> implements ISetting<U>, Serializable {
         private void restructure() {
             writeToFile();
             setupDirectory();
+        }
+
+        private String getLocalAppFolder() {
+            String returnVar = null;
+            String os = System.getProperty("os.name");
+            if (os.contains("Windows")) {
+                returnVar = System.getenv("Appdata") + "\\TallyTab";
+            } else {
+                returnVar = System.getProperty("user.home");
+                if (os.contains("Mac")) {
+                     returnVar += "/Documents/TallyTab";
+                }
+            }
+            return returnVar;
         }
     }
 
