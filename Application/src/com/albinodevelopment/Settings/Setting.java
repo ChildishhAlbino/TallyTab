@@ -5,6 +5,7 @@
  */
 package com.albinodevelopment.Settings;
 
+import com.albinodevelopment.IO.FileIO;
 import com.albinodevelopment.Logging.ConnorLogger;
 import com.albinodevelopment.Model.Components.Interpreter.IDrinksListInterpreter;
 import com.albinodevelopment.Model.Components.Interpreter.SerializedDrinksListInterpreter;
@@ -50,7 +51,7 @@ public abstract class Setting<U> implements ISetting<U>, Serializable {
                 // move files from oldDirectory to newDirectory
                 this.value = value;
                 if (this.value.contains("TallyTab") == false) {
-                    this.value += "\\TallyTab";
+                    this.value += System.getProperty("file.separator") + "TallyTab";
                 }
                 restructure();
                 return true;
@@ -73,7 +74,7 @@ public abstract class Setting<U> implements ISetting<U>, Serializable {
 
         private void setupDirectory() {
             new File(value).mkdir();
-            new File(value + "\\DrinksLists").mkdir();
+            new File(value + System.getProperty("file.separator") + "DrinksLists").mkdir();
         }
 
         private void restructure() {
@@ -89,7 +90,7 @@ public abstract class Setting<U> implements ISetting<U>, Serializable {
             } else {
                 returnVar = System.getProperty("user.home");
                 if (os.contains("Mac")) {
-                     returnVar += "/Documents/TallyTab";
+                    returnVar += "/Documents/TallyTab";
                 }
             }
             return returnVar;

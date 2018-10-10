@@ -5,10 +5,9 @@
  */
 package com.albinodevelopment.Model.Components.Interpreter;
 
+import com.albinodevelopment.IO.FileIO;
 import com.albinodevelopment.IO.SerializerDeserializerFactory;
 import com.albinodevelopment.Model.Components.DrinksList;
-import com.albinodevelopment.Settings.ApplicationSettings;
-import com.albinodevelopment.Settings.ISettingsManager;
 import java.io.Serializable;
 
 /**
@@ -34,7 +33,6 @@ public class SerializedDrinksListInterpreter implements IDrinksListInterpreter, 
         SerializerDeserializerFactory.getSerializer(
                 com.albinodevelopment.Model.Components.DrinksList.class)
                 .serialize(drinksList,
-                        ApplicationSettings.getInstance()
-                                .getSetting(ISettingsManager.settingsList.SerializedDirectory).getValue().toString() + "\\DrinksLists", drinksList.getName());
+                        FileIO.DRINKS_LIST_DIRECTORY(), drinksList.getName());
     }
 }

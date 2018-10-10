@@ -46,7 +46,7 @@ public class Serializer<T> {
         SerializerDeserializerFactory.getSerializer(
                 com.albinodevelopment.Settings.ApplicationSettings.class)
                 .serialize(applicationSettings,
-                        applicationSettings.getSetting(ISettingsManager.settingsList.SerializedDirectory).getValue().toString(),
+                        FileIO.APPLICATION_DIRECTORY(),
                         applicationSettings.toString());
     }
 
