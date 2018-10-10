@@ -60,7 +60,7 @@ public class SettingsWindow extends Window {
     @FXML
     public void HandleDirectoryChangeButton(ActionEvent event) {
         ConnorLogger.log("Handling directory change", ConnorLogger.PriorityLevel.Low);
-        String directory = FileIO.openDirectoryChooser(FileIO.APPLICATION_DIRECTORY());
+        String directory = FileIO.openDirectoryWindow(FileIO.APPLICATION_DIRECTORY());
         stage.requestFocus();
         if (directory != null) {
             ApplicationSettings.getInstance().getSetting(ISettingsManager.settingsList.SerializedDirectory).change(directory);
