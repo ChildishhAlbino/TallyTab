@@ -8,6 +8,9 @@ package com.albinodevelopment.IO;
 import com.albinodevelopment.Logging.ConnorLogger;
 import com.albinodevelopment.Settings.ApplicationSettings;
 import com.albinodevelopment.Settings.ISettingsManager;
+import java.io.File;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.Stage;
 import javax.swing.JFileChooser;
 
 /**
@@ -54,6 +57,28 @@ public class FileIO {
     public static String DRINKS_LIST_DIRECTORY() {
         String s = APPLICATION_DIRECTORY();
         s += System.getProperty("file.separator") + "DrinksLists";
+        return s;
+    }
+
+    public String openDirectoryChooser() {
+        String s = "";
+
+        return s;
+    }
+
+    public static String openDirectoryChooser(String directory) {
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setTitle("Select a Directory");
+        directoryChooser.setInitialDirectory(new File(directory));
+        File selected = directoryChooser.showDialog(new Stage());
+        String s = null;
+
+        if (selected != null) {
+            s = selected.getAbsolutePath();
+        } else {
+            ConnorLogger.log("ERROR: Directory selected was cancelled.", ConnorLogger.PriorityLevel.Zero);
+        }
+
         return s;
     }
 
