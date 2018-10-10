@@ -35,6 +35,7 @@ public class TallyTab extends Application {
                 System.exit(0);
             });
         });
+        ApplicationSettings.getInstance();
         loadWindow(stage);
     }
 

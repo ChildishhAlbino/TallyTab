@@ -45,7 +45,7 @@
                                 <Font name="System Bold" size="18.0" />
                             </font>
                         </Button>
-                        <Label fx:id="selectedDrinksList" maxWidth="300.0" textAlignment="CENTER">
+                        <Label fx:id="selectedDrinksList" maxWidth="300.0" textAlignment="CENTER" wrapText="true">
                             <font>
                                 <Font name="System Bold" size="12.0" />
                             </font>

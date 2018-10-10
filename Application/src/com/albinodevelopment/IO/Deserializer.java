@@ -62,9 +62,9 @@ public class Deserializer<T> {
             }
 
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(Deserializer.class.getName()).log(Level.SEVERE, null, ex);
+            ConnorLogger.log("ERROR: File: " + file.getName() + " not found - " + ex.getLocalizedMessage(), ConnorLogger.PriorityLevel.Medium);
         } catch (IOException ex) {
-            Logger.getLogger(Deserializer.class.getName()).log(Level.SEVERE, null, ex);
+            ConnorLogger.log("ERROR: IOException. " + ex.getLocalizedMessage(), ConnorLogger.PriorityLevel.Medium);
         }
 
         return null;
