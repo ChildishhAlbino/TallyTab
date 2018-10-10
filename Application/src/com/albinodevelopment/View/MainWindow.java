@@ -58,7 +58,6 @@ public class MainWindow extends View implements Initializable {
     @FXML
     private void handleOpenButton(ActionEvent event) {
         show();
-        ConnorLogger.log(System.getProperty("user.home"), ConnorLogger.PriorityLevel.High);
     }
 
     @FXML
@@ -194,7 +193,7 @@ public class MainWindow extends View implements Initializable {
     public void open() {
         // read in a function file and open a tab with it's corresponding details
     }
-    
+
     @Override
     public Window getWindowByName(String name) {
         Window window = null;

@@ -6,6 +6,8 @@
 package com.albinodevelopment.IO;
 
 import com.albinodevelopment.Logging.ConnorLogger;
+import com.albinodevelopment.Settings.ApplicationSettings;
+import com.albinodevelopment.Settings.ISettingsManager;
 import javax.swing.JFileChooser;
 
 /**
@@ -41,6 +43,17 @@ public class FileIO {
         } else {
             ConnorLogger.log("ERROR: Open file operation was cancelled.", ConnorLogger.PriorityLevel.Low);
         }
+        return s;
+    }
+
+    public static String APPLICATION_DIRECTORY() {
+        String s = ApplicationSettings.getInstance().getSetting(ISettingsManager.settingsList.SerializedDirectory).getValue().toString();
+        return s;
+    }
+
+    public static String DRINKS_LIST_DIRECTORY() {
+        String s = APPLICATION_DIRECTORY();
+        s += System.getProperty("file.separator") + "DrinksLists";
         return s;
     }
 
