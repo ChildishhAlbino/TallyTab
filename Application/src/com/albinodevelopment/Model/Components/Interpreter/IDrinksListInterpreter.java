@@ -13,7 +13,7 @@ import com.albinodevelopment.Model.Components.DrinksList;
  */
 public interface IDrinksListInterpreter {
 
-    DrinksList interpret(String directoryt);
+    DrinksList interpret(String directory);
 
     void save(DrinksList drinksList);
 }

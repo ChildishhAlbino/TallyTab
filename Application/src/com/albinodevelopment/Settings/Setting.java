@@ -9,6 +9,7 @@ import com.albinodevelopment.IO.FileIO;
 import com.albinodevelopment.Logging.ConnorLogger;
 import com.albinodevelopment.Model.Components.Interpreter.IDrinksListInterpreter;
 import com.albinodevelopment.Model.Components.Interpreter.SerializedDrinksListInterpreter;
+import com.albinodevelopment.Model.Components.Interpreter.XMLDrinksListInterpreter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -100,7 +101,8 @@ public abstract class Setting<U> implements ISetting<U>, Serializable {
     public static class DrinksListInterpreterSetting extends Setting<IDrinksListInterpreter> {
 
         public DrinksListInterpreterSetting() {
-            defaultValue = new SerializedDrinksListInterpreter();
+            //defaultValue = new SerializedDrinksListInterpreter();
+            defaultValue = new XMLDrinksListInterpreter();
             setToDefault();
         }
 
