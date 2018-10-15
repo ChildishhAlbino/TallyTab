@@ -5,6 +5,7 @@
  */
 package com.albinodevelopment.Settings;
 
+import com.albinodevelopment.IO.FileIO;
 import com.albinodevelopment.IO.SerializerDeserializerFactory;
 import java.io.Serializable;
 import java.util.HashMap;
@@ -24,13 +25,13 @@ public class ApplicationSettings implements ISettingsManager, Serializable {
     }
 
     public static ISettingsManager getInstance() {
-        if (instance == null) {
-            //check for serialized version first
-            ISettingsManager iSettingsManager = SerializerDeserializerFactory
-                    .getDeserializer(com.albinodevelopment.Settings.ApplicationSettings.class)
-                    .deserializeFromFileName("ApplicationSettings.ser");
-            if (iSettingsManager != null) {
-                instance = iSettingsManager;
+    if (instance == null) {
+            String fileDirectory = FileIO.readDirectoryFile();
+            if (!(fileDirectory == null)) {
+                ISettingsManager iSettingsManager = ApplicationSettingsXMLInterpreter.interpret(fileDirectory + "ApplicationSettings.xml");
+                if (iSettingsManager != null) {
+                    instance = iSettingsManager;
+                }
             } else {
                 instance = new ApplicationSettings();
             }

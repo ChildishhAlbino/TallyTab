@@ -5,10 +5,9 @@
  */
 package com.albinodevelopment.Settings;
 
-import com.albinodevelopment.IO.FileIO;
 import com.albinodevelopment.Logging.ConnorLogger;
+import com.albinodevelopment.Model.Components.Interpreter.DatabaseDrinksListInterpreter;
 import com.albinodevelopment.Model.Components.Interpreter.IDrinksListInterpreter;
-import com.albinodevelopment.Model.Components.Interpreter.SerializedDrinksListInterpreter;
 import com.albinodevelopment.Model.Components.Interpreter.XMLDrinksListInterpreter;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -27,7 +26,7 @@ public abstract class Setting<U> implements ISetting<U>, Serializable {
     protected U value;
     protected U defaultValue;
     protected String XMLCode;
-    
+
     @Override
     public U getValue() {
         return value;
@@ -37,13 +36,17 @@ public abstract class Setting<U> implements ISetting<U>, Serializable {
     public void setToDefault() {
         change(defaultValue);
     }
-    
-    public String getXMLCode(){
+
+    public String getXMLCode() {
         return XMLCode;
     }
 
-    public static class DrinksListDirectorySetting extends Setting<String> {
+    public String getXMLValue() {
+        return "Value was not set by subclass.";
+    }
 
+    public static class DrinksListDirectorySetting extends Setting<String> {
+    
         public DrinksListDirectorySetting() {
             XMLCode = "DrinksListDirectory";
             defaultValue = getLocalAppFolder();
@@ -102,6 +105,11 @@ public abstract class Setting<U> implements ISetting<U>, Serializable {
             }
             return returnVar;
         }
+
+        @Override
+        public String getXMLValue() {
+            return value;
+        }
     }
 
     public static class DrinksListInterpreterSetting extends Setting<IDrinksListInterpreter> {
@@ -121,6 +129,18 @@ public abstract class Setting<U> implements ISetting<U>, Serializable {
                 return false;
             }
         }
-        
+
+        @Override
+        public String getXMLValue() {
+            if (value instanceof XMLDrinksListInterpreter) {
+                return "XML";
+            }
+
+            if (value instanceof DatabaseDrinksListInterpreter) {
+                return "DB";
+            }
+
+            return super.getXMLValue();
+        }
     }
 }

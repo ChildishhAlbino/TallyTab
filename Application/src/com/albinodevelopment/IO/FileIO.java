@@ -8,8 +8,11 @@ package com.albinodevelopment.IO;
 import com.albinodevelopment.Logging.ConnorLogger;
 import com.albinodevelopment.Settings.ApplicationSettings;
 import com.albinodevelopment.Settings.ISettingsManager;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -41,7 +44,7 @@ public class FileIO {
         return null;
     }
 
-    public static boolean writeXMLDocumentToFile(Document document, String directory,  String fileName) {
+    public static boolean writeXMLDocumentToFile(Document document, String directory, String fileName) {
         try {
             xmlOutputter.output(document, new FileOutputStream(directory + System.getProperty("file.separator") + fileName));
             return true;
@@ -92,6 +95,27 @@ public class FileIO {
             ConnorLogger.log("ERROR: Directory selected was cancelled.", ConnorLogger.PriorityLevel.Zero);
         }
         return s;
+    }
+
+    public static String readDirectoryFile() {
+        File file = new File("userDirectory.txt");
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+            String directory = bufferedReader.readLine();
+            if (directory != null) {
+                ConnorLogger.log("Directory ==" + directory, ConnorLogger.PriorityLevel.High);
+                return directory + System.getProperty("file.separator");
+            } else {
+                throw new IOException("The directory was null.");
+            }
+
+        } catch (FileNotFoundException ex) {
+            ConnorLogger.log("ERROR: File: " + file.getName() + " not found - " + ex.getLocalizedMessage(), ConnorLogger.PriorityLevel.Medium);
+        } catch (IOException ex) {
+            ConnorLogger.log("ERROR: IOException. " + ex.getLocalizedMessage(), ConnorLogger.PriorityLevel.Medium);
+        }
+
+        return null;
     }
 
 }
