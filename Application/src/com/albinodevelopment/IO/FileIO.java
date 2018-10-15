@@ -9,10 +9,18 @@ import com.albinodevelopment.Logging.ConnorLogger;
 import com.albinodevelopment.Settings.ApplicationSettings;
 import com.albinodevelopment.Settings.ISettingsManager;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javax.swing.JFileChooser;
+import org.jdom2.Document;
+import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
 
 /**
  *
@@ -20,35 +28,28 @@ import javax.swing.JFileChooser;
  */
 public class FileIO {
 
-//    public static String openDirectoryWindow(String directory) {
-//        String s = null;
-//        JFileChooser jFileChooser = new JFileChooser(directory);
-//        jFileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-//        int response = jFileChooser.showOpenDialog(null);
-//        if (response == JFileChooser.APPROVE_OPTION) {
-//            s = jFileChooser.getSelectedFile().toString();
-//        } else {
-//            ConnorLogger.log("ERROR: Open file operation was cancelled.", ConnorLogger.PriorityLevel.Low);
-//        }
-//        return s;
-//    }
-//
-//    public static String openDirectoryWindow() {
-//        return FileIO.openDirectoryWindow("");
-//    }
-//
-//    public static String openFileExplorer(String directory) {
-//        String s = null;
-//        JFileChooser jFileChooser = new JFileChooser(directory);
-//        jFileChooser.setFileSelectionMode(JFileChooser.OPEN_DIALOG);
-//        int response = jFileChooser.showOpenDialog(null);
-//        if (response == JFileChooser.APPROVE_OPTION) {
-//            s = jFileChooser.getSelectedFile().toString();
-//        } else {
-//            ConnorLogger.log("ERROR: Open file operation was cancelled.", ConnorLogger.PriorityLevel.Low);
-//        }
-//        return s;
-//    }
+    private static final SAXBuilder saxBuilder = new SAXBuilder();
+    private static final XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
+
+    public static Document getXMLDocumentFromFile(String filePath) {
+        try {
+            Document document = saxBuilder.build(new File(filePath));
+            return document;
+        } catch (JDOMException | IOException ex) {
+            Logger.getLogger(FileIO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public static boolean writeXMLDocumentToFile(Document document, String fileName) {
+        try {
+            xmlOutputter.output(document, new FileOutputStream(FileIO.DRINKS_LIST_DIRECTORY() + System.getProperty("file.separator") + fileName));
+            return true;
+        } catch (IOException ex) {
+            Logger.getLogger(FileIO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
 
     public static String APPLICATION_DIRECTORY() {
         String s = ApplicationSettings.getInstance().getSetting(ISettingsManager.settingsList.SerializedDirectory).getValue().toString();
@@ -60,8 +61,8 @@ public class FileIO {
         s += System.getProperty("file.separator") + "DrinksLists";
         return s;
     }
-    
-    public static String openFileExplorer(String directory){
+
+    public static String openFileExplorer(String directory) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Select a File");
         fileChooser.setInitialDirectory(new File(directory));
