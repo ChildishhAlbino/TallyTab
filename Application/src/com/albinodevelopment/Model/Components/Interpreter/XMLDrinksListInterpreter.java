@@ -5,9 +5,16 @@
  */
 package com.albinodevelopment.Model.Components.Interpreter;
 
+import com.albinodevelopment.IO.FileIO;
 import com.albinodevelopment.Model.Components.Drink;
 import com.albinodevelopment.Model.Components.DrinksList;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.jdom2.*;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
 
 /**
  *
@@ -22,13 +29,21 @@ public class XMLDrinksListInterpreter implements IDrinksListInterpreter {
 
     @Override
     public void save(DrinksList drinksList) {
-        Document document = new Document();
-        Element root = new Element("DrinksList");
-        root.setAttribute("Version", "1");
-        root.setAttribute("Name", drinksList.getName());
-        document.setRootElement(root);
-        for (Drink drink : drinksList.getDrinksList().values()) {
-            root.addContent(createDrinkXML(drink));
+        try {
+            Document document = new Document();
+            Element root = new Element("DrinksList");
+            root.setAttribute("Version", "1");
+            root.setAttribute("Name", drinksList.getName());
+            document.setRootElement(root);
+            drinksList.getDrinksList().values().forEach((drink) -> {
+                root.addContent(createDrinkXML(drink));
+            });
+            
+            XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
+            String fileName = System.getProperty("file.separator") + drinksList.getName() + ".xml";
+            xmlOutputter.output(document, new FileOutputStream(FileIO.DRINKS_LIST_DIRECTORY() + fileName));
+        } catch (IOException ex) {
+            Logger.getLogger(XMLDrinksListInterpreter.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
