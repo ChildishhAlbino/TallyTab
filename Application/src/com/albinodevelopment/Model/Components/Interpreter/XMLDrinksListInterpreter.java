@@ -28,15 +28,21 @@ public class XMLDrinksListInterpreter implements IDrinksListInterpreter {
         root.setAttribute("Name", drinksList.getName());
         document.setRootElement(root);
         for (Drink drink : drinksList.getDrinksList().values()) {
-            Element drinkContainer = new Element("Drink");
-            Element nameContainer = new Element("Name");
-            nameContainer.addContent(drink.getName());
-            Element priceContainer = new Element("Price");
-            priceContainer.addContent(String.valueOf(drink.getPrice()));
-            drinkContainer.addContent(nameContainer);
-            drinkContainer.addContent(priceContainer);
-            root.addContent(drinkContainer);
+            root.addContent(createDrinkXML(drink));
         }
+    }
+
+    private Element createDrinkXML(Drink drink) {
+        Element drinkContainer = new Element("Drink");
+        
+        Element nameContainer = new Element("Name");
+        nameContainer.addContent(drink.getName());
+        drinkContainer.addContent(nameContainer);
+        
+        Element priceContainer = new Element("Price");
+        priceContainer.addContent(String.valueOf(drink.getPrice()));
+        drinkContainer.addContent(priceContainer);
+        return drinkContainer;
     }
 
 }
