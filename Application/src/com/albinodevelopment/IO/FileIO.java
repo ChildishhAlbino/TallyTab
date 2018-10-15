@@ -41,9 +41,9 @@ public class FileIO {
         return null;
     }
 
-    public static boolean writeXMLDocumentToFile(Document document, String fileName) {
+    public static boolean writeXMLDocumentToFile(Document document, String directory,  String fileName) {
         try {
-            xmlOutputter.output(document, new FileOutputStream(FileIO.DRINKS_LIST_DIRECTORY() + System.getProperty("file.separator") + fileName));
+            xmlOutputter.output(document, new FileOutputStream(directory + System.getProperty("file.separator") + fileName));
             return true;
         } catch (IOException ex) {
             Logger.getLogger(FileIO.class.getName()).log(Level.SEVERE, null, ex);
@@ -52,7 +52,7 @@ public class FileIO {
     }
 
     public static String APPLICATION_DIRECTORY() {
-        String s = ApplicationSettings.getInstance().getSetting(ISettingsManager.settingsList.SerializedDirectory).getValue().toString();
+        String s = ApplicationSettings.getInstance().getSetting(ISettingsManager.settingsList.DrinksListDirectory).getValue().toString();
         return s;
     }
 

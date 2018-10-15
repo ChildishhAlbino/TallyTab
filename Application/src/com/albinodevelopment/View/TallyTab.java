@@ -3,6 +3,7 @@ package com.albinodevelopment.View;
 import com.albinodevelopment.IO.SerializerDeserializerFactory;
 import com.albinodevelopment.Logging.ConnorLogger;
 import com.albinodevelopment.Settings.ApplicationSettings;
+import com.albinodevelopment.Settings.ApplicationSettingsXMLInterpreter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
@@ -32,6 +33,7 @@ public class TallyTab extends Application {
                 SerializerDeserializerFactory.getSerializer(
                         com.albinodevelopment.Settings.ApplicationSettings.class)
                         .serializeApplicationSettings();
+                ApplicationSettingsXMLInterpreter.save(ApplicationSettings.getInstance());
                 System.exit(0);
             });
         });

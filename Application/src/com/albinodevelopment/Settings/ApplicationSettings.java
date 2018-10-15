@@ -45,8 +45,8 @@ public class ApplicationSettings implements ISettingsManager, Serializable {
             switch (setting) {
                 case DrinksListInterpreter:
                     return new Setting.DrinksListInterpreterSetting();
-                case SerializedDirectory:
-                    return new Setting.SerializedDirectorySetting();
+                case DrinksListDirectory:
+                    return new Setting.DrinksListDirectorySetting();
                 default:
                     return null;
             }
@@ -69,5 +69,10 @@ public class ApplicationSettings implements ISettingsManager, Serializable {
     @Override
     public String toString() {
         return "ApplicationSettings";
+    }
+
+    @Override
+    public HashMap<settingsList, Setting> getSettings() {
+        return settings;
     }
 }

@@ -31,7 +31,7 @@ public class DrinksListBuilder implements IComponentManager<DrinksList> {
     public void open() {
         String directory = FileIO.openFileExplorer(
                 ApplicationSettings.getInstance()
-                        .getSetting(ISettingsManager.settingsList.SerializedDirectory)
+                        .getSetting(ISettingsManager.settingsList.DrinksListDirectory)
                         .getValue().toString() + "\\DrinksLists");
         if (directory != null) {
             ConnorLogger.log(directory, ConnorLogger.PriorityLevel.Low);

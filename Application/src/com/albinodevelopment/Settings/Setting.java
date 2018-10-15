@@ -26,7 +26,8 @@ public abstract class Setting<U> implements ISetting<U>, Serializable {
 
     protected U value;
     protected U defaultValue;
-
+    protected String XMLCode;
+    
     @Override
     public U getValue() {
         return value;
@@ -36,10 +37,15 @@ public abstract class Setting<U> implements ISetting<U>, Serializable {
     public void setToDefault() {
         change(defaultValue);
     }
+    
+    public String getXMLCode(){
+        return XMLCode;
+    }
 
-    public static class SerializedDirectorySetting extends Setting<String> {
+    public static class DrinksListDirectorySetting extends Setting<String> {
 
-        public SerializedDirectorySetting() {
+        public DrinksListDirectorySetting() {
+            XMLCode = "DrinksListDirectory";
             defaultValue = getLocalAppFolder();
             setToDefault();
             restructure();
@@ -101,7 +107,7 @@ public abstract class Setting<U> implements ISetting<U>, Serializable {
     public static class DrinksListInterpreterSetting extends Setting<IDrinksListInterpreter> {
 
         public DrinksListInterpreterSetting() {
-            //defaultValue = new SerializedDrinksListInterpreter();
+            XMLCode = "DrinksListInterpreter";
             defaultValue = new XMLDrinksListInterpreter();
             setToDefault();
         }
@@ -115,6 +121,6 @@ public abstract class Setting<U> implements ISetting<U>, Serializable {
                 return false;
             }
         }
-
+        
     }
 }
