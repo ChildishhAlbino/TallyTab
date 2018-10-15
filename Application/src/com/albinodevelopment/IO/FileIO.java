@@ -63,30 +63,20 @@ public class FileIO {
     
     public static String openFileExplorer(String directory){
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Select a Directory");
+        fileChooser.setTitle("Select a File");
         fileChooser.setInitialDirectory(new File(directory));
         File selected = fileChooser.showOpenDialog(new Stage());
         String s = null;
         if (selected != null) {
             s = selected.getAbsolutePath();
         } else {
-            ConnorLogger.log("ERROR: Directory selected was cancelled.", ConnorLogger.PriorityLevel.Zero);
+            ConnorLogger.log("ERROR: File selector was cancelled.", ConnorLogger.PriorityLevel.Zero);
         }
         return s;
     }
 
     public static String openDirectoryWindow() {
-        DirectoryChooser directoryChooser = new DirectoryChooser();
-        directoryChooser.setTitle("Select a Directory");
-        directoryChooser.setInitialDirectory(new File(APPLICATION_DIRECTORY()));
-        File selected = directoryChooser.showDialog(new Stage());
-        String s = null;
-        if (selected != null) {
-            s = selected.getAbsolutePath();
-        } else {
-            ConnorLogger.log("ERROR: Directory selected was cancelled.", ConnorLogger.PriorityLevel.Zero);
-        }
-        return s;
+        return openDirectoryWindow(APPLICATION_DIRECTORY());
     }
 
     public static String openDirectoryWindow(String directory) {

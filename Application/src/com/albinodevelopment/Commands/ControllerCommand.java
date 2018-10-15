@@ -8,19 +8,31 @@ package com.albinodevelopment.Commands;
 import com.albinodevelopment.Controller.Controller;
 import com.albinodevelopment.Model.Components.Drink;
 import com.albinodevelopment.Model.Components.DrinksTab;
-import com.albinodevelopment.Model.Components.Functions.Function;
-import com.albinodevelopment.View.TabContent.TabContent;
 
 /**
+ * Abstract class that contains static subclasses that all inherit from. Defines
+ * commands that should be run by a "Controller (the C in MVC)" object
  *
  * @author conno
  */
 public abstract class ControllerCommand extends Command<Controller> {
 
+    /**
+     * Carrier command - takes a ModelCommand from somewhere and passes it to
+     * the model to be executed.
+     */
     public static class PassToModelCommand extends ControllerCommand {
 
+        /**
+         * the Model Command to be passed. This is final so it cannot be edited.
+         */
         private final ModelCommand modelCommand;
 
+        /**
+         * The only constructor for this class
+         *
+         * @param modelCommand the model command you want to pass to the model.
+         */
         public PassToModelCommand(ModelCommand modelCommand) {
             this.modelCommand = modelCommand;
         }
@@ -41,9 +53,17 @@ public abstract class ControllerCommand extends Command<Controller> {
         }
     }
 
+    /**
+     * Static Controller Command that validates the creation of a drink.
+     */
     public static class ValidateDrinkCreationCommand extends ControllerCommand {
-
+        /**
+         * the name of the drink. FINAL
+         */
         private final String name;
+        /**
+         * the price of the drink (as a String). FINAL
+         */
         private final String price;
 
         public ValidateDrinkCreationCommand(String name, String price) {
