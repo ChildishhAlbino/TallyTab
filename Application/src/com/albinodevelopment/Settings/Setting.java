@@ -76,6 +76,12 @@ public abstract class Setting<U> implements ISetting<U>, Serializable {
             }
         }
 
+        @Override
+        public void setToDefault() {
+            super.setToDefault(); //To change body of generated methods, choose Tools | Templates.
+            restructure();
+        }
+        
         private void writeToFile() {
             File file = new File("userDirectory.txt");
             try {

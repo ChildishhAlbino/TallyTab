@@ -6,7 +6,6 @@
 package com.albinodevelopment.Settings;
 
 import com.albinodevelopment.IO.FileIO;
-import com.albinodevelopment.IO.SerializerDeserializerFactory;
 import java.io.Serializable;
 import java.util.HashMap;
 
@@ -37,6 +36,8 @@ public class ApplicationSettings implements ISettingsManager, Serializable {
                 ISettingsManager iSettingsManager = ApplicationSettingsXMLInterpreter.interpret(fileDirectory + "ApplicationSettings.xml");
                 if (iSettingsManager != null) {
                     instance = iSettingsManager;
+                } else{
+                    instance = new ApplicationSettings();
                 }
             } else {
                 instance = new ApplicationSettings();
