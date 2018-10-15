@@ -103,7 +103,7 @@ public class FileIO {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
             String directory = bufferedReader.readLine();
             if (directory != null) {
-                ConnorLogger.log("Directory ==" + directory, ConnorLogger.PriorityLevel.High);
+                ConnorLogger.log("Directory == " + directory, ConnorLogger.PriorityLevel.Zero);
                 return directory + System.getProperty("file.separator");
             } else {
                 throw new IOException("The directory was null.");

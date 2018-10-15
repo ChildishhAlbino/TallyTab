@@ -24,8 +24,14 @@ public class ApplicationSettings implements ISettingsManager, Serializable {
         setupSettings();
     }
 
+    public ApplicationSettings(Setting.DrinksListDirectorySetting directorySetting, Setting.DrinksListInterpreterSetting drinksListInterpreterSetting) {
+        settings = new HashMap<>();
+        settings.put(settingsList.DrinksListDirectory, directorySetting);
+        settings.put(settingsList.DrinksListInterpreter, drinksListInterpreterSetting);
+    }
+
     public static ISettingsManager getInstance() {
-    if (instance == null) {
+        if (instance == null) {
             String fileDirectory = FileIO.readDirectoryFile();
             if (!(fileDirectory == null)) {
                 ISettingsManager iSettingsManager = ApplicationSettingsXMLInterpreter.interpret(fileDirectory + "ApplicationSettings.xml");
@@ -52,6 +58,16 @@ public class ApplicationSettings implements ISettingsManager, Serializable {
                     return null;
             }
         }
+    }
+
+    private settingsList getSettingListFromSetting(Setting setting) {
+        if (setting instanceof Setting.DrinksListDirectorySetting) {
+            return settingsList.DrinksListDirectory;
+        }
+        if (setting instanceof Setting.DrinksListInterpreterSetting) {
+            return settingsList.DrinksListInterpreter;
+        }
+        return null;
     }
 
     @Override

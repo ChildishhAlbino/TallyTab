@@ -7,8 +7,8 @@ package com.albinodevelopment.Settings;
 
 import com.albinodevelopment.IO.FileIO;
 import com.albinodevelopment.Logging.ConnorLogger;
+import com.albinodevelopment.Model.Components.Interpreter.DatabaseDrinksListInterpreter;
 import com.albinodevelopment.Model.Components.Interpreter.XMLDrinksListInterpreter;
-import com.albinodevelopment.Settings.ISettingsManager.settingsList;
 import org.jdom2.Document;
 import org.jdom2.Element;
 
@@ -21,32 +21,18 @@ public class ApplicationSettingsXMLInterpreter {
     public static ApplicationSettings interpret(String filePath) {
         Document document = FileIO.getXMLDocumentFromFile(filePath);
         Element root = document.getRootElement();
-        ApplicationSettings applicationSettings = new ApplicationSettings();
-        
-        
+        Setting.DrinksListDirectorySetting drinksListDirectorySetting = null;
+        Setting.DrinksListInterpreterSetting drinksListInterpreterSetting = null;
         for (Element child : root.getChildren()) {
-            if (child.getName().equals(applicationSettings.getSetting(settingsList.DrinksListDirectory).getXMLCode())) {
-                ConnorLogger.log("Found the directory setting.", ConnorLogger.PriorityLevel.Low);
-                applicationSettings.getSetting(settingsList.DrinksListDirectory).change(child.getText());
-            } else if (child.getName().equals(applicationSettings.getSetting(settingsList.DrinksListInterpreter).getXMLCode())) {
-                ConnorLogger.log("Found the Interpreter setting.", ConnorLogger.PriorityLevel.Low);
-                String code = child.getText();
-                switch (code) {
-                    case "XML":
-                        applicationSettings.getSetting(settingsList.DrinksListInterpreter).change(new XMLDrinksListInterpreter());
-                        break;
-                    case "DB":
-                        applicationSettings.getSetting(settingsList.DrinksListInterpreter).change(new XMLDrinksListInterpreter());
-                        break;
-                    default:
-                        ConnorLogger.log("Interpreter code was not a recognised interpreter - " + code, ConnorLogger.PriorityLevel.Low);
-                        break;
-                }
+            if (child.getName().equals(Setting.getDrinksListDirectoryTag())) {
+                drinksListDirectorySetting = createDrinksListDirectorySetting(child);
+            } else if (child.getName().equals(Setting.getDrinksListInterpreterTag())) {
+                drinksListInterpreterSetting = createDrinksListInterpreterSetting(child);
             } else {
                 ConnorLogger.log("Child was not a recognised setting.", ConnorLogger.PriorityLevel.Low);
             }
         }
-        return applicationSettings;
+        return new ApplicationSettings(drinksListDirectorySetting, drinksListInterpreterSetting);
     }
 
     public static void save(ISettingsManager applicationSettings) {
@@ -55,7 +41,7 @@ public class ApplicationSettingsXMLInterpreter {
         root.setAttribute("AppVersion", "1");
         document.setRootElement(root);
         for (Setting setting : applicationSettings.getSettings().values()) {
-            ConnorLogger.log("XML-ing the " + setting.XMLCode + "Setting.", ConnorLogger.PriorityLevel.Low);
+            ConnorLogger.log("XML-ing the " + setting.getXMLCode() + "Setting.", ConnorLogger.PriorityLevel.Low);
             Element element = new Element(setting.getXMLCode());
             element.setText(setting.getXMLValue());
             root.addContent(element);
@@ -63,7 +49,31 @@ public class ApplicationSettingsXMLInterpreter {
 
         FileIO.writeXMLDocumentToFile(document, FileIO.APPLICATION_DIRECTORY(), "ApplicationSettings.xml");
     }
-    
-    
-    
+
+    public static Setting.DrinksListDirectorySetting createDrinksListDirectorySetting(Element element) {
+        ConnorLogger.log("Found the directory setting.", ConnorLogger.PriorityLevel.Low);
+        Setting.DrinksListDirectorySetting drinksListDirectorySetting = new Setting.DrinksListDirectorySetting();
+        drinksListDirectorySetting.change(element.getText());
+        return drinksListDirectorySetting;
+    }
+
+    public static Setting.DrinksListInterpreterSetting createDrinksListInterpreterSetting(Element element) {
+        ConnorLogger.log("Found the Interpreter setting.", ConnorLogger.PriorityLevel.Low);
+        Setting.DrinksListInterpreterSetting drinksListInterpreterSetting = new Setting.DrinksListInterpreterSetting();
+        String code = element.getText();
+        switch (code) {
+            case "XML":
+                drinksListInterpreterSetting.change(new XMLDrinksListInterpreter());
+                break;
+            case "DB":
+                drinksListInterpreterSetting.change(new DatabaseDrinksListInterpreter());
+                break;
+            default:
+                ConnorLogger.log("Interpreter code was not a recognised interpreter - " + code, ConnorLogger.PriorityLevel.Low);
+                break;
+        }
+
+        return drinksListInterpreterSetting;
+    }
+
 }

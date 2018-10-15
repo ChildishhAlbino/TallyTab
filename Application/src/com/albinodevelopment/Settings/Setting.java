@@ -25,7 +25,6 @@ public abstract class Setting<U> implements ISetting<U>, Serializable {
 
     protected U value;
     protected U defaultValue;
-    protected String XMLCode;
 
     @Override
     public U getValue() {
@@ -34,24 +33,31 @@ public abstract class Setting<U> implements ISetting<U>, Serializable {
 
     @Override
     public void setToDefault() {
-        change(defaultValue);
+        value = defaultValue;
     }
 
     public String getXMLCode() {
-        return XMLCode;
+        return "Code not set";
     }
 
     public String getXMLValue() {
         return "Value was not set by subclass.";
     }
 
+    public static String getDrinksListDirectoryTag() {
+        return "DrinksListDirectory";
+    }
+
+    public static String getDrinksListInterpreterTag() {
+        return "DrinksListInterpreter";
+    }
+
     public static class DrinksListDirectorySetting extends Setting<String> {
-    
+
         public DrinksListDirectorySetting() {
-            XMLCode = "DrinksListDirectory";
             defaultValue = getLocalAppFolder();
             setToDefault();
-            restructure();
+            //restructure();
         }
 
         // static class that holds the value of the Text File Directory
@@ -110,12 +116,16 @@ public abstract class Setting<U> implements ISetting<U>, Serializable {
         public String getXMLValue() {
             return value;
         }
+
+        public String getXMLCode() {
+            return getDrinksListDirectoryTag();
+        }
+
     }
 
     public static class DrinksListInterpreterSetting extends Setting<IDrinksListInterpreter> {
 
         public DrinksListInterpreterSetting() {
-            XMLCode = "DrinksListInterpreter";
             defaultValue = new XMLDrinksListInterpreter();
             setToDefault();
         }
@@ -142,5 +152,10 @@ public abstract class Setting<U> implements ISetting<U>, Serializable {
 
             return super.getXMLValue();
         }
+
+        public String getXMLCode() {
+            return getDrinksListInterpreterTag();
+        }
+
     }
 }
