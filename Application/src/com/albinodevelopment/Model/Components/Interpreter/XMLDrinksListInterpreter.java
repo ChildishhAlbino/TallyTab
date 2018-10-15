@@ -25,8 +25,8 @@ import org.jdom2.output.XMLOutputter;
  */
 public class XMLDrinksListInterpreter implements IDrinksListInterpreter, Serializable {
 
-    private transient XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
-    private transient SAXBuilder saxBuilder = new SAXBuilder();
+    private final transient XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
+    private final transient SAXBuilder saxBuilder = new SAXBuilder();
 
     @Override
     public DrinksList interpret(String directory) {
