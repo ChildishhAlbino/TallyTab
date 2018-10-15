@@ -60,9 +60,7 @@ public class Controller extends Thread implements ICommandHandler<ControllerComm
 
     @Override
     public void run() {
-        ConnorLogger.setLoggingState(true);
-        ConnorLogger.setPriority(ConnorLogger.PriorityLevel.Low);
-        ConnorLogger.log("Logging is on", ConnorLogger.PriorityLevel.High);
+        
     }
 
     @Override

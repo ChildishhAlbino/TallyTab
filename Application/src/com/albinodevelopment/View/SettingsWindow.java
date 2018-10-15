@@ -53,7 +53,7 @@ public class SettingsWindow extends Window {
         ConnorLogger.log("Settings Window Refreshed.", ConnorLogger.PriorityLevel.Zero);
         // returns a null pointer exception
         Platform.runLater(() -> {
-            directoryLabel.setText((String) ApplicationSettings.getInstance().getSetting(ISettingsManager.settingsList.SerializedDirectory).getValue());
+            directoryLabel.setText((String) ApplicationSettings.getInstance().getSetting(ISettingsManager.settingsList.DrinksListDirectory).getValue());
         });
     }
 
@@ -63,7 +63,7 @@ public class SettingsWindow extends Window {
         String directory = FileIO.openDirectoryWindow(FileIO.APPLICATION_DIRECTORY());
         stage.requestFocus();
         if (directory != null) {
-            ApplicationSettings.getInstance().getSetting(ISettingsManager.settingsList.SerializedDirectory).change(directory);
+            ApplicationSettings.getInstance().getSetting(ISettingsManager.settingsList.DrinksListDirectory).change(directory);
         } else {
             ConnorLogger.log("ERROR: Driectory was null.", ConnorLogger.PriorityLevel.Low);
         }
@@ -71,7 +71,7 @@ public class SettingsWindow extends Window {
 
     @FXML
     public void handleResetDefaultButton(ActionEvent event) {
-        ApplicationSettings.getInstance().getSetting(ISettingsManager.settingsList.SerializedDirectory).setToDefault();
+        ApplicationSettings.getInstance().getSetting(ISettingsManager.settingsList.DrinksListDirectory).setToDefault();
         ConnorLogger.log("NOTE: FileDirectory set to default.", ConnorLogger.PriorityLevel.Low);
     }
 

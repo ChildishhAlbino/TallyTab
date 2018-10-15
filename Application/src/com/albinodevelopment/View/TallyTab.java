@@ -1,8 +1,8 @@
 package com.albinodevelopment.View;
 
-import com.albinodevelopment.IO.SerializerDeserializerFactory;
 import com.albinodevelopment.Logging.ConnorLogger;
 import com.albinodevelopment.Settings.ApplicationSettings;
+import com.albinodevelopment.Settings.ApplicationSettingsXMLInterpreter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
@@ -29,13 +29,10 @@ public class TallyTab extends Application {
             Platform.runLater(() -> {
                 ConnorLogger.log("Application shutdown!",
                         ConnorLogger.PriorityLevel.High);
-                SerializerDeserializerFactory.getSerializer(
-                        com.albinodevelopment.Settings.ApplicationSettings.class)
-                        .serializeApplicationSettings();
+                ApplicationSettingsXMLInterpreter.save(ApplicationSettings.getInstance());
                 System.exit(0);
             });
-        });
-        ApplicationSettings.getInstance();
+        });        ApplicationSettings.getInstance();
         loadWindow(stage);
     }
 
@@ -43,6 +40,8 @@ public class TallyTab extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        ConnorLogger.setLoggingState(true);
+        ConnorLogger.setPriority(ConnorLogger.PriorityLevel.Low);
         launch(args);
     }
 

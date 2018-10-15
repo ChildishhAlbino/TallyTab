@@ -5,10 +5,9 @@
  */
 package com.albinodevelopment.Settings;
 
-import com.albinodevelopment.IO.FileIO;
 import com.albinodevelopment.Logging.ConnorLogger;
+import com.albinodevelopment.Model.Components.Interpreter.DatabaseDrinksListInterpreter;
 import com.albinodevelopment.Model.Components.Interpreter.IDrinksListInterpreter;
-import com.albinodevelopment.Model.Components.Interpreter.SerializedDrinksListInterpreter;
 import com.albinodevelopment.Model.Components.Interpreter.XMLDrinksListInterpreter;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -34,15 +33,31 @@ public abstract class Setting<U> implements ISetting<U>, Serializable {
 
     @Override
     public void setToDefault() {
-        change(defaultValue);
+        value = defaultValue;
     }
 
-    public static class SerializedDirectorySetting extends Setting<String> {
+    public String getXMLCode() {
+        return "Code not set";
+    }
 
-        public SerializedDirectorySetting() {
+    public String getXMLValue() {
+        return "Value was not set by subclass.";
+    }
+
+    public static String getDrinksListDirectoryTag() {
+        return "DrinksListDirectory";
+    }
+
+    public static String getDrinksListInterpreterTag() {
+        return "DrinksListInterpreter";
+    }
+
+    public static class DrinksListDirectorySetting extends Setting<String> {
+
+        public DrinksListDirectorySetting() {
             defaultValue = getLocalAppFolder();
             setToDefault();
-            restructure();
+            //restructure();
         }
 
         // static class that holds the value of the Text File Directory
@@ -61,6 +76,12 @@ public abstract class Setting<U> implements ISetting<U>, Serializable {
             }
         }
 
+        @Override
+        public void setToDefault() {
+            super.setToDefault(); //To change body of generated methods, choose Tools | Templates.
+            restructure();
+        }
+        
         private void writeToFile() {
             File file = new File("userDirectory.txt");
             try {
@@ -96,12 +117,21 @@ public abstract class Setting<U> implements ISetting<U>, Serializable {
             }
             return returnVar;
         }
+
+        @Override
+        public String getXMLValue() {
+            return value;
+        }
+
+        public String getXMLCode() {
+            return getDrinksListDirectoryTag();
+        }
+
     }
 
     public static class DrinksListInterpreterSetting extends Setting<IDrinksListInterpreter> {
 
         public DrinksListInterpreterSetting() {
-            //defaultValue = new SerializedDrinksListInterpreter();
             defaultValue = new XMLDrinksListInterpreter();
             setToDefault();
         }
@@ -114,6 +144,23 @@ public abstract class Setting<U> implements ISetting<U>, Serializable {
             } else {
                 return false;
             }
+        }
+
+        @Override
+        public String getXMLValue() {
+            if (value instanceof XMLDrinksListInterpreter) {
+                return "XML";
+            }
+
+            if (value instanceof DatabaseDrinksListInterpreter) {
+                return "DB";
+            }
+
+            return super.getXMLValue();
+        }
+
+        public String getXMLCode() {
+            return getDrinksListInterpreterTag();
         }
 
     }

@@ -6,15 +6,10 @@
 package com.albinodevelopment.IO;
 
 import com.albinodevelopment.Logging.ConnorLogger;
-import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -26,7 +21,7 @@ public class Deserializer<T> {
     private final String fileDirectory;
 
     public Deserializer() {
-        fileDirectory = readDirectoryFile();
+        fileDirectory = FileIO.readDirectoryFile();
     }
 
     public T deserializeFromFilePath(String filePath) {
@@ -48,26 +43,6 @@ public class Deserializer<T> {
 
     public T deserializeFromFileName(String fileName) {
         return deserializeFromFilePath(fileDirectory + "\\" + fileName);
-    }
-
-    private String readDirectoryFile() {
-        File file = new File("userDirectory.txt");
-        try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
-            String directory = bufferedReader.readLine();
-            if (directory != null) {
-                return directory;
-            } else {
-                throw new IOException("The directory was null.");
-            }
-
-        } catch (FileNotFoundException ex) {
-            ConnorLogger.log("ERROR: File: " + file.getName() + " not found - " + ex.getLocalizedMessage(), ConnorLogger.PriorityLevel.Medium);
-        } catch (IOException ex) {
-            ConnorLogger.log("ERROR: IOException. " + ex.getLocalizedMessage(), ConnorLogger.PriorityLevel.Medium);
-        }
-
-        return null;
     }
 
 }

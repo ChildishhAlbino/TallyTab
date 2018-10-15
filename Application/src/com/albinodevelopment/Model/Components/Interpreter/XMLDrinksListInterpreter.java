@@ -25,14 +25,12 @@ import org.jdom2.output.XMLOutputter;
  */
 public class XMLDrinksListInterpreter implements IDrinksListInterpreter, Serializable {
 
-    private final transient XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
-    private final transient SAXBuilder saxBuilder = new SAXBuilder();
-
     @Override
     public DrinksList interpret(String directory) {
-        try {
-            DrinksList drinksList = new DrinksList();
-            Document document = saxBuilder.build(new File(directory));
+
+        DrinksList drinksList = new DrinksList();
+        Document document = FileIO.getXMLDocumentFromFile(directory);
+        if (document != null) {
             Element root = document.getRootElement();
 
             drinksList.setName(root.getAttributeValue("Name"));
@@ -44,29 +42,22 @@ public class XMLDrinksListInterpreter implements IDrinksListInterpreter, Seriali
                 drinksList.add(drink);
             }
             return drinksList;
-        } catch (JDOMException | IOException ex) {
-            Logger.getLogger(XMLDrinksListInterpreter.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
 
     @Override
     public void save(DrinksList drinksList) {
-        try {
-            Document document = new Document();
-            Element root = new Element("DrinksList");
-            root.setAttribute("Version", "1");
-            root.setAttribute("Name", drinksList.getName());
-            document.setRootElement(root);
-            drinksList.getDrinksList().values().forEach((drink) -> {
-                root.addContent(createDrinkXML(drink));
-            });
+        Document document = new Document();
+        Element root = new Element("DrinksList");
+        root.setAttribute("Version", "1");
+        root.setAttribute("Name", drinksList.getName());
+        document.setRootElement(root);
+        drinksList.getDrinksList().values().forEach((drink) -> {
+            root.addContent(createDrinkXML(drink));
+        });
 
-            String fileName = System.getProperty("file.separator") + drinksList.getName() + ".xml";
-            xmlOutputter.output(document, new FileOutputStream(FileIO.DRINKS_LIST_DIRECTORY() + fileName));
-        } catch (IOException ex) {
-            Logger.getLogger(XMLDrinksListInterpreter.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        FileIO.writeXMLDocumentToFile(document, FileIO.DRINKS_LIST_DIRECTORY(), drinksList.getName() + ".xml");
     }
 
     private Element createDrinkXML(Drink drink) {
