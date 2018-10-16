@@ -95,7 +95,7 @@ public class DrinksTab implements Serializable {
     }
 
     public double GetCurrentValue() {
-        return currentValue;
+        return round(currentValue, 4);
     }
 
     public double GetLimit() {

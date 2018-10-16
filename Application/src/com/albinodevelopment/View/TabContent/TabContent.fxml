@@ -4,7 +4,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -12,56 +11,64 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.albinodevelopment.View.TabContent.TabContentController">
+<VBox prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.albinodevelopment.View.TabContent.TabContentController">
    <children>
-      <SplitPane dividerPositions="0.6251956181533647" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefWidth="1280.0">
-         <items>
-            <ScrollPane fitToHeight="true" fitToWidth="true" prefWidth="700.0">
+      <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="1080.0" prefWidth="1920.0" VBox.vgrow="ALWAYS">
+         <children>
+            <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="1920.0">
                <content>
-                  <VBox fx:id="drinksVbox" prefHeight="690.0" prefWidth="700.0" spacing="15.0">
+                  <VBox fx:id="drinksVbox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="1078.0" prefWidth="948.0" spacing="15.0">
+                     <padding>
+                        <Insets bottom="50.0" />
+                     </padding>
                      <children>
-                        <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="687.0">
+                        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="70.0" prefWidth="800.0">
                            <children>
-                              <GridPane alignment="CENTER" prefHeight="53.0" prefWidth="585.0">
+                              <GridPane alignment="CENTER" hgap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="70.0" prefWidth="800.0">
                                  <columnConstraints>
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="168.0" minWidth="10.0" prefWidth="157.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="114.0" minWidth="10.0" prefWidth="65.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="183.0" minWidth="10.0" prefWidth="145.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="110.0" minWidth="10.0" prefWidth="60.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="145.0" minWidth="10.0" prefWidth="61.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="151.0" minWidth="10.0" prefWidth="97.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="217.0" minWidth="10.0" prefWidth="217.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="168.0" minWidth="10.0" prefWidth="26.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="137.0" minWidth="10.0" prefWidth="70.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="183.0" minWidth="10.0" prefWidth="56.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="115.0" minWidth="10.0" prefWidth="57.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="145.0" minWidth="10.0" prefWidth="51.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="151.0" minWidth="10.0" prefWidth="108.0" />
                                  </columnConstraints>
                                  <rowConstraints>
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                  </rowConstraints>
                                  <children>
-                                    <Label fx:id="drinkName" alignment="CENTER" text="DRINK NAME">
+                                    <Label alignment="CENTER" prefHeight="70.0" prefWidth="234.0" text="DRINK NAME" wrapText="true">
                                        <font>
                                           <Font name="System Bold" size="17.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="drinkPrice" alignment="CENTER" text="PRICE" GridPane.columnIndex="1">
+                                    <Label alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="70.0" prefWidth="108.0" text="PRICE" textAlignment="RIGHT" GridPane.columnIndex="2">
                                        <font>
                                           <Font name="System Bold" size="19.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="currentAmt" alignment="CENTER" prefHeight="28.0" prefWidth="136.0" text="CURRENT AMT" GridPane.columnIndex="2">
+                                    <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="70.0" prefWidth="87.0" text="Current Amount" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="3">
                                        <font>
                                           <Font name="System Bold" size="19.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="subtotal" alignment="CENTER" text="SUBTOTAL" GridPane.columnIndex="5">
+                                    <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="70.0" prefWidth="163.0" text="SUBTOTAL" wrapText="true" GridPane.columnIndex="6">
                                        <font>
                                           <Font name="System Bold" size="19.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="currentAmt1" alignment="CENTER" prefHeight="28.0" prefWidth="136.0" text="+" GridPane.columnIndex="3">
+                                    <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="\$" wrapText="true" GridPane.columnIndex="1">
                                        <font>
                                           <Font name="System Bold" size="19.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="currentAmt11" alignment="CENTER" prefHeight="28.0" prefWidth="136.0" text="-" GridPane.columnIndex="4">
+                                    <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="70.0" prefWidth="163.0" text="+" wrapText="true" GridPane.columnIndex="4">
+                                       <font>
+                                          <Font name="System Bold" size="19.0" />
+                                       </font>
+                                    </Label>
+                                    <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="70.0" prefWidth="163.0" text="-" wrapText="true" GridPane.columnIndex="5">
                                        <font>
                                           <Font name="System Bold" size="19.0" />
                                        </font>
@@ -71,20 +78,17 @@
                            </children>
                         </HBox>
                      </children>
-                     <padding>
-                        <Insets bottom="50.0" left="50.0" right="50.0" />
-                     </padding>
                   </VBox>
                </content>
             </ScrollPane>
-            <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="701.0" minWidth="476.0" prefHeight="701.0" prefWidth="476.0">
+            <VBox alignment="TOP_CENTER" fillWidth="false" minHeight="701.0" minWidth="408.0" prefHeight="1080.0" prefWidth="408.0">
                <children>
                   <Label fx:id="title" text="FUNCTION TITLE">
                      <font>
                         <Font name="System Bold" size="24.0" />
                      </font>
                   </Label>
-                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="553.0" spacing="20.0">
                      <padding>
                         <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                      </padding>
@@ -101,7 +105,7 @@
                         </Label>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER_LEFT" layoutX="25.0" layoutY="60.0" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                  <HBox alignment="CENTER_LEFT" layoutX="25.0" layoutY="60.0" prefHeight="100.0" prefWidth="591.0" spacing="20.0">
                      <children>
                         <Label text="CURRENT VALUE:">
                            <font>
@@ -118,7 +122,7 @@
                         <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                      </padding>
                   </HBox>
-                  <HBox alignment="CENTER_LEFT" layoutX="25.0" layoutY="160.0" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                  <HBox alignment="CENTER_LEFT" layoutX="25.0" layoutY="160.0" prefHeight="100.0" prefWidth="533.0" spacing="20.0">
                      <children>
                         <Label text="PERCENTAGE:">
                            <font>
@@ -135,9 +139,9 @@
                         <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                      </padding>
                   </HBox>
-                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="579.0" spacing="20.0">
                      <children>
-                        <ProgressBar fx:id="progressBar" prefHeight="124.0" prefWidth="416.0" progress="0.5" />
+                        <ProgressBar fx:id="progressBar" prefHeight="70.0" prefWidth="442.0" progress="0.5" />
                      </children>
                      <padding>
                         <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
@@ -148,7 +152,7 @@
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                </padding>
             </VBox>
-         </items>
-      </SplitPane>
+         </children>
+      </HBox>
    </children>
 </VBox>

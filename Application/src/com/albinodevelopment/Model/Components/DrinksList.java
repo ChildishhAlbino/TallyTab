@@ -5,10 +5,9 @@
  */
 package com.albinodevelopment.Model.Components;
 
-import com.albinodevelopment.Logging.ConnorLogger;
 import com.albinodevelopment.Model.Components.Builders.IBuildable;
 import java.io.Serializable;
-import java.util.HashMap;
+import java.util.TreeMap;
 
 /**
  *
@@ -20,9 +19,9 @@ public class DrinksList implements Serializable, IBuildable {
 
     private transient StringBuilder stringBuilder;
 
-    private final HashMap<String, Drink> drinks = new HashMap<>();
+    private final TreeMap<String, Drink> drinks = new TreeMap<>((String o1, String o2) -> o1.compareTo(o2));
 
-    public HashMap<String, Drink> getDrinksList() {
+    public TreeMap<String, Drink> getDrinksList() {
         return drinks;
     }
 

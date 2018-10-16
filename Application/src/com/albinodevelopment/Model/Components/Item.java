@@ -23,7 +23,7 @@ public abstract class Item implements i_Item, Serializable {
 
     @Override
     public double getPrice() {
-        return price;
+        return DrinksTab.round(price, 4);
     }
 
     @Override
