@@ -70,7 +70,7 @@ public class NewFunctionWindow extends Window implements Initializable {
     @FXML
     private void handleOpenDrinksListButton(ActionEvent event) {
         String directory = FileIO.openFileExplorer((String) ApplicationSettings
-                .getInstance().getSetting(ISettingsManager.settingsList.SerializedDirectory).getValue() + "\\DrinksLists");
+                .getInstance().getSetting(ISettingsManager.settingsList.DrinksListDirectory).getValue() + "\\DrinksLists");
         stage.requestFocus();
         if (directory != null) {
             selectedDrinksList.setText(directory);

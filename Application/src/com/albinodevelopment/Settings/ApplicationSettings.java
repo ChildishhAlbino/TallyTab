@@ -5,7 +5,7 @@
  */
 package com.albinodevelopment.Settings;
 
-import com.albinodevelopment.IO.SerializerDeserializerFactory;
+import com.albinodevelopment.IO.FileIO;
 import java.io.Serializable;
 import java.util.HashMap;
 
@@ -23,14 +23,22 @@ public class ApplicationSettings implements ISettingsManager, Serializable {
         setupSettings();
     }
 
+    public ApplicationSettings(Setting.DrinksListDirectorySetting directorySetting, Setting.DrinksListInterpreterSetting drinksListInterpreterSetting) {
+        settings = new HashMap<>();
+        settings.put(settingsList.DrinksListDirectory, directorySetting);
+        settings.put(settingsList.DrinksListInterpreter, drinksListInterpreterSetting);
+    }
+
     public static ISettingsManager getInstance() {
         if (instance == null) {
-            //check for serialized version first
-            ISettingsManager iSettingsManager = SerializerDeserializerFactory
-                    .getDeserializer(com.albinodevelopment.Settings.ApplicationSettings.class)
-                    .deserializeFromFileName("ApplicationSettings.ser");
-            if (iSettingsManager != null) {
-                instance = iSettingsManager;
+            String fileDirectory = FileIO.readDirectoryFile();
+            if (!(fileDirectory == null)) {
+                ISettingsManager iSettingsManager = ApplicationSettingsXMLInterpreter.interpret(fileDirectory + "ApplicationSettings.xml");
+                if (iSettingsManager != null) {
+                    instance = iSettingsManager;
+                } else{
+                    instance = new ApplicationSettings();
+                }
             } else {
                 instance = new ApplicationSettings();
             }
@@ -45,12 +53,22 @@ public class ApplicationSettings implements ISettingsManager, Serializable {
             switch (setting) {
                 case DrinksListInterpreter:
                     return new Setting.DrinksListInterpreterSetting();
-                case SerializedDirectory:
-                    return new Setting.SerializedDirectorySetting();
+                case DrinksListDirectory:
+                    return new Setting.DrinksListDirectorySetting();
                 default:
                     return null;
             }
         }
+    }
+
+    private settingsList getSettingListFromSetting(Setting setting) {
+        if (setting instanceof Setting.DrinksListDirectorySetting) {
+            return settingsList.DrinksListDirectory;
+        }
+        if (setting instanceof Setting.DrinksListInterpreterSetting) {
+            return settingsList.DrinksListInterpreter;
+        }
+        return null;
     }
 
     @Override
@@ -69,5 +87,10 @@ public class ApplicationSettings implements ISettingsManager, Serializable {
     @Override
     public String toString() {
         return "ApplicationSettings";
+    }
+
+    @Override
+    public HashMap<settingsList, Setting> getSettings() {
+        return settings;
     }
 }

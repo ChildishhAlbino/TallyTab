@@ -6,6 +6,7 @@
 package com.albinodevelopment.Settings;
 
 import com.albinodevelopment.Model.Components.Interpreter.IDrinksListInterpreter;
+import java.util.HashMap;
 
 /**
  *
@@ -14,9 +15,11 @@ import com.albinodevelopment.Model.Components.Interpreter.IDrinksListInterpreter
 public interface ISettingsManager {
 
     public enum settingsList {
-        SerializedDirectory,
+        DrinksListDirectory,
         DrinksListInterpreter,
     }
 
     Setting getSetting(settingsList setting);
+    
+    HashMap<settingsList, Setting> getSettings();
 }
