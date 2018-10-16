@@ -5,10 +5,8 @@
  */
 package com.albinodevelopment.Model.Components;
 
-import com.albinodevelopment.Logging.ConnorLogger;
 import com.albinodevelopment.Model.Components.Builders.IBuildable;
 import java.io.Serializable;
-import java.util.Comparator;
 import java.util.TreeMap;
 
 /**
