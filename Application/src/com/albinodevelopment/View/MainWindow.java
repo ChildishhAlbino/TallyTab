@@ -17,7 +17,7 @@ import com.albinodevelopment.Model.Components.Functions.Function;
 import com.albinodevelopment.Model.Components.Functions.FunctionManager;
 import com.albinodevelopment.Model.Model;
 import com.albinodevelopment.View.TabContent.ContentLoaderFactory;
-import com.albinodevelopment.View.TabContent.TabContent;
+import com.albinodevelopment.View.TabContent.FunctionTabContent;
 import java.util.HashMap;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -38,7 +38,7 @@ public class MainWindow extends View implements Initializable {
     private Window settingsWindow;
     private Window drinksListBuilderWindow;
     private Window functionWindow;
-    private final HashMap<Function, TabContent> tabs = new HashMap<>();
+    private final HashMap<Function, FunctionTabContent> tabs = new HashMap<>();
 
     @FXML
     private TabPane tabPane;
@@ -228,8 +228,8 @@ public class MainWindow extends View implements Initializable {
         }
     }
 
-    private TabContent createNewTabContent(Function function) {
-        TabContent tabContent = (TabContent) contentLoaderFactory.getBuilder().getContentController("TabContent.fxml");
+    private FunctionTabContent createNewTabContent(Function function) {
+        FunctionTabContent tabContent = (FunctionTabContent) contentLoaderFactory.getBuilder().getContentController("FunctionTabContent.fxml");
         tabContent.setMain(this);
         tabs.put(function, tabContent);
         return tabContent;
@@ -245,7 +245,7 @@ public class MainWindow extends View implements Initializable {
 
     @Override
     public void updateTab(Function function) {
-        TabContent tabContent = tabs.get(function);
+        FunctionTabContent tabContent = tabs.get(function);
         if (tabContent == null) {
             newTab(function);
         } else {
@@ -254,8 +254,8 @@ public class MainWindow extends View implements Initializable {
         }
     }
 
-    private TabContent generateTabGUI(Function function) {
-        TabContent tabContent = tabs.get(function);
+    private FunctionTabContent generateTabGUI(Function function) {
+        FunctionTabContent tabContent = tabs.get(function);
         if (tabContent == null) {
             tabContent = createNewTabContent(function);
         }

@@ -116,13 +116,13 @@ public class DrinksTab implements Serializable {
     }
 
     public void init() {
-        drinksList.getDrinksList().values().forEach((drink) -> {
+        drinksList.getDrinksMap().values().forEach((drink) -> {
             count.put(drink, 0);
         });
     }
 
-    public DrinksTabItem getDrinksTabItem(Drink drink) {
-        DrinksTabItem drinksTabItem = new DrinksTabItem(drink, GetCount(drink), getDrinkSubtotal(drink));
+    public DrinksTabContainer getDrinksTabItem(Drink drink) {
+        DrinksTabContainer drinksTabItem = new DrinksTabContainer(drink, GetCount(drink), getDrinkSubtotal(drink));
         return drinksTabItem;
     }
 

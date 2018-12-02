@@ -6,18 +6,18 @@
 package com.albinodevelopment.View.TabContent;
 
 import com.albinodevelopment.Model.Components.Drink;
-import com.albinodevelopment.Model.Components.DrinksTabItem;
+import com.albinodevelopment.Model.Components.DrinksTabContainer;
 
 /**
  *
  * @author conno
  */
-public abstract class DrinkItemContent extends Content implements IContent<DrinksTabItem> {
+public abstract class DrinkItemContent extends Content implements IContent<DrinksTabContainer> {
 
     protected Drink drink;
-    protected TabContent tabContent;
+    protected FunctionTabContent tabContent;
 
-    public void setTabContent(TabContent tabContent) {
+    public void setTabContent(FunctionTabContent tabContent) {
         this.tabContent = tabContent;
     }
 

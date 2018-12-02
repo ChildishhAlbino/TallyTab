@@ -53,7 +53,7 @@ public abstract class ModelCommand extends Command<Model> {
 
         @Override
         public ExecutionResult execute(Model commandHandler) {
-            commandHandler.functionManager.newFunction(name, drinksTab);
+            commandHandler.functionManager.newFunction(name, drinksTab); // function manager is singleton - why do this?
             commandHandler.getCommandHandler().handle(new ViewCommand.CloseNewFunctionWindowCommand());
             commandHandler.getCommandHandler().handle(new ViewCommand.UpdateTabContentCommand(FunctionManager.getInstance().getFunction(name)));
             return ExecutionResult.success;

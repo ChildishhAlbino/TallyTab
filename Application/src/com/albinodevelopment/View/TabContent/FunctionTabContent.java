@@ -6,7 +6,7 @@
 package com.albinodevelopment.View.TabContent;
 
 import com.albinodevelopment.Model.Components.Drink;
-import com.albinodevelopment.Model.Components.DrinksTabItem;
+import com.albinodevelopment.Model.Components.DrinksTabContainer;
 import com.albinodevelopment.Model.Components.Functions.Function;
 import javafx.scene.Parent;
 
@@ -14,9 +14,9 @@ import javafx.scene.Parent;
  *
  * @author conno
  */
-public abstract class TabContent extends Content implements IContent<Function> {
+public abstract class FunctionTabContent extends Content implements IContent<Function> {
 
-    public void updateDrinkContent(DrinksTabItem drinksTabItem) {
+    public void updateDrinkContent(DrinksTabContainer drinksTabItem) {
 
     }
 }

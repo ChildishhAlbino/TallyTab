@@ -8,7 +8,7 @@ package com.albinodevelopment.View.TabContent;
 import com.albinodevelopment.Model.Components.Drink;
 import com.albinodevelopment.Model.Components.DrinksList;
 import com.albinodevelopment.Model.Components.DrinksTab;
-import com.albinodevelopment.Model.Components.DrinksTabItem;
+import com.albinodevelopment.Model.Components.DrinksTabContainer;
 import com.albinodevelopment.Model.Components.Functions.Function;
 import com.albinodevelopment.View.View;
 import java.net.URL;
@@ -28,10 +28,10 @@ import javafx.scene.layout.VBox;
  *
  * @author conno
  */
-public class TabContentController extends TabContent implements Initializable {
+public class FunctionTabContentController extends FunctionTabContent implements Initializable {
 
     private final ContentLoaderFactory contentLoaderFactory = new ContentLoaderFactory();
-    private final HashMap<DrinksTabItem, DrinkItemContent> drinkItemContents = new HashMap<>();
+    private final HashMap<DrinksTabContainer, DrinkItemContent> drinkItemContents = new HashMap<>();
 
     @FXML
     private Label title;
@@ -77,25 +77,25 @@ public class TabContentController extends TabContent implements Initializable {
     }
 
     private void generateDrinksListGUI(DrinksTab drinksTab) {
-        drinksTab.getDrinksList().getDrinksList().values().forEach((Drink drink) -> {
-            DrinksTabItem drinksTabItem = new DrinksTabItem(drink, drinksTab.GetCount(drink), drinksTab.getDrinkSubtotal(drink));
-            DrinkItemContent drinkItemContent = generateDrinkItemContent(drinksTabItem);
-            Parent drinkContent = drinkItemContent.generateContent(drinksTabItem);
+        drinksTab.getDrinksList().getDrinksMap().values().forEach((Drink drink) -> {
+            DrinksTabContainer drinksTabContainer = new DrinksTabContainer(drink, drinksTab.GetCount(drink), drinksTab.getDrinkSubtotal(drink));
+            DrinkItemContent drinkItemContent = generateDrinkItemContent(drinksTabContainer);
+            Parent drinkContent = drinkItemContent.generateContent(drinksTabContainer);
             drinksVbox.getChildren().add(drinkContent);
         });
     }
 
-    private DrinkItemContent generateDrinkItemContent(DrinksTabItem drinksTabItem) {
+    private DrinkItemContent generateDrinkItemContent(DrinksTabContainer drinksTabContainer) {
         DrinkItemContent drinkItemContent = (DrinkItemContent) contentLoaderFactory.getBuilder().getContentController("DrinkItemContentFXML.fxml");
         drinkItemContent.setMain(view);
         drinkItemContent.setTabContent(this);
-        drinkItemContents.put(drinksTabItem, drinkItemContent);
+        drinkItemContents.put(drinksTabContainer, drinkItemContent);
         return drinkItemContent;
     }
 
     @Override
-    public void updateDrinkContent(DrinksTabItem drinksTabItem) {
-        drinkItemContents.get(drinksTabItem.getDrink()).update(drinksTabItem);
+    public void updateDrinkContent(DrinksTabContainer drinksTabContainer) {
+        drinkItemContents.get(drinksTabContainer.getDrink()).update(drinksTabContainer);
     }
 
     @Override

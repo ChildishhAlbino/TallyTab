@@ -21,7 +21,7 @@ public class DrinksList implements Serializable, IBuildable {
 
     private final TreeMap<String, Drink> drinks = new TreeMap<>((String o1, String o2) -> o1.compareTo(o2));
 
-    public TreeMap<String, Drink> getDrinksList() {
+    public TreeMap<String, Drink> getDrinksMap() {
         return drinks;
     }
 

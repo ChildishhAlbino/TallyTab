@@ -94,7 +94,7 @@ public class DrinksListBuilderWindow extends Window implements Initializable {
     }
 
     private void createGUIFromDrinksList(DrinksList drinksList) {
-        drinksList.getDrinksList().values().forEach((drink) -> {
+        drinksList.getDrinksMap().values().forEach((drink) -> {
             createGUIFromDrink(drink);
         });
     }
