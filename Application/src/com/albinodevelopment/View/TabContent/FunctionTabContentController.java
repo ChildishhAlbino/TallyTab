@@ -5,23 +5,23 @@
  */
 package com.albinodevelopment.View.TabContent;
 
+import com.albinodevelopment.Logging.ConnorLogger;
 import com.albinodevelopment.Model.Components.Drink;
-import com.albinodevelopment.Model.Components.DrinksList;
 import com.albinodevelopment.Model.Components.DrinksTab;
 import com.albinodevelopment.Model.Components.DrinksTabContainer;
 import com.albinodevelopment.Model.Components.Functions.Function;
-import com.albinodevelopment.View.View;
+import com.albinodevelopment.Model.Components.Functions.FunctionManager;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import org.jdom2.Document;
 
 /**
  * FXML Controller class
@@ -115,6 +115,12 @@ public class FunctionTabContentController extends FunctionTabContent implements 
                 drinkItemContent.update(input.getDrinksTab().getDrinksTabItem(drinkItemContent.drink));
             }
         }
+    }
+    
+    @FXML
+    public void saveFunction(ActionEvent event){
+        ConnorLogger.log("Saving function to XML!!", ConnorLogger.PriorityLevel.Low);
+        FunctionManager.getInstance().saveFunction(title.getText());
     }
 
 }

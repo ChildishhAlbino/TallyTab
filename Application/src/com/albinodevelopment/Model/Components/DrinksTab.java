@@ -142,13 +142,20 @@ public class DrinksTab implements Serializable, XMLable {
     @Override
     public Element toXML() {
         Element ret = drinksList.toXML();
-        for (Element e : ret.getChildren("Drink")){
-            Parent parent = e.getParent();
-            Element countElem = new Element("Count");
-            Drink d = drinksList.GetDrink(parent.indexOf(e));
-            String count = String.valueOf(GetCount(d));
-            countElem.addContent(count);
-            parent.addContent(countElem);
+//        ret.getChildren("Drink").forEach((e) -> {
+//            Parent parent = e.getParent();
+//            Element countElem = new Element("Count");
+//            Drink d = drinksList.GetDrink(parent.indexOf(e));
+//            String count = String.valueOf(GetCount(d));
+//            countElem.addContent(count);
+//            parent.addContent(countElem);
+//        });
+
+        for(int i = 0; i < drinksList.GetListSize(); i++){
+            Element currDrink = ret.getChildren("Drink").get(i);
+            Element count = new Element("Count");            
+            count.addContent(String.valueOf(GetCount(drinksList.GetDrink(i))));
+            currDrink.addContent(count);
         }
         
         return ret;
