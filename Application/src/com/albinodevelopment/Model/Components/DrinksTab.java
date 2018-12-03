@@ -6,16 +6,19 @@
 package com.albinodevelopment.Model.Components;
 
 import com.albinodevelopment.Logging.ConnorLogger;
+import com.albinodevelopment.XML.XMLable;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.HashMap;
+import org.jdom2.Element;
+import org.jdom2.Parent;
 
 /**
  *
  * @author conno
  */
-public class DrinksTab implements Serializable {
+public class DrinksTab implements Serializable, XMLable {
 
     private final DrinksList drinksList;
     private final HashMap<Drink, Integer> count = new HashMap<>();
@@ -134,6 +137,21 @@ public class DrinksTab implements Serializable {
         BigDecimal bd = new BigDecimal(value);
         bd = bd.setScale(places, RoundingMode.HALF_UP);
         return bd.doubleValue();
+    }
+
+    @Override
+    public Element toXML() {
+        Element ret = drinksList.toXML();
+        for (Element e : ret.getChildren("Drink")){
+            Parent parent = e.getParent();
+            Element countElem = new Element("Count");
+            Drink d = drinksList.GetDrink(parent.indexOf(e));
+            String count = String.valueOf(GetCount(d));
+            countElem.addContent(count);
+            parent.addContent(countElem);
+        }
+        
+        return ret;
     }
 
 }

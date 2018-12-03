@@ -27,7 +27,6 @@ public class XMLDrinksListInterpreter implements IDrinksListInterpreter, Seriali
 
     @Override
     public DrinksList interpret(String directory) {
-
         DrinksList drinksList = new DrinksList();
         Document document = FileIO.getXMLDocumentFromFile(directory);
         if (document != null) {
