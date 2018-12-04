@@ -9,6 +9,7 @@ import com.albinodevelopment.IO.FileIO;
 import com.albinodevelopment.IO.SerializerDeserializerFactory;
 import com.albinodevelopment.Model.Components.DrinksList;
 import java.io.Serializable;
+import org.jdom2.Element;
 
 /**
  *
@@ -34,5 +35,10 @@ public class SerializedDrinksListInterpreter implements IDrinksListInterpreter, 
                 com.albinodevelopment.Model.Components.DrinksList.class)
                 .serialize(drinksList,
                         FileIO.DRINKS_LIST_DIRECTORY(), drinksList.getName());
+    }
+
+    @Override
+    public DrinksList interpret(Element root) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

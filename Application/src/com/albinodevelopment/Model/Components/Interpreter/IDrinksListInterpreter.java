@@ -6,6 +6,7 @@
 package com.albinodevelopment.Model.Components.Interpreter;
 
 import com.albinodevelopment.Model.Components.DrinksList;
+import org.jdom2.Element;
 
 /**
  *
@@ -14,6 +15,6 @@ import com.albinodevelopment.Model.Components.DrinksList;
 public interface IDrinksListInterpreter {
 
     DrinksList interpret(String directory);
-
+    DrinksList interpret(Element root);
     void save(DrinksList drinksList);
 }

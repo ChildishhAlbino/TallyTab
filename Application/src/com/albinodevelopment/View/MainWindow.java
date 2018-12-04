@@ -12,10 +12,17 @@ import com.albinodevelopment.Commands.ICommandHandler;
 import com.albinodevelopment.Commands.ModelCommand;
 import com.albinodevelopment.Commands.ViewCommand;
 import com.albinodevelopment.Controller.Controller;
+import com.albinodevelopment.IO.FileIO;
 import com.albinodevelopment.Logging.ConnorLogger;
+import com.albinodevelopment.Model.Components.Drink;
+import com.albinodevelopment.Model.Components.DrinksList;
+import com.albinodevelopment.Model.Components.DrinksTab;
 import com.albinodevelopment.Model.Components.Functions.Function;
 import com.albinodevelopment.Model.Components.Functions.FunctionManager;
+import com.albinodevelopment.Model.Components.Interpreter.IDrinksListInterpreter;
 import com.albinodevelopment.Model.Model;
+import com.albinodevelopment.Settings.ApplicationSettings;
+import com.albinodevelopment.Settings.ISettingsManager;
 import com.albinodevelopment.View.TabContent.ContentLoaderFactory;
 import com.albinodevelopment.View.TabContent.FunctionTabContent;
 import java.util.HashMap;
@@ -25,6 +32,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import org.jdom2.Document;
+import org.jdom2.Element;
 
 /**
  *
@@ -57,7 +66,7 @@ public class MainWindow extends View implements Initializable {
 
     @FXML
     private void handleOpenButton(ActionEvent event) {
-        show();
+        open();
     }
 
     @FXML
@@ -192,6 +201,14 @@ public class MainWindow extends View implements Initializable {
     @Override
     public void open() {
         // read in a function file and open a tab with it's corresponding details
+        Document document = FileIO.getXMLDocumentFromFile(FileIO.openFileExplorer(FileIO.FUNCTION_DIRECTORY()));
+        if (document != null) {
+            ConnorLogger.log("Found XML Function file.", ConnorLogger.PriorityLevel.Low);
+            Element root = document.getRootElement();
+            if (root.getName() == "Function") {
+                loadFunctionFromFile(root);
+            }
+        }
     }
 
     @Override
@@ -269,5 +286,38 @@ public class MainWindow extends View implements Initializable {
             closeTab(source.getText());
         });
         return tab;
+    }
+
+    private void loadFunctionFromFile(Element root) {
+        String functionName = root.getAttributeValue("Name");
+        Element meta = root.getChild("Metadata");
+        String limitString = meta.getChildText("Limit");
+        Double limit = Double.valueOf(limitString);
+        DrinksTab drinksTab = rebuildDrinksTab(root.getChild("Tab"), limit);
+        
+        commandHandler.getCommandHandler().handle(new ModelCommand.NewFunctionCommand(functionName, drinksTab));
+    }
+
+    private DrinksTab rebuildDrinksTab(Element tabElem, double limit) {
+        if (tabElem.getName() == "Tab") {
+            IDrinksListInterpreter dli
+                    = (IDrinksListInterpreter) ApplicationSettings
+                            .getInstance().getSetting(
+                                    ISettingsManager.settingsList.DrinksListInterpreter).getValue();
+            Element drinksTabElem = tabElem.getChild("DrinksList");
+            DrinksList drinksList = dli.interpret(drinksTabElem);
+            HashMap<Drink, Integer> count = new HashMap<>();
+            for (Element e : drinksTabElem.getChildren("Drink")) {
+                Drink drink = drinksList.GetDrink(e.getChildText("Name"));
+                int amount = Integer.valueOf(e.getChildText("Count"));
+                count.put(drink, amount);
+            }
+
+            DrinksTab dt = new DrinksTab(drinksList, limit, count);
+            return dt;
+        } else {
+            ConnorLogger.log("ERROR: Couldn't find tab XML data.", ConnorLogger.PriorityLevel.Medium);
+            return null;
+        }
     }
 }

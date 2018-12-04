@@ -23,9 +23,8 @@ public class Function implements Serializable, XMLable {
     public Function(String name, DrinksTab tab) {
         this.name = name;
         this.drinksTab = tab;
-        drinksTab.init();
     }
-
+    
     public String getName() {
         return name;
     }

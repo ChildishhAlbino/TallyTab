@@ -7,6 +7,7 @@ package com.albinodevelopment.Model.Components.Interpreter;
 
 import com.albinodevelopment.Model.Components.DrinksList;
 import java.io.Serializable;
+import org.jdom2.Element;
 
 /**
  *
@@ -21,6 +22,11 @@ public class DatabaseDrinksListInterpreter implements IDrinksListInterpreter, Se
 
     @Override
     public void save(DrinksList drinksList) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public DrinksList interpret(Element root) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

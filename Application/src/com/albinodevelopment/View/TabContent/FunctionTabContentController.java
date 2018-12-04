@@ -118,7 +118,7 @@ public class FunctionTabContentController extends FunctionTabContent implements 
     }
     
     @FXML
-    public void saveFunction(ActionEvent event){
+    public void saveFunctionButtonAction(ActionEvent event){
         ConnorLogger.log("Saving function to XML!!", ConnorLogger.PriorityLevel.Low);
         FunctionManager.getInstance().saveFunction(title.getText());
     }
