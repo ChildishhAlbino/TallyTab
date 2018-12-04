@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.albinodevelopment.View.TabContent;
+package com.albinodevelopment.View.Templates;
 
 /**
  *
  * @author conno
  */
-public class ContentLoaderFactory {
+public class TemplateLoaderFactory {
 
-    public ContentLoader getBuilder() {
-        return new ContentLoader();
+    public TemplateLoader getBuilder() {
+        return new TemplateLoader();
     }
 
 }

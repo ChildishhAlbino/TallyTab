@@ -5,7 +5,7 @@
  */
 package com.albinodevelopment.Model.Components.Interpreter;
 
-import com.albinodevelopment.Model.Components.DrinksList;
+import com.albinodevelopment.Model.Components.Menu;
 import java.io.Serializable;
 import org.jdom2.Element;
 
@@ -16,17 +16,17 @@ import org.jdom2.Element;
 public class DatabaseDrinksListInterpreter implements IDrinksListInterpreter, Serializable {
 
     @Override
-    public DrinksList interpret(String directory) {
+    public Menu interpret(String directory) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void save(DrinksList drinksList) {
+    public void save(Menu drinksList) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public DrinksList interpret(Element root) {
+    public Menu interpret(Element root) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

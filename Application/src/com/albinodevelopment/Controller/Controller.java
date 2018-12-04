@@ -11,12 +11,12 @@ import com.albinodevelopment.Commands.ICommand;
 import com.albinodevelopment.Commands.ICommandHandler;
 import com.albinodevelopment.Commands.ModelCommand;
 import com.albinodevelopment.Logging.ConnorLogger;
-import com.albinodevelopment.Model.Components.Builders.DrinksListBuilder;
-import com.albinodevelopment.Model.Components.Drink;
-import com.albinodevelopment.Model.Components.DrinksList;
-import com.albinodevelopment.Model.Components.DrinksTab;
+import com.albinodevelopment.Model.Components.Builders.MenuBuilder;
+import com.albinodevelopment.Model.Components.MenuItem;
+import com.albinodevelopment.Model.Components.Menu;
+import com.albinodevelopment.Model.Components.CustomerTab;
 import com.albinodevelopment.Model.Components.Functions.Function;
-import com.albinodevelopment.View.TabContent.FunctionTabContent;
+import com.albinodevelopment.View.Templates.FunctionTemplate;
 import java.util.HashMap;
 
 /**
@@ -77,19 +77,19 @@ public class Controller extends Thread implements ICommandHandler<ControllerComm
         return commandHandler;
     }
 
-    public Drink validateDrinkCreation(String name, String price) {
+    public MenuItem validateDrinkCreation(String name, String price) {
         Double d_Price = validateDouble(price);
         if (d_Price == null) {
             return null;
         }
-        return new Drink(d_Price, name);
+        return new MenuItem(d_Price, name);
     }
 
-    public DrinksTab validateFunctionCreation(String name, String limit, String drinksListPath) {
+    public CustomerTab validateFunctionCreation(String name, String limit, String drinksListPath) {
         Double d_Limit = validateLimit(limit);
-        if (DrinksListBuilder.getInstance().validate(drinksListPath) && d_Limit != null) {
-            DrinksList drinksList = DrinksListBuilder.getInstance().openAndGet(drinksListPath);
-            DrinksTab drinksTab = new DrinksTab(drinksList, d_Limit);
+        if (MenuBuilder.getInstance().validate(drinksListPath) && d_Limit != null) {
+            Menu drinksList = MenuBuilder.getInstance().openAndGet(drinksListPath);
+            CustomerTab drinksTab = new CustomerTab(drinksList, d_Limit);
             return drinksTab;
         }
 

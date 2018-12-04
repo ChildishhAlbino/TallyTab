@@ -7,8 +7,8 @@ package com.albinodevelopment.Model.Components.Functions;
 
 import com.albinodevelopment.IO.FileIO;
 import com.albinodevelopment.Logging.ConnorLogger;
-import com.albinodevelopment.Model.Components.Drink;
-import com.albinodevelopment.Model.Components.DrinksTab;
+import com.albinodevelopment.Model.Components.MenuItem;
+import com.albinodevelopment.Model.Components.CustomerTab;
 import java.util.HashMap;
 import org.jdom2.Document;
 
@@ -35,13 +35,13 @@ public class FunctionManager {
     //START// instance methods and variables
     private final HashMap<String, Function> functions = new HashMap<>();
 
-    public Function changeDrinkValue(String functionName, Drink drink, int amount) {
+    public Function changeDrinkValue(String functionName, MenuItem drink, int amount) {
         functions.get(functionName).getDrinksTab().changeDrinkAmount(amount, drink);
         Function function = functions.get(functionName);
         return function;
     }
 
-    public boolean newFunction(String name, DrinksTab drinksTab) {
+    public boolean newFunction(String name, CustomerTab drinksTab) {
         if (!functionAlreadyExists(name)) {
             Function function = new Function(name, drinksTab);
             functions.put(name, function);

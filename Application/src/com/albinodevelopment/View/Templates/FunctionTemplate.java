@@ -3,29 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.albinodevelopment.View;
+package com.albinodevelopment.View.Templates;
 
 import com.albinodevelopment.Model.Components.MenuItem;
+import com.albinodevelopment.Model.Components.MenuItemContainer;
 import com.albinodevelopment.Model.Components.Functions.Function;
-import javafx.scene.control.Button;
+import javafx.scene.Parent;
 
 /**
  *
  * @author conno
  */
-public interface IView {
+public abstract class FunctionTemplate extends Template implements ITemplate<Function> {
 
-    void newFunction();
+    public void updateDrinkContent(MenuItemContainer drinksTabItem) {
 
-    void open();
-
-    void save();
-
-    void closeTab(String title);
-
-    //void newTab(Function function);
-    void updateTab(Function function);
-
-    void closeNewFunctionWindow();
-
+    }
 }

@@ -9,19 +9,19 @@ package com.albinodevelopment.Model.Components;
  *
  * @author conno
  */
-public class DrinksTabContainer {
+public class MenuItemContainer {
 
-    private final Drink drink;
+    private final MenuItem drink;
     private final int amount;
     private final Double subtotal;
 
-    public DrinksTabContainer(Drink drink, int amount, Double subtotal) {
+    public MenuItemContainer(MenuItem drink, int amount, Double subtotal) {
         this.drink = drink;
         this.amount = amount;
         this.subtotal = subtotal;
     }
 
-    public Drink getDrink() {
+    public MenuItem getDrink() {
         return drink;
     }
 

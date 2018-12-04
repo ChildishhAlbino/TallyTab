@@ -6,8 +6,8 @@
 package com.albinodevelopment.Model.Components.Interpreter;
 
 import com.albinodevelopment.IO.FileIO;
-import com.albinodevelopment.Model.Components.Drink;
-import com.albinodevelopment.Model.Components.DrinksList;
+import com.albinodevelopment.Model.Components.MenuItem;
+import com.albinodevelopment.Model.Components.Menu;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -26,8 +26,8 @@ import org.jdom2.output.XMLOutputter;
 public class XMLDrinksListInterpreter implements IDrinksListInterpreter, Serializable {
 
     @Override
-    public DrinksList interpret(String directory) {
-        DrinksList drinksList = new DrinksList();
+    public Menu interpret(String directory) {
+        Menu drinksList = new Menu();
         Document document = FileIO.getXMLDocumentFromFile(directory);
         if (document != null) {
             return interpret(document.getRootElement());
@@ -36,7 +36,7 @@ public class XMLDrinksListInterpreter implements IDrinksListInterpreter, Seriali
     }
 
     @Override
-    public void save(DrinksList drinksList) {
+    public void save(Menu drinksList) {
         Document document = new Document();
         Element root = new Element("DrinksList");
         root.setAttribute("Version", "1");
@@ -49,7 +49,7 @@ public class XMLDrinksListInterpreter implements IDrinksListInterpreter, Seriali
         FileIO.writeXMLDocumentToFile(document, FileIO.DRINKS_LIST_DIRECTORY(), drinksList.getName() + ".xml");
     }
 
-    private Element createDrinkXML(Drink drink) {
+    private Element createDrinkXML(MenuItem drink) {
         Element drinkContainer = new Element("Drink");
 
         Element nameContainer = new Element("Name");
@@ -63,14 +63,14 @@ public class XMLDrinksListInterpreter implements IDrinksListInterpreter, Seriali
     }
 
     @Override
-    public DrinksList interpret(Element root) {
-        DrinksList drinksList = new DrinksList();
+    public Menu interpret(Element root) {
+        Menu drinksList = new Menu();
         drinksList.setName(root.getAttributeValue("Name"));
         for (Element drinkElement : root.getChildren("Drink")) {
             String name = drinkElement.getChildText("Name");
             String price = drinkElement.getChildText("Price");
             Double d_Price = Double.valueOf(price);
-            Drink drink = new Drink(d_Price, name);
+            MenuItem drink = new MenuItem(d_Price, name);
             drinksList.add(drink);
         }
         return drinksList;

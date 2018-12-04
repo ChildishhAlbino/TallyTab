@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.albinodevelopment.View.TabContent;
+package com.albinodevelopment.View.Templates;
 
 import com.albinodevelopment.View.View;
 import javafx.scene.Parent;
@@ -12,7 +12,7 @@ import javafx.scene.Parent;
  *
  * @author conno
  */
-public abstract class Content {
+public abstract class Template {
 
     protected View view;
     protected Parent fromFXML;

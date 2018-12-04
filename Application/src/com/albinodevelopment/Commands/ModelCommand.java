@@ -5,8 +5,8 @@
  */
 package com.albinodevelopment.Commands;
 
-import com.albinodevelopment.Model.Components.Drink;
-import com.albinodevelopment.Model.Components.DrinksTab;
+import com.albinodevelopment.Model.Components.MenuItem;
+import com.albinodevelopment.Model.Components.CustomerTab;
 import com.albinodevelopment.Model.Components.Functions.Function;
 import com.albinodevelopment.Model.Components.Functions.FunctionManager;
 import com.albinodevelopment.Model.Model;
@@ -44,9 +44,9 @@ public abstract class ModelCommand extends Command<Model> {
     public static class NewFunctionCommand extends ModelCommand {
 
         private final String name;
-        private final DrinksTab drinksTab;
+        private final CustomerTab drinksTab;
 
-        public NewFunctionCommand(String name, DrinksTab drinksTab) {
+        public NewFunctionCommand(String name, CustomerTab drinksTab) {
             this.name = name;
             this.drinksTab = drinksTab;
         }
@@ -108,9 +108,9 @@ public abstract class ModelCommand extends Command<Model> {
 
     public static class AddDrinkToDrinksListCommand extends ModelCommand {
 
-        private final Drink drink;
+        private final MenuItem drink;
 
-        public AddDrinkToDrinksListCommand(Drink drink) {
+        public AddDrinkToDrinksListCommand(MenuItem drink) {
             this.drink = drink;
         }
 
@@ -130,9 +130,9 @@ public abstract class ModelCommand extends Command<Model> {
 
     public static class RemoveDrinkFromDrinksListCommand extends ModelCommand {
 
-        private final Drink drink;
+        private final MenuItem drink;
 
-        public RemoveDrinkFromDrinksListCommand(Drink drink) {
+        public RemoveDrinkFromDrinksListCommand(MenuItem drink) {
             this.drink = drink;
         }
 
@@ -163,9 +163,9 @@ public abstract class ModelCommand extends Command<Model> {
 
         private final int delta;
         private final String functionName;
-        private final Drink drink;
+        private final MenuItem drink;
 
-        public ChangeDrinkAmountCommand(int delta, String functionName, Drink drink) {
+        public ChangeDrinkAmountCommand(int delta, String functionName, MenuItem drink) {
             this.delta = delta;
             this.functionName = functionName;
             this.drink = drink;

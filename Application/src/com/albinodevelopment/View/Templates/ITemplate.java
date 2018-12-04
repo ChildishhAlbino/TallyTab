@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.albinodevelopment.View.TabContent;
+package com.albinodevelopment.View.Templates;
 
 import javafx.scene.Parent;
 
@@ -12,9 +12,9 @@ import javafx.scene.Parent;
  * @author conno
  * @param <T>
  */
-public interface IContent<T> {
+public interface ITemplate<T> {
 
-    Parent generateContent(T input);
+    Parent generate(T input);
 
     void setFromFXML(Parent fromFXML);
 

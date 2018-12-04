@@ -6,8 +6,8 @@
 package com.albinodevelopment.Commands;
 
 import com.albinodevelopment.Controller.Controller;
-import com.albinodevelopment.Model.Components.Drink;
-import com.albinodevelopment.Model.Components.DrinksTab;
+import com.albinodevelopment.Model.Components.MenuItem;
+import com.albinodevelopment.Model.Components.CustomerTab;
 
 /**
  * Abstract class that contains static subclasses that all inherit from. Defines
@@ -78,7 +78,7 @@ public abstract class ControllerCommand extends Command<Controller> {
 
         @Override
         public ExecutionResult execute(Controller commandHandler) {
-            Drink drink = commandHandler.validateDrinkCreation(name, price);
+            MenuItem drink = commandHandler.validateDrinkCreation(name, price);
             if (drink != null) {
                 commandHandler.getCommandHandler().handle(new ModelCommand.AddDrinkToDrinksListCommand(drink));
                 return ExecutionResult.success;
@@ -105,7 +105,7 @@ public abstract class ControllerCommand extends Command<Controller> {
 
         @Override
         public ExecutionResult execute(Controller commandHandler) {
-            Drink drink = commandHandler.validateDrinkCreation(name, price);
+            MenuItem drink = commandHandler.validateDrinkCreation(name, price);
             if (drink != null) {
                 commandHandler.getCommandHandler().handle(new ModelCommand.RemoveDrinkFromDrinksListCommand(drink));
                 return ExecutionResult.success;
@@ -129,7 +129,7 @@ public abstract class ControllerCommand extends Command<Controller> {
 
         @Override
         public ExecutionResult execute(Controller commandHandler) {
-            DrinksTab drinksTab = commandHandler.validateFunctionCreation(name, limit, drinksListPath);
+            CustomerTab drinksTab = commandHandler.validateFunctionCreation(name, limit, drinksListPath);
             if (drinksTab == null) {
                 generateErrorCode("Function couldn't be validated. Plese check logs for further explanation.");
                 return ExecutionResult.failure;
@@ -159,10 +159,10 @@ public abstract class ControllerCommand extends Command<Controller> {
     public static class ValidateDrinkAmountChangeCommand extends ControllerCommand {
 
         private final int amountChange;
-        private final Drink drink;
+        private final MenuItem drink;
         private final String functionName;
 
-        public ValidateDrinkAmountChangeCommand(int amountChange, Drink drink, String functionName) {
+        public ValidateDrinkAmountChangeCommand(int amountChange, MenuItem drink, String functionName) {
             this.amountChange = amountChange;
             this.drink = drink;
             this.functionName = functionName;

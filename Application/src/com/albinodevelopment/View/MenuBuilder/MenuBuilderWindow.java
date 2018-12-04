@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.albinodevelopment.View.DrinksListBuilder;
+package com.albinodevelopment.View.MenuBuilder;
 
 import com.albinodevelopment.Commands.ControllerCommand;
 import com.albinodevelopment.Commands.ModelCommand;
 import com.albinodevelopment.Commands.ViewCommand;
 import com.albinodevelopment.Logging.ConnorLogger;
-import com.albinodevelopment.Model.Components.Builders.DrinksListBuilder;
-import com.albinodevelopment.Model.Components.Drink;
-import com.albinodevelopment.Model.Components.DrinksList;
+import com.albinodevelopment.Model.Components.Builders.MenuBuilder;
+import com.albinodevelopment.Model.Components.MenuItem;
+import com.albinodevelopment.Model.Components.Menu;
 import com.albinodevelopment.View.Window;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -32,7 +32,7 @@ import javafx.scene.text.Font;
  *
  * @author conno
  */
-public class DrinksListBuilderWindow extends Window implements Initializable {
+public class MenuBuilderWindow extends Window implements Initializable {
 
     private final String BLANK_TEXT = "";
     // private DrinksListBuilder drinksListBuilder = new DrinksListBuilder();
@@ -70,8 +70,8 @@ public class DrinksListBuilderWindow extends Window implements Initializable {
     @FXML
     private void saveButtonAction(ActionEvent event) {
         String name = drinksListName.getText();
-        if (textFieldEntered(name, "TEXT TO HACK THE METHOD") && DrinksListBuilder.getInstance().get() != null) {
-            DrinksListBuilder.getInstance().get().setName(name);
+        if (textFieldEntered(name, "TEXT TO HACK THE METHOD") && MenuBuilder.getInstance().get() != null) {
+            MenuBuilder.getInstance().get().setName(name);
             //saveDrinksList(DrinksListBuilder.getInstance().get());
             main.handle(new ViewCommand.PassToControllerCommand(new ControllerCommand.PassToModelCommand(new ModelCommand.SaveDrinksListCommand())));
             drinksListName.clear();
@@ -87,19 +87,19 @@ public class DrinksListBuilderWindow extends Window implements Initializable {
         main.handle(new ViewCommand.PassToControllerCommand(new ControllerCommand.PassToModelCommand(new ModelCommand.OpenDrinksListCommand())));
     }
 
-    public void loadDrinksList(DrinksList drinksList) {
+    public void loadDrinksList(Menu drinksList) {
         drinksListName.setText(drinksList.getName());
         createGUIFromDrinksList(drinksList);
         output.setText("Loaded drinks list!");
     }
 
-    private void createGUIFromDrinksList(DrinksList drinksList) {
+    private void createGUIFromDrinksList(Menu drinksList) {
         drinksList.getDrinksMap().values().forEach((drink) -> {
             createGUIFromDrink(drink);
         });
     }
 
-    public void createGUIFromDrink(Drink drink) {
+    public void createGUIFromDrink(MenuItem drink) {
         Button removeButton = new Button("Remove Item");
         removeButton.setOnAction((event) -> {
             removeItem(removeButton.getParent());
@@ -150,8 +150,8 @@ public class DrinksListBuilderWindow extends Window implements Initializable {
 
     @Override
     protected void refresh() {
-        if (DrinksListBuilder.getInstance().get() != null && DrinksListBuilder.getInstance().get().GetListSize() > 0) {
-            ConnorLogger.log(DrinksListBuilder.getInstance().get().toString(), ConnorLogger.PriorityLevel.Zero);
+        if (MenuBuilder.getInstance().get() != null && MenuBuilder.getInstance().get().GetListSize() > 0) {
+            ConnorLogger.log(MenuBuilder.getInstance().get().toString(), ConnorLogger.PriorityLevel.Zero);
         }
         ConnorLogger.log("Drinks List Window refreshed.", ConnorLogger.PriorityLevel.Zero);
     }

@@ -7,7 +7,7 @@ package com.albinodevelopment.Model.Components.Interpreter;
 
 import com.albinodevelopment.IO.FileIO;
 import com.albinodevelopment.IO.SerializerDeserializerFactory;
-import com.albinodevelopment.Model.Components.DrinksList;
+import com.albinodevelopment.Model.Components.Menu;
 import java.io.Serializable;
 import org.jdom2.Element;
 
@@ -18,9 +18,9 @@ import org.jdom2.Element;
 public class SerializedDrinksListInterpreter implements IDrinksListInterpreter, Serializable {
 
     @Override
-    public DrinksList interpret(String directory) {
-        DrinksList drinksList = SerializerDeserializerFactory
-                .getDeserializer(com.albinodevelopment.Model.Components.DrinksList.class)
+    public Menu interpret(String directory) {
+        Menu drinksList = SerializerDeserializerFactory
+                .getDeserializer(com.albinodevelopment.Model.Components.Menu.class)
                 .deserializeFromFilePath(directory);
         if (drinksList != null) {
             return drinksList;
@@ -30,15 +30,14 @@ public class SerializedDrinksListInterpreter implements IDrinksListInterpreter, 
     }
 
     @Override
-    public void save(DrinksList drinksList) {
-        SerializerDeserializerFactory.getSerializer(
-                com.albinodevelopment.Model.Components.DrinksList.class)
+    public void save(Menu drinksList) {
+        SerializerDeserializerFactory.getSerializer(com.albinodevelopment.Model.Components.Menu.class)
                 .serialize(drinksList,
                         FileIO.DRINKS_LIST_DIRECTORY(), drinksList.getName());
     }
 
     @Override
-    public DrinksList interpret(Element root) {
+    public Menu interpret(Element root) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

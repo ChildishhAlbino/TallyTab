@@ -14,17 +14,17 @@ import com.albinodevelopment.Commands.ViewCommand;
 import com.albinodevelopment.Controller.Controller;
 import com.albinodevelopment.IO.FileIO;
 import com.albinodevelopment.Logging.ConnorLogger;
-import com.albinodevelopment.Model.Components.Drink;
-import com.albinodevelopment.Model.Components.DrinksList;
-import com.albinodevelopment.Model.Components.DrinksTab;
+import com.albinodevelopment.Model.Components.MenuItem;
+import com.albinodevelopment.Model.Components.Menu;
+import com.albinodevelopment.Model.Components.CustomerTab;
 import com.albinodevelopment.Model.Components.Functions.Function;
 import com.albinodevelopment.Model.Components.Functions.FunctionManager;
 import com.albinodevelopment.Model.Components.Interpreter.IDrinksListInterpreter;
 import com.albinodevelopment.Model.Model;
 import com.albinodevelopment.Settings.ApplicationSettings;
 import com.albinodevelopment.Settings.ISettingsManager;
-import com.albinodevelopment.View.TabContent.ContentLoaderFactory;
-import com.albinodevelopment.View.TabContent.FunctionTabContent;
+import com.albinodevelopment.View.Templates.TemplateLoaderFactory;
+import com.albinodevelopment.View.Templates.FunctionTemplate;
 import java.util.HashMap;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -40,14 +40,19 @@ import org.jdom2.Element;
  * @author conno
  */
 public class MainWindow extends View implements Initializable {
-
+    
+    public enum Windows{
+        menuBuilder,
+        settings,
+    }
+    
     private ICommandHandler<ControllerCommand> commandHandler;
     private final WindowLoaderFactory windowLoaderFactory;
-    private final ContentLoaderFactory contentLoaderFactory;
+    private final TemplateLoaderFactory templateLoaderFactory;
     private Window settingsWindow;
-    private Window drinksListBuilderWindow;
+    private Window menuBuilderWindow;
     private Window functionWindow;
-    private final HashMap<Function, FunctionTabContent> tabs = new HashMap<>();
+    private final HashMap<Function, FunctionTemplate> tabs = new HashMap<>();
 
     @FXML
     private TabPane tabPane;
@@ -55,7 +60,7 @@ public class MainWindow extends View implements Initializable {
     public MainWindow() {
         super();
         windowLoaderFactory = new WindowLoaderFactory();
-        contentLoaderFactory = new ContentLoaderFactory();
+        templateLoaderFactory = new TemplateLoaderFactory();
         setupMVC();
     }
 
@@ -94,15 +99,15 @@ public class MainWindow extends View implements Initializable {
 
     @FXML
     private void handleDrinksListButton(ActionEvent event) {
-        if (drinksListBuilderWindow == null) {
-            Window window = setupWindow(com.albinodevelopment.View.DrinksListBuilder.DrinksListBuilderWindow.class, "DrinksListBuilder/DrinksListBuilderWindowFXML.fxml");
+        if (menuBuilderWindow == null) {
+            Window window = setupWindow(com.albinodevelopment.View.MenuBuilder.MenuBuilderWindow.class, "MenuBuilder/MenuBuilderWindowFXML.fxml");
             if (window != null) {
-                drinksListBuilderWindow = window;
+                menuBuilderWindow = window;
             } else {
                 return;
             }
         }
-        drinksListBuilderWindow.show();
+        menuBuilderWindow.show();
     }
 
     @Override
@@ -212,13 +217,13 @@ public class MainWindow extends View implements Initializable {
     }
 
     @Override
-    public Window getWindowByName(String name) {
+    public Window getWindowByName(Windows windowName) {
         Window window = null;
-        switch (name) {
-            case "DrinksList":
-                window = drinksListBuilderWindow;
+        switch (windowName) {
+            case menuBuilder:
+                window = menuBuilderWindow;
                 break;
-            case "Settings":
+            case settings:
                 window = settingsWindow;
                 break;
         }
@@ -245,38 +250,38 @@ public class MainWindow extends View implements Initializable {
         }
     }
 
-    private FunctionTabContent createNewTabContent(Function function) {
-        FunctionTabContent tabContent = (FunctionTabContent) contentLoaderFactory.getBuilder().getContentController("FunctionTabContent.fxml");
-        tabContent.setMain(this);
-        tabs.put(function, tabContent);
-        return tabContent;
+    private FunctionTemplate createNewFunctionTemplate(Function function) {
+        FunctionTemplate template = (FunctionTemplate) templateLoaderFactory.getBuilder().getContentController("FunctionTemplateFXML.fxml");
+        template.setMain(this);
+        tabs.put(function, template);
+        return template;
     }
 
     private void newTab(Function function) {
         ConnorLogger.log("New Tab!", ConnorLogger.PriorityLevel.Low);
         Tab tab = generateTab(function.getName());
-        tab.contentProperty().set(generateTabGUI(function).generateContent(function));
+        tab.contentProperty().set(getTemplate(function).generate(function));
         tabPane.getTabs().add(tab);
         tabPane.getSelectionModel().select(tab);
     }
 
     @Override
     public void updateTab(Function function) {
-        FunctionTabContent tabContent = tabs.get(function);
-        if (tabContent == null) {
+        FunctionTemplate templateContent = tabs.get(function);
+        if (templateContent == null) {
             newTab(function);
         } else {
             ConnorLogger.log("Updating Tab!", ConnorLogger.PriorityLevel.Low);
-            tabContent.update(function);
+            templateContent.update(function);
         }
     }
 
-    private FunctionTabContent generateTabGUI(Function function) {
-        FunctionTabContent tabContent = tabs.get(function);
-        if (tabContent == null) {
-            tabContent = createNewTabContent(function);
+    private FunctionTemplate getTemplate(Function function) {
+        FunctionTemplate templateContent = tabs.get(function);
+        if (templateContent == null) {
+            templateContent = createNewFunctionTemplate(function);
         }
-        return tabContent;
+        return templateContent;
     }
 
     private Tab generateTab(String name) {
@@ -293,27 +298,27 @@ public class MainWindow extends View implements Initializable {
         Element meta = root.getChild("Metadata");
         String limitString = meta.getChildText("Limit");
         Double limit = Double.valueOf(limitString);
-        DrinksTab drinksTab = rebuildDrinksTab(root.getChild("Tab"), limit);
+        CustomerTab drinksTab = rebuildDrinksTab(root.getChild("Tab"), limit);
         
         commandHandler.getCommandHandler().handle(new ModelCommand.NewFunctionCommand(functionName, drinksTab));
     }
 
-    private DrinksTab rebuildDrinksTab(Element tabElem, double limit) {
+    private CustomerTab rebuildDrinksTab(Element tabElem, double limit) {
         if (tabElem.getName() == "Tab") {
             IDrinksListInterpreter dli
                     = (IDrinksListInterpreter) ApplicationSettings
                             .getInstance().getSetting(
                                     ISettingsManager.settingsList.DrinksListInterpreter).getValue();
             Element drinksTabElem = tabElem.getChild("DrinksList");
-            DrinksList drinksList = dli.interpret(drinksTabElem);
-            HashMap<Drink, Integer> count = new HashMap<>();
+            Menu drinksList = dli.interpret(drinksTabElem);
+            HashMap<MenuItem, Integer> count = new HashMap<>();
             for (Element e : drinksTabElem.getChildren("Drink")) {
-                Drink drink = drinksList.GetDrink(e.getChildText("Name"));
+                MenuItem drink = drinksList.GetDrink(e.getChildText("Name"));
                 int amount = Integer.valueOf(e.getChildText("Count"));
                 count.put(drink, amount);
             }
 
-            DrinksTab dt = new DrinksTab(drinksList, limit, count);
+            CustomerTab dt = new CustomerTab(drinksList, limit, count);
             return dt;
         } else {
             ConnorLogger.log("ERROR: Couldn't find tab XML data.", ConnorLogger.PriorityLevel.Medium);

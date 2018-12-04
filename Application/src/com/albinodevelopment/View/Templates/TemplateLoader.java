@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.albinodevelopment.View.TabContent;
+package com.albinodevelopment.View.Templates;
 
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
@@ -14,7 +14,7 @@ import javafx.scene.Parent;
  * @author conno
  * @param <T> the type this content loader returns
  */
-public class ContentLoader<T extends IContent<?>> {
+public class TemplateLoader<T extends ITemplate<?>> {
 
     private final FXMLLoader fXMLLoader = new FXMLLoader();
 

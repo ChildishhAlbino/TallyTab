@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.albinodevelopment.View.TabContent;
+package com.albinodevelopment.View.Templates;
 
 import com.albinodevelopment.Commands.ControllerCommand;
 import com.albinodevelopment.Commands.ViewCommand;
 import com.albinodevelopment.Logging.ConnorLogger;
-import com.albinodevelopment.Model.Components.Drink;
-import com.albinodevelopment.Model.Components.DrinksList;
-import com.albinodevelopment.Model.Components.DrinksTab;
-import com.albinodevelopment.Model.Components.DrinksTabContainer;
+import com.albinodevelopment.Model.Components.MenuItem;
+import com.albinodevelopment.Model.Components.Menu;
+import com.albinodevelopment.Model.Components.CustomerTab;
+import com.albinodevelopment.Model.Components.MenuItemContainer;
 import com.albinodevelopment.Model.Components.Functions.Function;
 import com.albinodevelopment.View.Window;
 import java.net.URL;
@@ -28,7 +28,7 @@ import javafx.scene.control.Label;
  *
  * @author conno
  */
-public class DrinkItemContentController extends DrinkItemContent implements Initializable {
+public class MenuItemTemplateController extends MenuItemTemplate implements Initializable {
 
     @FXML
     private Label drinkName;
@@ -60,14 +60,14 @@ public class DrinkItemContentController extends DrinkItemContent implements Init
      * @return
      */
     @Override
-    public Parent generateContent(DrinksTabContainer input) {
+    public Parent generate(MenuItemContainer input) {
         //setupLabels
         update(input);
         return fromFXML;
     }
 
     @Override
-    public void update(DrinksTabContainer input) {
+    public void update(MenuItemContainer input) {
         this.drink = input.getDrink();
         drinkName.setText(input.getDrink().getName());
         drinkPrice.setText(String.valueOf(input.getDrink().getPrice()));
