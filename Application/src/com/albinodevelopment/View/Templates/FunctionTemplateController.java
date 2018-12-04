@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.albinodevelopment.View.TabContent;
+package com.albinodevelopment.View.Templates;
 
 import com.albinodevelopment.Logging.ConnorLogger;
 import com.albinodevelopment.Model.Components.Drink;
@@ -27,10 +27,10 @@ import javafx.scene.layout.VBox;
  *
  * @author conno
  */
-public class FunctionTabContentController extends FunctionTabContent implements Initializable {
+public class FunctionTemplateController extends FunctionTemplate implements Initializable {
 
-    private final ContentLoaderFactory contentLoaderFactory = new ContentLoaderFactory();
-    private final HashMap<DrinksTabContainer, DrinkItemContent> drinkItemContents = new HashMap<>();
+    private final TemplateLoaderFactory templateLoaderFactory = new TemplateLoaderFactory();
+    private final HashMap<DrinksTabContainer, MenuItemTemplate> drinkItemContents = new HashMap<>();
 
     @FXML
     private Label title;
@@ -59,7 +59,7 @@ public class FunctionTabContentController extends FunctionTabContent implements 
     }
 
     @Override
-    public Parent generateContent(Function input) {
+    public Parent generateFromTemplate(Function input) {
         if (input != null) {
             update(input);
             // return Parent
@@ -78,14 +78,14 @@ public class FunctionTabContentController extends FunctionTabContent implements 
     private void generateDrinksListGUI(DrinksTab drinksTab) {
         drinksTab.getDrinksList().getDrinksMap().values().forEach((Drink drink) -> {
             DrinksTabContainer drinksTabContainer = new DrinksTabContainer(drink, drinksTab.GetCount(drink), drinksTab.getDrinkSubtotal(drink));
-            DrinkItemContent drinkItemContent = generateDrinkItemContent(drinksTabContainer);
-            Parent drinkContent = drinkItemContent.generateContent(drinksTabContainer);
+            MenuItemTemplate drinkItemContent = generateDrinkItemContent(drinksTabContainer);
+            Parent drinkContent = drinkItemContent.generateFromTemplate(drinksTabContainer);
             drinksVbox.getChildren().add(drinkContent);
         });
     }
 
-    private DrinkItemContent generateDrinkItemContent(DrinksTabContainer drinksTabContainer) {
-        DrinkItemContent drinkItemContent = (DrinkItemContent) contentLoaderFactory.getBuilder().getContentController("DrinkItemContentFXML.fxml");
+    private MenuItemTemplate generateDrinkItemContent(DrinksTabContainer drinksTabContainer) {
+        MenuItemTemplate drinkItemContent = (MenuItemTemplate) templateLoaderFactory.getBuilder().getContentController("MenuItemTemplateFXML.fxml");
         drinkItemContent.setMain(view);
         drinkItemContent.setTabContent(this);
         drinkItemContents.put(drinksTabContainer, drinkItemContent);
@@ -110,7 +110,7 @@ public class FunctionTabContentController extends FunctionTabContent implements 
         if (drinkItemContents.isEmpty()) {
             generateDrinksListGUI(input.getDrinksTab());
         } else {
-            for (DrinkItemContent drinkItemContent : drinkItemContents.values()) {
+            for (MenuItemTemplate drinkItemContent : drinkItemContents.values()) {
                 drinkItemContent.update(input.getDrinksTab().getDrinksTabItem(drinkItemContent.drink));
             }
         }

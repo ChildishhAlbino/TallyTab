@@ -23,8 +23,8 @@ import com.albinodevelopment.Model.Components.Interpreter.IDrinksListInterpreter
 import com.albinodevelopment.Model.Model;
 import com.albinodevelopment.Settings.ApplicationSettings;
 import com.albinodevelopment.Settings.ISettingsManager;
-import com.albinodevelopment.View.TabContent.ContentLoaderFactory;
-import com.albinodevelopment.View.TabContent.FunctionTabContent;
+import com.albinodevelopment.View.Templates.TemplateLoaderFactory;
+import com.albinodevelopment.View.Templates.FunctionTemplate;
 import java.util.HashMap;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -43,11 +43,11 @@ public class MainWindow extends View implements Initializable {
 
     private ICommandHandler<ControllerCommand> commandHandler;
     private final WindowLoaderFactory windowLoaderFactory;
-    private final ContentLoaderFactory contentLoaderFactory;
+    private final TemplateLoaderFactory templateLoaderFactory;
     private Window settingsWindow;
     private Window drinksListBuilderWindow;
     private Window functionWindow;
-    private final HashMap<Function, FunctionTabContent> tabs = new HashMap<>();
+    private final HashMap<Function, FunctionTemplate> tabs = new HashMap<>();
 
     @FXML
     private TabPane tabPane;
@@ -55,7 +55,7 @@ public class MainWindow extends View implements Initializable {
     public MainWindow() {
         super();
         windowLoaderFactory = new WindowLoaderFactory();
-        contentLoaderFactory = new ContentLoaderFactory();
+        templateLoaderFactory = new TemplateLoaderFactory();
         setupMVC();
     }
 
@@ -245,8 +245,8 @@ public class MainWindow extends View implements Initializable {
         }
     }
 
-    private FunctionTabContent createNewTabContent(Function function) {
-        FunctionTabContent tabContent = (FunctionTabContent) contentLoaderFactory.getBuilder().getContentController("FunctionTabContent.fxml");
+    private FunctionTemplate createNewTabContent(Function function) {
+        FunctionTemplate tabContent = (FunctionTemplate) templateLoaderFactory.getBuilder().getContentController("FunctionTemplateFXML.fxml");
         tabContent.setMain(this);
         tabs.put(function, tabContent);
         return tabContent;
@@ -255,14 +255,14 @@ public class MainWindow extends View implements Initializable {
     private void newTab(Function function) {
         ConnorLogger.log("New Tab!", ConnorLogger.PriorityLevel.Low);
         Tab tab = generateTab(function.getName());
-        tab.contentProperty().set(generateTabGUI(function).generateContent(function));
+        tab.contentProperty().set(generateTabGUI(function).generateFromTemplate(function));
         tabPane.getTabs().add(tab);
         tabPane.getSelectionModel().select(tab);
     }
 
     @Override
     public void updateTab(Function function) {
-        FunctionTabContent tabContent = tabs.get(function);
+        FunctionTemplate tabContent = tabs.get(function);
         if (tabContent == null) {
             newTab(function);
         } else {
@@ -271,8 +271,8 @@ public class MainWindow extends View implements Initializable {
         }
     }
 
-    private FunctionTabContent generateTabGUI(Function function) {
-        FunctionTabContent tabContent = tabs.get(function);
+    private FunctionTemplate generateTabGUI(Function function) {
+        FunctionTemplate tabContent = tabs.get(function);
         if (tabContent == null) {
             tabContent = createNewTabContent(function);
         }

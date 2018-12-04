@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.albinodevelopment.View.TabContent;
+package com.albinodevelopment.View.Templates;
 
 import com.albinodevelopment.Model.Components.Drink;
 import com.albinodevelopment.Model.Components.DrinksTabContainer;
@@ -12,12 +12,12 @@ import com.albinodevelopment.Model.Components.DrinksTabContainer;
  *
  * @author conno
  */
-public abstract class DrinkItemContent extends Content implements IContent<DrinksTabContainer> {
+public abstract class MenuItemTemplate extends Template implements ITemplate<DrinksTabContainer> {
 
     protected Drink drink;
-    protected FunctionTabContent tabContent;
+    protected FunctionTemplate tabContent;
 
-    public void setTabContent(FunctionTabContent tabContent) {
+    public void setTabContent(FunctionTemplate tabContent) {
         this.tabContent = tabContent;
     }
 

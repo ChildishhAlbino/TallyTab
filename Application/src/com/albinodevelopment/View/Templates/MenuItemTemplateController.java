@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.albinodevelopment.View.TabContent;
+package com.albinodevelopment.View.Templates;
 
 import com.albinodevelopment.Commands.ControllerCommand;
 import com.albinodevelopment.Commands.ViewCommand;
@@ -28,7 +28,7 @@ import javafx.scene.control.Label;
  *
  * @author conno
  */
-public class DrinkItemContentController extends DrinkItemContent implements Initializable {
+public class MenuItemTemplateController extends MenuItemTemplate implements Initializable {
 
     @FXML
     private Label drinkName;
@@ -60,7 +60,7 @@ public class DrinkItemContentController extends DrinkItemContent implements Init
      * @return
      */
     @Override
-    public Parent generateContent(DrinksTabContainer input) {
+    public Parent generateFromTemplate(DrinksTabContainer input) {
         //setupLabels
         update(input);
         return fromFXML;

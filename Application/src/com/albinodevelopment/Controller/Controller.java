@@ -16,7 +16,7 @@ import com.albinodevelopment.Model.Components.Drink;
 import com.albinodevelopment.Model.Components.DrinksList;
 import com.albinodevelopment.Model.Components.DrinksTab;
 import com.albinodevelopment.Model.Components.Functions.Function;
-import com.albinodevelopment.View.TabContent.FunctionTabContent;
+import com.albinodevelopment.View.Templates.FunctionTemplate;
 import java.util.HashMap;
 
 /**
