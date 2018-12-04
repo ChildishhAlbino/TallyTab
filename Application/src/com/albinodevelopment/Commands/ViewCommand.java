@@ -6,10 +6,10 @@
 package com.albinodevelopment.Commands;
 
 import com.albinodevelopment.Controller.Controller;
-import com.albinodevelopment.Model.Components.Drink;
-import com.albinodevelopment.Model.Components.DrinksList;
+import com.albinodevelopment.Model.Components.MenuItem;
+import com.albinodevelopment.Model.Components.Menu;
 import com.albinodevelopment.Model.Components.Functions.Function;
-import com.albinodevelopment.View.DrinksListBuilder.DrinksListBuilderWindow;
+import com.albinodevelopment.View.MenuBuilder.MenuBuilderWindow;
 import com.albinodevelopment.View.View;
 
 /**
@@ -44,9 +44,9 @@ public abstract class ViewCommand extends Command<View> {
 
     public static class GenerateGUIFromDrinkCommand extends ViewCommand {
 
-        private final Drink drink;
+        private final MenuItem drink;
 
-        public GenerateGUIFromDrinkCommand(Drink drink) {
+        public GenerateGUIFromDrinkCommand(MenuItem drink) {
             this.drink = drink;
         }
 
@@ -57,7 +57,7 @@ public abstract class ViewCommand extends Command<View> {
 
         @Override
         public ExecutionResult execute(View commandHandler) {
-            DrinksListBuilderWindow drinksListBuilderWindow = (DrinksListBuilderWindow) commandHandler.getWindowByName("DrinksList");
+            MenuBuilderWindow drinksListBuilderWindow = (MenuBuilderWindow) commandHandler.getWindowByName("DrinksList");
             drinksListBuilderWindow.createGUIFromDrink(drink);
             return ExecutionResult.success;
         }
@@ -65,9 +65,9 @@ public abstract class ViewCommand extends Command<View> {
 
     public static class LoadDrinksListCommand extends ViewCommand {
 
-        private final DrinksList drinkList;
+        private final Menu drinkList;
 
-        public LoadDrinksListCommand(DrinksList drinkList) {
+        public LoadDrinksListCommand(Menu drinkList) {
             this.drinkList = drinkList;
         }
 
@@ -78,7 +78,7 @@ public abstract class ViewCommand extends Command<View> {
 
         @Override
         public ExecutionResult execute(View commandHandler) {
-            DrinksListBuilderWindow drinksListBuilderWindow = (DrinksListBuilderWindow) commandHandler.getWindowByName("DrinksList");
+            MenuBuilderWindow drinksListBuilderWindow = (MenuBuilderWindow) commandHandler.getWindowByName("DrinksList");
             drinksListBuilderWindow.loadDrinksList(drinkList);
             return ExecutionResult.success;
         }

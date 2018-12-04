@@ -17,22 +17,22 @@ import org.jdom2.Element;
  *
  * @author conno
  */
-public class DrinksTab implements Serializable, XMLable {
+public class CustomerTab implements Serializable, XMLable {
 
-    private final DrinksList drinksList;
-    private final HashMap<Drink, Integer> count;
+    private final Menu drinksList;
+    private final HashMap<MenuItem, Integer> count;
     private double limit;
     private double currentValue;
     private double percentUsed;
 
-    public DrinksTab(DrinksList drinksList, double Limit) {
+    public CustomerTab(Menu drinksList, double Limit) {
         this.drinksList = drinksList;
         this.limit = Limit;
         this.count = new HashMap<>();
         init();
     }
 
-    public DrinksTab(DrinksList drinksList, double Limit, HashMap<Drink, Integer> count) {
+    public CustomerTab(Menu drinksList, double Limit, HashMap<MenuItem, Integer> count) {
         this.drinksList = drinksList;
         this.limit = Limit;
         this.count = count;
@@ -44,7 +44,7 @@ public class DrinksTab implements Serializable, XMLable {
         CalculatePercentUsed();
     }
 
-    public void changeDrinkAmount(int delta, Drink drink) {
+    public void changeDrinkAmount(int delta, MenuItem drink) {
         ConnorLogger.log("Attempting to change value of " + drink.getName(), ConnorLogger.PriorityLevel.Low);
         int currentAmount = count.get(drink);
         int newAmount = currentAmount + delta;
@@ -58,11 +58,11 @@ public class DrinksTab implements Serializable, XMLable {
         CheckValues();
     }
 
-    public int GetCount(Drink drink) {
+    public int GetCount(MenuItem drink) {
         return count.get(drink);
     }
 
-    private Double getPriceForAmount(Drink drink, int amount) {
+    private Double getPriceForAmount(MenuItem drink, int amount) {
         Double price = round((drink.getPrice() * amount), 2);
         ConnorLogger.log(drink.getName() + ": " + String.valueOf(price), ConnorLogger.PriorityLevel.Zero);
         return price;
@@ -71,7 +71,7 @@ public class DrinksTab implements Serializable, XMLable {
     private Double CalculateCost() throws NumberFormatException {
         double cost = Double.NaN;
         for (int i = 0; i < drinksList.GetListSize(); i++) {
-            Drink drink = drinksList.GetDrink(i);
+            MenuItem drink = drinksList.GetDrink(i);
             if (Double.isNaN(cost)) {
                 cost = getDrinkSubtotal(drink);
             } else {
@@ -87,7 +87,7 @@ public class DrinksTab implements Serializable, XMLable {
         }
     }
 
-    public double getDrinkSubtotal(Drink drink) {
+    public double getDrinkSubtotal(MenuItem drink) {
         return getPriceForAmount(drink, GetCount(drink));
     }
 
@@ -122,7 +122,7 @@ public class DrinksTab implements Serializable, XMLable {
         }
     }
 
-    public DrinksList getDrinksList() {
+    public Menu getDrinksList() {
         return drinksList;
     }
 
@@ -132,7 +132,7 @@ public class DrinksTab implements Serializable, XMLable {
         });
     }
 
-    public MenuItemContainer getDrinksTabItem(Drink drink) {
+    public MenuItemContainer getDrinksTabItem(MenuItem drink) {
         MenuItemContainer drinksTabItem = new MenuItemContainer(drink, GetCount(drink), getDrinkSubtotal(drink));
         return drinksTabItem;
     }

@@ -7,7 +7,7 @@ package com.albinodevelopment.Model.Components.Builders;
 
 import com.albinodevelopment.IO.FileIO;
 import com.albinodevelopment.Logging.ConnorLogger;
-import com.albinodevelopment.Model.Components.DrinksList;
+import com.albinodevelopment.Model.Components.Menu;
 import com.albinodevelopment.Model.Components.Interpreter.IDrinksListInterpreter;
 import com.albinodevelopment.Settings.ApplicationSettings;
 import com.albinodevelopment.Settings.ISettingsManager;
@@ -16,15 +16,15 @@ import com.albinodevelopment.Settings.ISettingsManager;
  *
  * @author conno
  */
-public class DrinksListBuilder implements IComponentManager<DrinksList> {
+public class MenuBuilder implements IComponentManager<Menu> {
 
-    private static DrinksListBuilder instance;
-    private DrinksList drinksList;
+    private static MenuBuilder instance;
+    private Menu drinksList;
     private IDrinksListInterpreter drinksListInterpreter;
 
     @Override
     public void create() {
-        drinksList = new DrinksList();
+        drinksList = new Menu();
     }
 
     @Override
@@ -37,7 +37,7 @@ public class DrinksListBuilder implements IComponentManager<DrinksList> {
             ConnorLogger.log(directory, ConnorLogger.PriorityLevel.Low);
             checkInterpreter();
 
-            DrinksList temp = drinksListInterpreter.interpret(directory);
+            Menu temp = drinksListInterpreter.interpret(directory);
             if (temp != null) {
                 drinksList = temp;
                 ConnorLogger.log("Drinks List opened correctly.", ConnorLogger.PriorityLevel.Low);
@@ -53,7 +53,7 @@ public class DrinksListBuilder implements IComponentManager<DrinksList> {
     }
 
     @Override
-    public DrinksList get() {
+    public Menu get() {
         return drinksList;
     }
 
@@ -67,9 +67,9 @@ public class DrinksListBuilder implements IComponentManager<DrinksList> {
         drinksList = null;
     }
 
-    public static DrinksListBuilder getInstance() {
+    public static MenuBuilder getInstance() {
         if (instance == null) {
-            instance = new DrinksListBuilder();
+            instance = new MenuBuilder();
         }
         return instance;
     }
@@ -77,14 +77,14 @@ public class DrinksListBuilder implements IComponentManager<DrinksList> {
     @Override
     public boolean validate(String path) {
         checkInterpreter();
-        DrinksList temp = drinksListInterpreter.interpret(path);
+        Menu temp = drinksListInterpreter.interpret(path);
         return temp != null;
     }
 
     @Override
-    public DrinksList openAndGet(String path) {
+    public Menu openAndGet(String path) {
         checkInterpreter();
-        DrinksList dl = drinksListInterpreter.interpret(path);
+        Menu dl = drinksListInterpreter.interpret(path);
         return dl;
     }
 

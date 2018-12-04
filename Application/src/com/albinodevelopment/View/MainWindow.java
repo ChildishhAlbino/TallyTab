@@ -14,9 +14,9 @@ import com.albinodevelopment.Commands.ViewCommand;
 import com.albinodevelopment.Controller.Controller;
 import com.albinodevelopment.IO.FileIO;
 import com.albinodevelopment.Logging.ConnorLogger;
-import com.albinodevelopment.Model.Components.Drink;
-import com.albinodevelopment.Model.Components.DrinksList;
-import com.albinodevelopment.Model.Components.DrinksTab;
+import com.albinodevelopment.Model.Components.MenuItem;
+import com.albinodevelopment.Model.Components.Menu;
+import com.albinodevelopment.Model.Components.CustomerTab;
 import com.albinodevelopment.Model.Components.Functions.Function;
 import com.albinodevelopment.Model.Components.Functions.FunctionManager;
 import com.albinodevelopment.Model.Components.Interpreter.IDrinksListInterpreter;
@@ -95,7 +95,7 @@ public class MainWindow extends View implements Initializable {
     @FXML
     private void handleDrinksListButton(ActionEvent event) {
         if (drinksListBuilderWindow == null) {
-            Window window = setupWindow(com.albinodevelopment.View.DrinksListBuilder.DrinksListBuilderWindow.class, "DrinksListBuilder/DrinksListBuilderWindowFXML.fxml");
+            Window window = setupWindow(com.albinodevelopment.View.MenuBuilder.MenuBuilderWindow.class, "MenuBuilder/MenuBuilderWindowFXML.fxml");
             if (window != null) {
                 drinksListBuilderWindow = window;
             } else {
@@ -293,27 +293,27 @@ public class MainWindow extends View implements Initializable {
         Element meta = root.getChild("Metadata");
         String limitString = meta.getChildText("Limit");
         Double limit = Double.valueOf(limitString);
-        DrinksTab drinksTab = rebuildDrinksTab(root.getChild("Tab"), limit);
+        CustomerTab drinksTab = rebuildDrinksTab(root.getChild("Tab"), limit);
         
         commandHandler.getCommandHandler().handle(new ModelCommand.NewFunctionCommand(functionName, drinksTab));
     }
 
-    private DrinksTab rebuildDrinksTab(Element tabElem, double limit) {
+    private CustomerTab rebuildDrinksTab(Element tabElem, double limit) {
         if (tabElem.getName() == "Tab") {
             IDrinksListInterpreter dli
                     = (IDrinksListInterpreter) ApplicationSettings
                             .getInstance().getSetting(
                                     ISettingsManager.settingsList.DrinksListInterpreter).getValue();
             Element drinksTabElem = tabElem.getChild("DrinksList");
-            DrinksList drinksList = dli.interpret(drinksTabElem);
-            HashMap<Drink, Integer> count = new HashMap<>();
+            Menu drinksList = dli.interpret(drinksTabElem);
+            HashMap<MenuItem, Integer> count = new HashMap<>();
             for (Element e : drinksTabElem.getChildren("Drink")) {
-                Drink drink = drinksList.GetDrink(e.getChildText("Name"));
+                MenuItem drink = drinksList.GetDrink(e.getChildText("Name"));
                 int amount = Integer.valueOf(e.getChildText("Count"));
                 count.put(drink, amount);
             }
 
-            DrinksTab dt = new DrinksTab(drinksList, limit, count);
+            CustomerTab dt = new CustomerTab(drinksList, limit, count);
             return dt;
         } else {
             ConnorLogger.log("ERROR: Couldn't find tab XML data.", ConnorLogger.PriorityLevel.Medium);

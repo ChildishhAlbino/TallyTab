@@ -15,19 +15,19 @@ import org.jdom2.Element;
  *
  * @author conno
  */
-public class DrinksList implements Serializable, IBuildable, XMLable {
+public class Menu implements Serializable, IBuildable, XMLable {
 
     private String name;
 
     private transient StringBuilder stringBuilder;
 
-    private final TreeMap<String, Drink> drinks = new TreeMap<>((String o1, String o2) -> o1.compareTo(o2));
+    private final TreeMap<String, MenuItem> drinks = new TreeMap<>((String o1, String o2) -> o1.compareTo(o2));
 
-    public TreeMap<String, Drink> getDrinksMap() {
+    public TreeMap<String, MenuItem> getDrinksMap() {
         return drinks;
     }
 
-    public Drink GetDrink(String name) {
+    public MenuItem GetDrink(String name) {
         return drinks.get(name);
     }
 
@@ -35,17 +35,17 @@ public class DrinksList implements Serializable, IBuildable, XMLable {
         return drinks.size();
     }
 
-    public Drink GetDrink(int index) {
-        Drink drink = (Drink) drinks.values().toArray()[index];
+    public MenuItem GetDrink(int index) {
+        MenuItem drink = (MenuItem) drinks.values().toArray()[index];
         //ConnorLogger.Log(drink.GetName(), ConnorLogger.PriorityLevel.Low);
         return drink;
     }
 
-    public void add(Drink drink) {
+    public void add(MenuItem drink) {
         drinks.put(drink.getName(), drink);
     }
 
-    public void remove(Drink drink) {
+    public void remove(MenuItem drink) {
         drinks.remove(drink.getName());
     }
 

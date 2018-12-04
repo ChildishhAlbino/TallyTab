@@ -5,8 +5,8 @@
  */
 package com.albinodevelopment.Model.Components.Functions;
 
-import com.albinodevelopment.Model.Components.DrinksList;
-import com.albinodevelopment.Model.Components.DrinksTab;
+import com.albinodevelopment.Model.Components.Menu;
+import com.albinodevelopment.Model.Components.CustomerTab;
 import com.albinodevelopment.XML.XMLable;
 import java.io.Serializable;
 import org.jdom2.Element;
@@ -18,9 +18,9 @@ import org.jdom2.Element;
 public class Function implements Serializable, XMLable {
 
     private final String name;
-    private final DrinksTab drinksTab;
+    private final CustomerTab drinksTab;
 
-    public Function(String name, DrinksTab tab) {
+    public Function(String name, CustomerTab tab) {
         this.name = name;
         this.drinksTab = tab;
     }
@@ -41,7 +41,7 @@ public class Function implements Serializable, XMLable {
 
     public String getPercentUsed() {
         Double d_Percent = drinksTab.GetPercentUsed() * 100;
-        d_Percent = DrinksTab.round(d_Percent, 4);
+        d_Percent = CustomerTab.round(d_Percent, 4);
         return d_Percent.toString() + "%";
     }
 
@@ -49,11 +49,11 @@ public class Function implements Serializable, XMLable {
         return drinksTab.GetPercentUsed();
     }
 
-    public DrinksList getDrinksList() {
+    public Menu getDrinksList() {
         return drinksTab.getDrinksList();
     }
 
-    public DrinksTab getDrinksTab() {
+    public CustomerTab getDrinksTab() {
         return drinksTab;
     }
 

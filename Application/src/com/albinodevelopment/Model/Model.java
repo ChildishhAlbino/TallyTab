@@ -11,8 +11,8 @@ import com.albinodevelopment.Commands.ICommandHandler;
 import com.albinodevelopment.Commands.ModelCommand;
 import com.albinodevelopment.Commands.ViewCommand;
 import com.albinodevelopment.Logging.ConnorLogger;
-import com.albinodevelopment.Model.Components.Builders.DrinksListBuilder;
-import com.albinodevelopment.Model.Components.Drink;
+import com.albinodevelopment.Model.Components.Builders.MenuBuilder;
+import com.albinodevelopment.Model.Components.MenuItem;
 import com.albinodevelopment.Model.Components.Functions.FunctionManager;
 
 /**
@@ -22,7 +22,7 @@ import com.albinodevelopment.Model.Components.Functions.FunctionManager;
 public class Model implements ICommandHandler<ModelCommand> {
 
     private ICommandHandler<ViewCommand> commandHandler;
-    private final DrinksListBuilder drinksListBuilder = DrinksListBuilder.getInstance();
+    private final MenuBuilder drinksListBuilder = MenuBuilder.getInstance();
     public final FunctionManager functionManager = FunctionManager.getInstance();
 
     @Override
@@ -76,12 +76,12 @@ public class Model implements ICommandHandler<ModelCommand> {
         }
     }
 
-    public void addDrinkToDrinksList(Drink drink) {
+    public void addDrinkToDrinksList(MenuItem drink) {
         createNewDrinksList();
         drinksListBuilder.get().add(drink);
     }
 
-    public void removeDrinkFromDrinksList(Drink drink) {
+    public void removeDrinkFromDrinksList(MenuItem drink) {
         createNewDrinksList();
         drinksListBuilder.get().remove(drink);
     }
@@ -94,7 +94,7 @@ public class Model implements ICommandHandler<ModelCommand> {
         drinksListBuilder.save();
     }
 
-    public DrinksListBuilder getDrinksListBuilder() {
+    public MenuBuilder getDrinksListBuilder() {
         return drinksListBuilder;
     }
 

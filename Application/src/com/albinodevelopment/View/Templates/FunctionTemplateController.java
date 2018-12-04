@@ -6,8 +6,8 @@
 package com.albinodevelopment.View.Templates;
 
 import com.albinodevelopment.Logging.ConnorLogger;
-import com.albinodevelopment.Model.Components.Drink;
-import com.albinodevelopment.Model.Components.DrinksTab;
+import com.albinodevelopment.Model.Components.MenuItem;
+import com.albinodevelopment.Model.Components.CustomerTab;
 import com.albinodevelopment.Model.Components.MenuItemContainer;
 import com.albinodevelopment.Model.Components.Functions.Function;
 import com.albinodevelopment.Model.Components.Functions.FunctionManager;
@@ -75,8 +75,8 @@ public class FunctionTemplateController extends FunctionTemplate implements Init
         progressBar.setProgress(input.getPercentAsDouble());
     }
 
-    private void generateDrinksListGUI(DrinksTab drinksTab) {
-        drinksTab.getDrinksList().getDrinksMap().values().forEach((Drink drink) -> {
+    private void generateDrinksListGUI(CustomerTab drinksTab) {
+        drinksTab.getDrinksList().getDrinksMap().values().forEach((MenuItem drink) -> {
             MenuItemContainer drinksTabContainer = new MenuItemContainer(drink, drinksTab.GetCount(drink), drinksTab.getDrinkSubtotal(drink));
             MenuItemTemplate drinkItemContent = generateDrinkItemContent(drinksTabContainer);
             Parent drinkContent = drinkItemContent.generate(drinksTabContainer);

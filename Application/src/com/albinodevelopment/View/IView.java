@@ -5,7 +5,7 @@
  */
 package com.albinodevelopment.View;
 
-import com.albinodevelopment.Model.Components.Drink;
+import com.albinodevelopment.Model.Components.MenuItem;
 import com.albinodevelopment.Model.Components.Functions.Function;
 import javafx.scene.control.Button;
 

@@ -5,7 +5,7 @@
  */
 package com.albinodevelopment.View.Templates;
 
-import com.albinodevelopment.Model.Components.Drink;
+import com.albinodevelopment.Model.Components.MenuItem;
 import com.albinodevelopment.Model.Components.MenuItemContainer;
 
 /**
@@ -14,7 +14,7 @@ import com.albinodevelopment.Model.Components.MenuItemContainer;
  */
 public abstract class MenuItemTemplate extends Template implements ITemplate<MenuItemContainer> {
 
-    protected Drink drink;
+    protected MenuItem drink;
     protected FunctionTemplate tabContent;
 
     public void setTabContent(FunctionTemplate tabContent) {
