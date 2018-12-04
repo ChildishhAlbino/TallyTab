@@ -6,14 +6,16 @@
 package com.albinodevelopment.Model.Components;
 
 import com.albinodevelopment.Model.Components.Builders.IBuildable;
+import com.albinodevelopment.XML.XMLable;
 import java.io.Serializable;
 import java.util.TreeMap;
+import org.jdom2.Element;
 
 /**
  *
  * @author conno
  */
-public class DrinksList implements Serializable, IBuildable {
+public class DrinksList implements Serializable, IBuildable, XMLable {
 
     private String name;
 
@@ -66,5 +68,17 @@ public class DrinksList implements Serializable, IBuildable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public Element toXML() {
+        Element root = new Element("DrinksList");
+        root.setAttribute("Version", "1");
+        root.setAttribute("Name", this.name);
+        drinks.values().forEach((drink) -> {
+            root.addContent(drink.toXML());
+        });
+        
+        return root;
     }
 }

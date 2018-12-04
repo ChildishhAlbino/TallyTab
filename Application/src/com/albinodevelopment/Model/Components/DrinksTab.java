@@ -6,19 +6,21 @@
 package com.albinodevelopment.Model.Components;
 
 import com.albinodevelopment.Logging.ConnorLogger;
+import com.albinodevelopment.XML.XMLable;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.HashMap;
+import org.jdom2.Element;
 
 /**
  *
  * @author conno
  */
-public class DrinksTab implements Serializable {
+public class DrinksTab implements Serializable, XMLable {
 
     private final DrinksList drinksList;
-    private final HashMap<Drink, Integer> count = new HashMap<>();
+    private final HashMap<Drink, Integer> count;
     private double limit;
     private double currentValue;
     private double percentUsed;
@@ -26,6 +28,15 @@ public class DrinksTab implements Serializable {
     public DrinksTab(DrinksList drinksList, double Limit) {
         this.drinksList = drinksList;
         this.limit = Limit;
+        this.count = new HashMap<>();
+        init();
+    }
+
+    public DrinksTab(DrinksList drinksList, double Limit, HashMap<Drink, Integer> count) {
+        this.drinksList = drinksList;
+        this.limit = Limit;
+        this.count = count;
+        CheckValues();
     }
 
     public void CheckValues() {
@@ -134,6 +145,19 @@ public class DrinksTab implements Serializable {
         BigDecimal bd = new BigDecimal(value);
         bd = bd.setScale(places, RoundingMode.HALF_UP);
         return bd.doubleValue();
+    }
+
+    @Override
+    public Element toXML() {
+        Element ret = drinksList.toXML();
+        for (int i = 0; i < drinksList.GetListSize(); i++) {
+            Element currDrink = ret.getChildren("Drink").get(i);
+            Element count = new Element("Count");
+            count.addContent(String.valueOf(GetCount(drinksList.GetDrink(i))));
+            currDrink.addContent(count);
+        }
+
+        return ret;
     }
 
 }

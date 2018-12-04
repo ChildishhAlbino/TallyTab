@@ -65,6 +65,12 @@ public class FileIO {
         return s;
     }
 
+    public static String FUNCTION_DIRECTORY() {
+        String s = APPLICATION_DIRECTORY();
+        s += System.getProperty("file.separator") + "Functions";
+        return s;
+    }
+
     public static String openFileExplorer(String directory) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Select a File");

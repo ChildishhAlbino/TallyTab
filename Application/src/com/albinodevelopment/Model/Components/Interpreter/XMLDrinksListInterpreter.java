@@ -27,21 +27,10 @@ public class XMLDrinksListInterpreter implements IDrinksListInterpreter, Seriali
 
     @Override
     public DrinksList interpret(String directory) {
-
         DrinksList drinksList = new DrinksList();
         Document document = FileIO.getXMLDocumentFromFile(directory);
         if (document != null) {
-            Element root = document.getRootElement();
-
-            drinksList.setName(root.getAttributeValue("Name"));
-            for (Element drinkElement : root.getChildren("Drink")) {
-                String name = drinkElement.getChildText("Name");
-                String price = drinkElement.getChildText("Price");
-                Double d_Price = Double.valueOf(price);
-                Drink drink = new Drink(d_Price, name);
-                drinksList.add(drink);
-            }
-            return drinksList;
+            return interpret(document.getRootElement());
         }
         return null;
     }
@@ -71,6 +60,20 @@ public class XMLDrinksListInterpreter implements IDrinksListInterpreter, Seriali
         priceContainer.addContent(String.valueOf(drink.getPrice()));
         drinkContainer.addContent(priceContainer);
         return drinkContainer;
+    }
+
+    @Override
+    public DrinksList interpret(Element root) {
+        DrinksList drinksList = new DrinksList();
+        drinksList.setName(root.getAttributeValue("Name"));
+        for (Element drinkElement : root.getChildren("Drink")) {
+            String name = drinkElement.getChildText("Name");
+            String price = drinkElement.getChildText("Price");
+            Double d_Price = Double.valueOf(price);
+            Drink drink = new Drink(d_Price, name);
+            drinksList.add(drink);
+        }
+        return drinksList;
     }
 
 }

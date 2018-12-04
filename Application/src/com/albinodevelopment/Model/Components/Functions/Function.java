@@ -7,13 +7,15 @@ package com.albinodevelopment.Model.Components.Functions;
 
 import com.albinodevelopment.Model.Components.DrinksList;
 import com.albinodevelopment.Model.Components.DrinksTab;
+import com.albinodevelopment.XML.XMLable;
 import java.io.Serializable;
+import org.jdom2.Element;
 
 /**
  *
  * @author conno
  */
-public class Function implements Serializable {
+public class Function implements Serializable, XMLable {
 
     private final String name;
     private final DrinksTab drinksTab;
@@ -21,9 +23,8 @@ public class Function implements Serializable {
     public Function(String name, DrinksTab tab) {
         this.name = name;
         this.drinksTab = tab;
-        drinksTab.init();
     }
-
+    
     public String getName() {
         return name;
     }
@@ -55,5 +56,23 @@ public class Function implements Serializable {
     public DrinksTab getDrinksTab() {
         return drinksTab;
     }
+
+    @Override
+    public Element toXML() {
+        Element root = new Element("Function");
+        root.setAttribute("Name", this.name);
+        
+        Element meta = new Element("Metadata");
+        Element limit = new Element ("Limit");
+        limit.addContent(getLimit());
+        meta.addContent(limit);
+        root.addContent(meta);
+        
+        Element tab = new Element("Tab");
+        tab.addContent(drinksTab.toXML());
+        root.addContent(tab);
+        
+        return root;
+    }   
 
 }

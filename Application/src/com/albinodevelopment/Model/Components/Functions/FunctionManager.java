@@ -5,10 +5,12 @@
  */
 package com.albinodevelopment.Model.Components.Functions;
 
+import com.albinodevelopment.IO.FileIO;
 import com.albinodevelopment.Logging.ConnorLogger;
 import com.albinodevelopment.Model.Components.Drink;
 import com.albinodevelopment.Model.Components.DrinksTab;
 import java.util.HashMap;
+import org.jdom2.Document;
 
 /**
  * Class that stores, edits, and outputs Functions to users. Class is
@@ -75,5 +77,13 @@ public class FunctionManager {
 
         return s;
     }
+    
+    public boolean saveFunction(String name){
+         Document toXML = new Document();
+         toXML.addContent(functions.get(name).toXML());
+         FileIO.writeXMLDocumentToFile(toXML, FileIO.FUNCTION_DIRECTORY(), name + ".xml");
+         return true;
+    }
+    
     //END// instance methods and variables
 }
