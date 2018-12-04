@@ -14,6 +14,7 @@ import com.albinodevelopment.Commands.ViewCommand;
 import com.albinodevelopment.Controller.Controller;
 import com.albinodevelopment.IO.FileIO;
 import com.albinodevelopment.Logging.ConnorLogger;
+import com.albinodevelopment.Model.Components.Builders.MenuBuilder;
 import com.albinodevelopment.Model.Components.MenuItem;
 import com.albinodevelopment.Model.Components.Menu;
 import com.albinodevelopment.Model.Components.CustomerTab;
@@ -25,11 +26,13 @@ import com.albinodevelopment.Settings.ApplicationSettings;
 import com.albinodevelopment.Settings.ISettingsManager;
 import com.albinodevelopment.View.Templates.TemplateLoaderFactory;
 import com.albinodevelopment.View.Templates.FunctionTemplate;
+import com.albinodevelopment.View.Templates.MenuBuilderTemplate;
 import java.util.HashMap;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import org.jdom2.Document;
@@ -40,12 +43,12 @@ import org.jdom2.Element;
  * @author conno
  */
 public class MainWindow extends View implements Initializable {
-    
-    public enum Windows{
+
+    public enum Windows {
         menuBuilder,
         settings,
     }
-    
+
     private ICommandHandler<ControllerCommand> commandHandler;
     private final WindowLoaderFactory windowLoaderFactory;
     private final TemplateLoaderFactory templateLoaderFactory;
@@ -53,6 +56,8 @@ public class MainWindow extends View implements Initializable {
     private Window menuBuilderWindow;
     private Window functionWindow;
     private final HashMap<Function, FunctionTemplate> tabs = new HashMap<>();
+
+    private MenuBuilderTemplate menuBuilderTemplate;
 
     @FXML
     private TabPane tabPane;
@@ -99,15 +104,16 @@ public class MainWindow extends View implements Initializable {
 
     @FXML
     private void handleDrinksListButton(ActionEvent event) {
-        if (menuBuilderWindow == null) {
-            Window window = setupWindow(com.albinodevelopment.View.MenuBuilder.MenuBuilderWindow.class, "MenuBuilder/MenuBuilderWindowFXML.fxml");
-            if (window != null) {
-                menuBuilderWindow = window;
-            } else {
-                return;
-            }
-        }
-        menuBuilderWindow.show();
+//        if (menuBuilderWindow == null) {
+//            Window window = setupWindow(com.albinodevelopment.View.MenuBuilder.MenuBuilderWindow.class, "MenuBuilder/MenuBuilderWindowFXML.fxml");
+//            if (window != null) {
+//                menuBuilderWindow = window;
+//            } else {
+//                return;
+//            }
+//        }
+//        menuBuilderWindow.show();
+        openMenuBuilderTab();
     }
 
     @Override
@@ -203,6 +209,18 @@ public class MainWindow extends View implements Initializable {
         commandHandler.handle(new ControllerCommand.PassToModelCommand(new ModelCommand.RemoveFunctionCommand(title)));
     }
 
+    private void openMenuBuilderTab() {
+        if (menuBuilderTemplate == null) {
+            menuBuilderTemplate = (MenuBuilderTemplate) templateLoaderFactory.getBuilder().getContentController("MenuBuilderTemplateFXML.fxml");
+            menuBuilderTemplate.setMain(this);
+        }
+        Tab tab = generateTab("Menu Builder", false);
+        Parent p = menuBuilderTemplate.generate(MenuBuilder.getInstance().get());
+        tab.contentProperty().set(p);
+        tabPane.getTabs().add(tab);
+        tabPane.getSelectionModel().select(tab);
+    }
+
     @Override
     public void open() {
         // read in a function file and open a tab with it's corresponding details
@@ -259,7 +277,7 @@ public class MainWindow extends View implements Initializable {
 
     private void newTab(Function function) {
         ConnorLogger.log("New Tab!", ConnorLogger.PriorityLevel.Low);
-        Tab tab = generateTab(function.getName());
+        Tab tab = generateTab(function.getName(), true);
         tab.contentProperty().set(getTemplate(function).generate(function));
         tabPane.getTabs().add(tab);
         tabPane.getSelectionModel().select(tab);
@@ -284,12 +302,14 @@ public class MainWindow extends View implements Initializable {
         return templateContent;
     }
 
-    private Tab generateTab(String name) {
+    private Tab generateTab(String name, boolean isFunctionTab) {
         Tab tab = new Tab(name);
-        tab.setOnClosed((Event event) -> {
-            Tab source = (Tab) event.getSource();
-            closeTab(source.getText());
-        });
+        if (isFunctionTab) {
+            tab.setOnClosed((Event event) -> {
+                Tab source = (Tab) event.getSource();
+                closeTab(source.getText());
+            });
+        } 
         return tab;
     }
 
@@ -299,7 +319,7 @@ public class MainWindow extends View implements Initializable {
         String limitString = meta.getChildText("Limit");
         Double limit = Double.valueOf(limitString);
         CustomerTab drinksTab = rebuildDrinksTab(root.getChild("Tab"), limit);
-        
+
         commandHandler.getCommandHandler().handle(new ModelCommand.NewFunctionCommand(functionName, drinksTab));
     }
 

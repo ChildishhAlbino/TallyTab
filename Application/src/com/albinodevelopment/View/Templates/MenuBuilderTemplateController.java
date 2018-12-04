@@ -5,15 +5,14 @@
  */
 package com.albinodevelopment.View.Templates;
 
-import com.albinodevelopment.Commands.ControllerCommand;
-import com.albinodevelopment.Commands.ModelCommand;
-import com.albinodevelopment.Commands.ViewCommand;
-import com.albinodevelopment.Model.Components.Builders.MenuBuilder;
+import com.albinodevelopment.Logging.ConnorLogger;
+import com.albinodevelopment.Model.Components.Menu;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -52,7 +51,7 @@ public class MenuBuilderTemplateController extends MenuBuilderTemplate implement
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    
     }
     
     
@@ -88,5 +87,26 @@ public class MenuBuilderTemplateController extends MenuBuilderTemplate implement
     @FXML
     private void changeDrinksListNameButtonAction(ActionEvent event) {
 //        main.handle(new ViewCommand.PassToControllerCommand(new ControllerCommand.PassToModelCommand(new ModelCommand.OpenDrinksListCommand())));
+    }
+
+    @Override
+    public Parent generate(Menu input) {
+        if (input != null) {
+            update(input);
+            // return Parent
+        }
+        if(fromFXML == null){
+            ConnorLogger.log("MenuBuilderTemplate fxml was null.", ConnorLogger.PriorityLevel.Medium);
+        }
+        return fromFXML;
+    }
+
+    @Override
+    public String getText() {
+        return menuTitle.getText();
+    }
+
+    @Override
+    public void update(Menu input) {
     }
 }

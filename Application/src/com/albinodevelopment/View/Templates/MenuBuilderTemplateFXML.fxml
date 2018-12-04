@@ -20,19 +20,19 @@
                <children>
                   <Label fx:id="title" text="MENU TITLE">
                      <font>
-                        <Font name="System Bold" size="24.0" />
+                        <Font name="System Bold" size="36.0" />
                      </font>
                   </Label>
                   <HBox alignment="CENTER" prefHeight="62.0" prefWidth="406.0" spacing="15.0">
                      <children>
-                        <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveButtonAction" prefHeight="62.0" prefWidth="100.0" text="Save">
+                        <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveButtonAction" prefHeight="62.0" prefWidth="200.0" text="Save">
                            <font>
-                              <Font name="System Bold" size="12.0" />
+                              <Font name="System Bold" size="24.0" />
                            </font>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#openButtonAction" prefHeight="62.0" prefWidth="100.0" text="Open">
+                        <Button mnemonicParsing="false" onAction="#openButtonAction" prefHeight="62.0" prefWidth="200.0" text="Open">
                            <font>
-                              <Font name="System Bold" size="12.0" />
+                              <Font name="System Bold" size="24.0" />
                            </font>
                         </Button>
                      </children>

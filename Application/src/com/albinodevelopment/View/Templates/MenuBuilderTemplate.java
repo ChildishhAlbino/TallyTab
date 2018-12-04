@@ -12,26 +12,6 @@ import javafx.scene.Parent;
  *
  * @author conno
  */
-public class MenuBuilderTemplate implements ITemplate<Menu> {
-
-    @Override
-    public Parent generate(Menu input) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void setFromFXML(Parent fromFXML) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public String getText() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void update(Menu input) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+public abstract class MenuBuilderTemplate extends Template implements ITemplate<Menu> {
 
 }
