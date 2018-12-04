@@ -7,6 +7,7 @@ package com.albinodevelopment.View;
 
 import com.albinodevelopment.Commands.ICommandHandler;
 import com.albinodevelopment.Commands.ViewCommand;
+import com.albinodevelopment.View.MainWindow.Windows;
 
 /**
  *
@@ -18,7 +19,7 @@ public abstract class View extends Window implements IView, ICommandHandler<View
         super();
     }
 
-    public Window getWindowByName(String name) {
+    public Window getWindowByName(Windows name) {
         return null;
     }
 

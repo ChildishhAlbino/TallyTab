@@ -40,12 +40,17 @@ import org.jdom2.Element;
  * @author conno
  */
 public class MainWindow extends View implements Initializable {
-
+    
+    public enum Windows{
+        menuBuilder,
+        settings,
+    }
+    
     private ICommandHandler<ControllerCommand> commandHandler;
     private final WindowLoaderFactory windowLoaderFactory;
     private final TemplateLoaderFactory templateLoaderFactory;
     private Window settingsWindow;
-    private Window drinksListBuilderWindow;
+    private Window menuBuilderWindow;
     private Window functionWindow;
     private final HashMap<Function, FunctionTemplate> tabs = new HashMap<>();
 
@@ -94,15 +99,15 @@ public class MainWindow extends View implements Initializable {
 
     @FXML
     private void handleDrinksListButton(ActionEvent event) {
-        if (drinksListBuilderWindow == null) {
+        if (menuBuilderWindow == null) {
             Window window = setupWindow(com.albinodevelopment.View.MenuBuilder.MenuBuilderWindow.class, "MenuBuilder/MenuBuilderWindowFXML.fxml");
             if (window != null) {
-                drinksListBuilderWindow = window;
+                menuBuilderWindow = window;
             } else {
                 return;
             }
         }
-        drinksListBuilderWindow.show();
+        menuBuilderWindow.show();
     }
 
     @Override
@@ -212,13 +217,13 @@ public class MainWindow extends View implements Initializable {
     }
 
     @Override
-    public Window getWindowByName(String name) {
+    public Window getWindowByName(Windows windowName) {
         Window window = null;
-        switch (name) {
-            case "DrinksList":
-                window = drinksListBuilderWindow;
+        switch (windowName) {
+            case menuBuilder:
+                window = menuBuilderWindow;
                 break;
-            case "Settings":
+            case settings:
                 window = settingsWindow;
                 break;
         }

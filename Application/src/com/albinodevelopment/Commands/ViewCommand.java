@@ -9,6 +9,7 @@ import com.albinodevelopment.Controller.Controller;
 import com.albinodevelopment.Model.Components.MenuItem;
 import com.albinodevelopment.Model.Components.Menu;
 import com.albinodevelopment.Model.Components.Functions.Function;
+import com.albinodevelopment.View.MainWindow;
 import com.albinodevelopment.View.MenuBuilder.MenuBuilderWindow;
 import com.albinodevelopment.View.View;
 
@@ -57,7 +58,7 @@ public abstract class ViewCommand extends Command<View> {
 
         @Override
         public ExecutionResult execute(View commandHandler) {
-            MenuBuilderWindow drinksListBuilderWindow = (MenuBuilderWindow) commandHandler.getWindowByName("DrinksList");
+            MenuBuilderWindow drinksListBuilderWindow = (MenuBuilderWindow) commandHandler.getWindowByName(MainWindow.Windows.menuBuilder);
             drinksListBuilderWindow.createGUIFromDrink(drink);
             return ExecutionResult.success;
         }
@@ -78,7 +79,7 @@ public abstract class ViewCommand extends Command<View> {
 
         @Override
         public ExecutionResult execute(View commandHandler) {
-            MenuBuilderWindow drinksListBuilderWindow = (MenuBuilderWindow) commandHandler.getWindowByName("DrinksList");
+            MenuBuilderWindow drinksListBuilderWindow = (MenuBuilderWindow) commandHandler.getWindowByName(MainWindow.Windows.menuBuilder);
             drinksListBuilderWindow.loadDrinksList(drinkList);
             return ExecutionResult.success;
         }
