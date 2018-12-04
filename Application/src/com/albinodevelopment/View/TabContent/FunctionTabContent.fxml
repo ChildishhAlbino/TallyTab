@@ -25,21 +25,21 @@
                      <children>
                         <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="70.0" prefWidth="835.0">
                            <children>
-                              <GridPane alignment="CENTER" hgap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="70.0" prefWidth="800.0">
+                              <GridPane alignment="CENTER" hgap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="70.0" prefWidth="1600.0">
                                  <columnConstraints>
                                     <ColumnConstraints hgrow="SOMETIMES" maxWidth="217.0" minWidth="10.0" prefWidth="217.0" />
                                     <ColumnConstraints hgrow="SOMETIMES" maxWidth="168.0" minWidth="10.0" prefWidth="26.0" />
                                     <ColumnConstraints hgrow="SOMETIMES" maxWidth="137.0" minWidth="10.0" prefWidth="70.0" />
                                     <ColumnConstraints hgrow="SOMETIMES" maxWidth="183.0" minWidth="10.0" prefWidth="56.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="115.0" minWidth="10.0" prefWidth="57.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="145.0" minWidth="10.0" prefWidth="51.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" />
                                     <ColumnConstraints hgrow="SOMETIMES" maxWidth="151.0" minWidth="10.0" prefWidth="108.0" />
                                  </columnConstraints>
                                  <rowConstraints>
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                  </rowConstraints>
                                  <children>
-                                    <Label alignment="CENTER" prefHeight="70.0" prefWidth="234.0" text="DRINK NAME" wrapText="true">
+                                    <Label alignment="CENTER" prefHeight="70.0" prefWidth="348.0" text="DRINK NAME" wrapText="true">
                                        <font>
                                           <Font name="System Bold" size="17.0" />
                                        </font>
@@ -54,7 +54,7 @@
                                           <Font name="System Bold" size="19.0" />
                                        </font>
                                     </Label>
-                                    <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="70.0" prefWidth="163.0" text="SUBTOTAL" wrapText="true" GridPane.columnIndex="6">
+                                    <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="70.0" prefWidth="271.0" text="SUBTOTAL" wrapText="true" GridPane.columnIndex="6">
                                        <font>
                                           <Font name="System Bold" size="19.0" />
                                        </font>
@@ -64,12 +64,12 @@
                                           <Font name="System Bold" size="19.0" />
                                        </font>
                                     </Label>
-                                    <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="70.0" prefWidth="163.0" text="+" wrapText="true" GridPane.columnIndex="4">
+                                    <Label alignment="CENTER" prefHeight="70.0" prefWidth="115.0" text="+" wrapText="true" GridPane.columnIndex="4">
                                        <font>
                                           <Font name="System Bold" size="19.0" />
                                        </font>
                                     </Label>
-                                    <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="70.0" prefWidth="163.0" text="-" wrapText="true" GridPane.columnIndex="5">
+                                    <Label alignment="CENTER" prefHeight="70.0" prefWidth="115.0" text="-" wrapText="true" GridPane.columnIndex="5">
                                        <font>
                                           <Font name="System Bold" size="19.0" />
                                        </font>
@@ -82,7 +82,7 @@
                   </VBox>
                </content>
             </ScrollPane>
-            <VBox alignment="TOP_CENTER" fillWidth="false" minHeight="701.0" minWidth="408.0" prefHeight="1080.0" prefWidth="700.0" spacing="100.0">
+            <VBox alignment="TOP_CENTER" fillWidth="false" minHeight="701.0" minWidth="408.0" prefHeight="1080.0" prefWidth="700.0" spacing="25.0">
                <children>
                   <Label fx:id="title" text="FUNCTION TITLE">
                      <font>
@@ -102,17 +102,17 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="730.0" prefWidth="184.0" text="Limit:">
+                              <Label alignment="CENTER_RIGHT" prefHeight="730.0" prefWidth="184.0" text="Limit:">
                                  <font>
                                     <Font name="System Bold" size="18.0" />
                                  </font>
                               </Label>
-                              <Label alignment="CENTER" prefHeight="730.0" prefWidth="184.0" text="Current Total:" GridPane.rowIndex="1">
+                              <Label alignment="CENTER_RIGHT" prefHeight="730.0" prefWidth="184.0" text="Current Total:" GridPane.rowIndex="1">
                                  <font>
                                     <Font name="System Bold" size="18.0" />
                                  </font>
                               </Label>
-                              <Label alignment="CENTER" prefHeight="730.0" prefWidth="184.0" text="Current Percentage:" GridPane.rowIndex="2">
+                              <Label alignment="CENTER_RIGHT" prefHeight="730.0" prefWidth="184.0" text="Current Percentage:" GridPane.rowIndex="2">
                                  <font>
                                     <Font name="System Bold" size="18.0" />
                                  </font>
@@ -144,25 +144,25 @@
                         <ProgressBar fx:id="progressBar" prefHeight="155.0" prefWidth="348.0" progress="0.5" />
                      </children>
                   </HBox>
-                  <VBox alignment="CENTER" prefWidth="400.0" spacing="25.0">
+                  <HBox spacing="15.0">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#saveFunctionButtonAction" prefHeight="62.0" prefWidth="200.0" text="Save">
+                        <Button mnemonicParsing="false" onAction="#saveFunctionButtonAction" prefHeight="62.0" prefWidth="100.0" text="Save">
                            <font>
-                              <Font name="System Bold" size="29.0" />
+                              <Font name="System Bold" size="12.0" />
                            </font>
                         </Button>
-                        <Button mnemonicParsing="false" prefHeight="62.0" prefWidth="200.0" text="Edit Limit">
+                        <Button mnemonicParsing="false" prefHeight="62.0" prefWidth="100.0" text="Edit Limit">
                            <font>
-                              <Font name="System Bold" size="29.0" />
+                              <Font name="System Bold" size="12.0" />
                            </font>
                         </Button>
-                        <Button mnemonicParsing="false" prefHeight="62.0" prefWidth="200.0" text="Edit Menu">
+                        <Button mnemonicParsing="false" prefHeight="62.0" prefWidth="100.0" text="Edit Menu">
                            <font>
-                              <Font name="System Bold" size="29.0" />
+                              <Font name="System Bold" size="12.0" />
                            </font>
                         </Button>
                      </children>
-                  </VBox>
+                  </HBox>
                </children>
                <padding>
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />

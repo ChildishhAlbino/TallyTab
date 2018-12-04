@@ -21,7 +21,6 @@ import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.VBox;
-import org.jdom2.Document;
 
 /**
  * FXML Controller class
