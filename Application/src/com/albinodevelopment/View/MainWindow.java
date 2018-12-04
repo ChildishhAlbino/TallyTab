@@ -245,38 +245,38 @@ public class MainWindow extends View implements Initializable {
         }
     }
 
-    private FunctionTemplate createNewTabContent(Function function) {
-        FunctionTemplate tabContent = (FunctionTemplate) templateLoaderFactory.getBuilder().getContentController("FunctionTemplateFXML.fxml");
-        tabContent.setMain(this);
-        tabs.put(function, tabContent);
-        return tabContent;
+    private FunctionTemplate createNewFunctionTemplate(Function function) {
+        FunctionTemplate template = (FunctionTemplate) templateLoaderFactory.getBuilder().getContentController("FunctionTemplateFXML.fxml");
+        template.setMain(this);
+        tabs.put(function, template);
+        return template;
     }
 
     private void newTab(Function function) {
         ConnorLogger.log("New Tab!", ConnorLogger.PriorityLevel.Low);
         Tab tab = generateTab(function.getName());
-        tab.contentProperty().set(generateTabGUI(function).generateFromTemplate(function));
+        tab.contentProperty().set(getTemplate(function).generate(function));
         tabPane.getTabs().add(tab);
         tabPane.getSelectionModel().select(tab);
     }
 
     @Override
     public void updateTab(Function function) {
-        FunctionTemplate tabContent = tabs.get(function);
-        if (tabContent == null) {
+        FunctionTemplate templateContent = tabs.get(function);
+        if (templateContent == null) {
             newTab(function);
         } else {
             ConnorLogger.log("Updating Tab!", ConnorLogger.PriorityLevel.Low);
-            tabContent.update(function);
+            templateContent.update(function);
         }
     }
 
-    private FunctionTemplate generateTabGUI(Function function) {
-        FunctionTemplate tabContent = tabs.get(function);
-        if (tabContent == null) {
-            tabContent = createNewTabContent(function);
+    private FunctionTemplate getTemplate(Function function) {
+        FunctionTemplate templateContent = tabs.get(function);
+        if (templateContent == null) {
+            templateContent = createNewFunctionTemplate(function);
         }
-        return tabContent;
+        return templateContent;
     }
 
     private Tab generateTab(String name) {

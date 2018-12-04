@@ -11,7 +11,7 @@ import com.albinodevelopment.Logging.ConnorLogger;
 import com.albinodevelopment.Model.Components.Drink;
 import com.albinodevelopment.Model.Components.DrinksList;
 import com.albinodevelopment.Model.Components.DrinksTab;
-import com.albinodevelopment.Model.Components.DrinksTabContainer;
+import com.albinodevelopment.Model.Components.MenuItemContainer;
 import com.albinodevelopment.Model.Components.Functions.Function;
 import com.albinodevelopment.View.Window;
 import java.net.URL;
@@ -60,14 +60,14 @@ public class MenuItemTemplateController extends MenuItemTemplate implements Init
      * @return
      */
     @Override
-    public Parent generateFromTemplate(DrinksTabContainer input) {
+    public Parent generate(MenuItemContainer input) {
         //setupLabels
         update(input);
         return fromFXML;
     }
 
     @Override
-    public void update(DrinksTabContainer input) {
+    public void update(MenuItemContainer input) {
         this.drink = input.getDrink();
         drinkName.setText(input.getDrink().getName());
         drinkPrice.setText(String.valueOf(input.getDrink().getPrice()));

@@ -6,7 +6,7 @@
 package com.albinodevelopment.View.Templates;
 
 import com.albinodevelopment.Model.Components.Drink;
-import com.albinodevelopment.Model.Components.DrinksTabContainer;
+import com.albinodevelopment.Model.Components.MenuItemContainer;
 import com.albinodevelopment.Model.Components.Functions.Function;
 import javafx.scene.Parent;
 
@@ -16,7 +16,7 @@ import javafx.scene.Parent;
  */
 public abstract class FunctionTemplate extends Template implements ITemplate<Function> {
 
-    public void updateDrinkContent(DrinksTabContainer drinksTabItem) {
+    public void updateDrinkContent(MenuItemContainer drinksTabItem) {
 
     }
 }

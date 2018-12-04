@@ -6,13 +6,13 @@
 package com.albinodevelopment.View.Templates;
 
 import com.albinodevelopment.Model.Components.Drink;
-import com.albinodevelopment.Model.Components.DrinksTabContainer;
+import com.albinodevelopment.Model.Components.MenuItemContainer;
 
 /**
  *
  * @author conno
  */
-public abstract class MenuItemTemplate extends Template implements ITemplate<DrinksTabContainer> {
+public abstract class MenuItemTemplate extends Template implements ITemplate<MenuItemContainer> {
 
     protected Drink drink;
     protected FunctionTemplate tabContent;

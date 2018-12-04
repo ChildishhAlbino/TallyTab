@@ -14,7 +14,7 @@ import javafx.scene.Parent;
  */
 public interface ITemplate<T> {
 
-    Parent generateFromTemplate(T input);
+    Parent generate(T input);
 
     void setFromFXML(Parent fromFXML);
 

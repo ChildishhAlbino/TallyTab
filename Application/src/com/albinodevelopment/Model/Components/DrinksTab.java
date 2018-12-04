@@ -132,8 +132,8 @@ public class DrinksTab implements Serializable, XMLable {
         });
     }
 
-    public DrinksTabContainer getDrinksTabItem(Drink drink) {
-        DrinksTabContainer drinksTabItem = new DrinksTabContainer(drink, GetCount(drink), getDrinkSubtotal(drink));
+    public MenuItemContainer getDrinksTabItem(Drink drink) {
+        MenuItemContainer drinksTabItem = new MenuItemContainer(drink, GetCount(drink), getDrinkSubtotal(drink));
         return drinksTabItem;
     }
 

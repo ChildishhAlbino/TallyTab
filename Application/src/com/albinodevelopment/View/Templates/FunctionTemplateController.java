@@ -8,7 +8,7 @@ package com.albinodevelopment.View.Templates;
 import com.albinodevelopment.Logging.ConnorLogger;
 import com.albinodevelopment.Model.Components.Drink;
 import com.albinodevelopment.Model.Components.DrinksTab;
-import com.albinodevelopment.Model.Components.DrinksTabContainer;
+import com.albinodevelopment.Model.Components.MenuItemContainer;
 import com.albinodevelopment.Model.Components.Functions.Function;
 import com.albinodevelopment.Model.Components.Functions.FunctionManager;
 import java.net.URL;
@@ -30,8 +30,8 @@ import javafx.scene.layout.VBox;
 public class FunctionTemplateController extends FunctionTemplate implements Initializable {
 
     private final TemplateLoaderFactory templateLoaderFactory = new TemplateLoaderFactory();
-    private final HashMap<DrinksTabContainer, MenuItemTemplate> drinkItemContents = new HashMap<>();
-
+    private final HashMap<MenuItemContainer, MenuItemTemplate> templates = new HashMap<>();
+    
     @FXML
     private Label title;
 
@@ -59,7 +59,7 @@ public class FunctionTemplateController extends FunctionTemplate implements Init
     }
 
     @Override
-    public Parent generateFromTemplate(Function input) {
+    public Parent generate(Function input) {
         if (input != null) {
             update(input);
             // return Parent
@@ -77,24 +77,24 @@ public class FunctionTemplateController extends FunctionTemplate implements Init
 
     private void generateDrinksListGUI(DrinksTab drinksTab) {
         drinksTab.getDrinksList().getDrinksMap().values().forEach((Drink drink) -> {
-            DrinksTabContainer drinksTabContainer = new DrinksTabContainer(drink, drinksTab.GetCount(drink), drinksTab.getDrinkSubtotal(drink));
+            MenuItemContainer drinksTabContainer = new MenuItemContainer(drink, drinksTab.GetCount(drink), drinksTab.getDrinkSubtotal(drink));
             MenuItemTemplate drinkItemContent = generateDrinkItemContent(drinksTabContainer);
-            Parent drinkContent = drinkItemContent.generateFromTemplate(drinksTabContainer);
+            Parent drinkContent = drinkItemContent.generate(drinksTabContainer);
             drinksVbox.getChildren().add(drinkContent);
         });
     }
 
-    private MenuItemTemplate generateDrinkItemContent(DrinksTabContainer drinksTabContainer) {
-        MenuItemTemplate drinkItemContent = (MenuItemTemplate) templateLoaderFactory.getBuilder().getContentController("MenuItemTemplateFXML.fxml");
-        drinkItemContent.setMain(view);
-        drinkItemContent.setTabContent(this);
-        drinkItemContents.put(drinksTabContainer, drinkItemContent);
-        return drinkItemContent;
+    private MenuItemTemplate generateDrinkItemContent(MenuItemContainer menuItemContainer) {
+        MenuItemTemplate menuItemContent = (MenuItemTemplate) templateLoaderFactory.getBuilder().getContentController("MenuItemTemplateFXML.fxml");
+        menuItemContent.setMain(view);
+        menuItemContent.setTabContent(this);
+        templates.put(menuItemContainer, menuItemContent);
+        return menuItemContent;
     }
 
     @Override
-    public void updateDrinkContent(DrinksTabContainer drinksTabContainer) {
-        drinkItemContents.get(drinksTabContainer.getDrink()).update(drinksTabContainer);
+    public void updateDrinkContent(MenuItemContainer menuItemContainer) {
+        templates.get(menuItemContainer).update(menuItemContainer);
     }
 
     @Override
@@ -107,10 +107,10 @@ public class FunctionTemplateController extends FunctionTemplate implements Init
         // take function
         setupInfoPage(input);
         // generate GUI elements
-        if (drinkItemContents.isEmpty()) {
+        if (templates.isEmpty()) {
             generateDrinksListGUI(input.getDrinksTab());
         } else {
-            for (MenuItemTemplate drinkItemContent : drinkItemContents.values()) {
+            for (MenuItemTemplate drinkItemContent : templates.values()) {
                 drinkItemContent.update(input.getDrinksTab().getDrinksTabItem(drinkItemContent.drink));
             }
         }
