@@ -5,10 +5,16 @@
  */
 package com.albinodevelopment.View.Templates;
 
+import com.albinodevelopment.Commands.ControllerCommand;
+import com.albinodevelopment.Commands.ModelCommand;
+import com.albinodevelopment.Commands.ViewCommand;
 import com.albinodevelopment.Logging.ConnorLogger;
 import com.albinodevelopment.Model.Components.Menu;
+import com.albinodevelopment.Model.Components.MenuItem;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.TreeMap;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -23,8 +29,10 @@ import javafx.scene.layout.VBox;
  * @author conno
  */
 public class MenuBuilderTemplateController extends MenuBuilderTemplate implements Initializable {
-    
-   @FXML
+
+    TemplateLoaderFactory templateLoaderFactory = new TemplateLoaderFactory();
+
+    @FXML
     private VBox scrollVbox;
 
     @FXML
@@ -44,46 +52,36 @@ public class MenuBuilderTemplateController extends MenuBuilderTemplate implement
 
     @FXML
     private Button saveButton;
-    
+
     @FXML
     private Label menuTitle;
-    
-    
+
+    private ArrayList<MenuBuilderItemTemplate> menuBuilderItemTeplates = new ArrayList<>();
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-    
+
     }
-    
-    
+
     @FXML
     private void addItemButtonAction(ActionEvent event) {
-//        String name = drinkName.getText();
-//        String price = drinkPrice.getText();
-//        if (textFieldEntered(name, price)) {
-//            main.getCommandHandler().handle(new ControllerCommand.ValidateDrinkCreationCommand(name, price));
-//        }
+        String name = itemNameTF.getText();
+        String price = itemPriceTF.getText();
+        if ((notBlank(name) && notBlank(price))) {
+            view.getCommandHandler().handle(new ControllerCommand.ValidateDrinkCreationCommand(name, price));
+        }
     }
 
     @FXML
     private void saveButtonAction(ActionEvent event) {
-//        String name = drinksListName.getText();
-//        if (textFieldEntered(name, "TEXT TO HACK THE METHOD") && MenuBuilder.getInstance().get() != null) {
-//            MenuBuilder.getInstance().get().setName(name);
-//            //saveDrinksList(DrinksListBuilder.getInstance().get());
-//            main.handle(new ViewCommand.PassToControllerCommand(new ControllerCommand.PassToModelCommand(new ModelCommand.SaveDrinksListCommand())));
-//            drinksListName.clear();
-//            scrollVbox.getChildren().clear();
-//            output.setText("Drinks list saved as: " + name + ".ser");
-//        } else {
-//            output.setText("Please enter a drink list name.");
-//        }
+
     }
 
     @FXML
     private void openButtonAction(ActionEvent event) {
-//        main.handle(new ViewCommand.PassToControllerCommand(new ControllerCommand.PassToModelCommand(new ModelCommand.OpenDrinksListCommand())));
+        view.handle(new ViewCommand.PassToControllerCommand(new ControllerCommand.PassToModelCommand(new ModelCommand.OpenDrinksListCommand())));
     }
-    
+
     @FXML
     private void changeDrinksListNameButtonAction(ActionEvent event) {
 //        main.handle(new ViewCommand.PassToControllerCommand(new ControllerCommand.PassToModelCommand(new ModelCommand.OpenDrinksListCommand())));
@@ -95,7 +93,7 @@ public class MenuBuilderTemplateController extends MenuBuilderTemplate implement
             update(input);
             // return Parent
         }
-        if(fromFXML == null){
+        if (fromFXML == null) {
             ConnorLogger.log("MenuBuilderTemplate fxml was null.", ConnorLogger.PriorityLevel.Medium);
         }
         return fromFXML;
@@ -108,5 +106,24 @@ public class MenuBuilderTemplateController extends MenuBuilderTemplate implement
 
     @Override
     public void update(Menu input) {
+        menuTitle.setText(input.getName());
+        TreeMap<String, MenuItem> menuMap = input.getDrinksMap();
+        menuBuilderItemTeplates.clear();
+        if(scrollVbox.getChildren().size() > 1){
+            scrollVbox.getChildren().remove(1, scrollVbox.getChildren().size());
+        }
+        for (MenuItem item : menuMap.values()) {
+            MenuBuilderItemTemplate menuBuilderItemTemplate
+                    = (MenuBuilderItemTemplate) templateLoaderFactory.getBuilder().getContentController("MenuBuilderItemTemplate.fxml");
+            menuBuilderItemTemplate.setMain(view);
+            Parent p = menuBuilderItemTemplate.generate(item);
+            scrollVbox.getChildren().add(p);
+            menuBuilderItemTeplates.add(menuBuilderItemTemplate);
+        }
     }
+
+    private boolean notBlank(String text) {
+        return text != "";
+    }
+
 }

@@ -22,7 +22,11 @@ public class Menu implements Serializable, IBuildable, XMLable {
     private transient StringBuilder stringBuilder;
 
     private final TreeMap<String, MenuItem> drinks = new TreeMap<>((String o1, String o2) -> o1.compareTo(o2));
-
+    
+    public Menu(){
+        name = "New Menu";
+    }
+    
     public TreeMap<String, MenuItem> getDrinksMap() {
         return drinks;
     }

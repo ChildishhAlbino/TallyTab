@@ -6,6 +6,7 @@
 package com.albinodevelopment.Commands;
 
 import com.albinodevelopment.Controller.Controller;
+import com.albinodevelopment.Model.Components.Builders.MenuBuilder;
 import com.albinodevelopment.Model.Components.MenuItem;
 import com.albinodevelopment.Model.Components.Menu;
 import com.albinodevelopment.Model.Components.Functions.Function;
@@ -58,17 +59,16 @@ public abstract class ViewCommand extends Command<View> {
 
         @Override
         public ExecutionResult execute(View commandHandler) {
-            MenuBuilderWindow drinksListBuilderWindow = (MenuBuilderWindow) commandHandler.getWindowByName(MainWindow.Windows.menuBuilder);
-            drinksListBuilderWindow.createGUIFromDrink(drink);
+            commandHandler.updateMenuBuilderWindow(MenuBuilder.getInstance().get());
             return ExecutionResult.success;
         }
     }
 
-    public static class LoadDrinksListCommand extends ViewCommand {
+    public static class LoadMenuCommand extends ViewCommand {
 
         private final Menu drinkList;
 
-        public LoadDrinksListCommand(Menu drinkList) {
+        public LoadMenuCommand(Menu drinkList) {
             this.drinkList = drinkList;
         }
 
@@ -79,8 +79,9 @@ public abstract class ViewCommand extends Command<View> {
 
         @Override
         public ExecutionResult execute(View commandHandler) {
-            MenuBuilderWindow drinksListBuilderWindow = (MenuBuilderWindow) commandHandler.getWindowByName(MainWindow.Windows.menuBuilder);
-            drinksListBuilderWindow.loadDrinksList(drinkList);
+//            MenuBuilderWindow drinksListBuilderWindow = (MenuBuilderWindow) commandHandler.getWindowByName(MainWindow.Windows.menuBuilder);
+//            drinksListBuilderWindow.loadDrinksList(drinkList);
+            commandHandler.updateMenuBuilderWindow(MenuBuilder.getInstance().get());
             return ExecutionResult.success;
         }
 

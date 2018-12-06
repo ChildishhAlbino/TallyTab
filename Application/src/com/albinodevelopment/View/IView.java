@@ -5,9 +5,8 @@
  */
 package com.albinodevelopment.View;
 
-import com.albinodevelopment.Model.Components.MenuItem;
 import com.albinodevelopment.Model.Components.Functions.Function;
-import javafx.scene.control.Button;
+import com.albinodevelopment.Model.Components.Menu;
 
 /**
  *
@@ -27,5 +26,6 @@ public interface IView {
     void updateTab(Function function);
 
     void closeNewFunctionWindow();
-
+    
+    void updateMenuBuilderWindow(Menu menu);
 }

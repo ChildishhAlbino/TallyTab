@@ -44,6 +44,11 @@ import org.jdom2.Element;
  */
 public class MainWindow extends View implements Initializable {
 
+    @Override
+    public void updateMenuBuilderWindow(Menu menu) {
+        menuBuilderTemplate.generate(menu);
+    }
+
     public enum Windows {
         menuBuilder,
         settings,
@@ -58,7 +63,7 @@ public class MainWindow extends View implements Initializable {
     private final HashMap<Function, FunctionTemplate> tabs = new HashMap<>();
 
     private MenuBuilderTemplate menuBuilderTemplate;
-
+    private boolean menuBuilderOpen = false;
     @FXML
     private TabPane tabPane;
 
@@ -104,15 +109,6 @@ public class MainWindow extends View implements Initializable {
 
     @FXML
     private void handleDrinksListButton(ActionEvent event) {
-//        if (menuBuilderWindow == null) {
-//            Window window = setupWindow(com.albinodevelopment.View.MenuBuilder.MenuBuilderWindow.class, "MenuBuilder/MenuBuilderWindowFXML.fxml");
-//            if (window != null) {
-//                menuBuilderWindow = window;
-//            } else {
-//                return;
-//            }
-//        }
-//        menuBuilderWindow.show();
         openMenuBuilderTab();
     }
 
@@ -210,15 +206,24 @@ public class MainWindow extends View implements Initializable {
     }
 
     private void openMenuBuilderTab() {
-        if (menuBuilderTemplate == null) {
-            menuBuilderTemplate = (MenuBuilderTemplate) templateLoaderFactory.getBuilder().getContentController("MenuBuilderTemplateFXML.fxml");
-            menuBuilderTemplate.setMain(this);
+        if (menuBuilderOpen == false) {
+            menuBuilderOpen = true;
+            if (menuBuilderTemplate == null) {
+                menuBuilderTemplate = (MenuBuilderTemplate) templateLoaderFactory.getBuilder().getContentController("MenuBuilderTemplateFXML.fxml");
+                menuBuilderTemplate.setMain(this);
+            }
+            Tab tab = generateTab("Menu Builder", false);
+            tab.setOnClosed((Event event) -> {
+                menuBuilderOpen = false;
+            });
+            Parent p = menuBuilderTemplate.generate(MenuBuilder.getInstance().get());
+            tab.contentProperty().set(p);
+            tabPane.getTabs().add(tab);
+            tabPane.getSelectionModel().select(tab);
+        } else {
+            ConnorLogger.log("Menu builder already open.", ConnorLogger.PriorityLevel.Low);
         }
-        Tab tab = generateTab("Menu Builder", false);
-        Parent p = menuBuilderTemplate.generate(MenuBuilder.getInstance().get());
-        tab.contentProperty().set(p);
-        tabPane.getTabs().add(tab);
-        tabPane.getSelectionModel().select(tab);
+
     }
 
     @Override
@@ -309,7 +314,7 @@ public class MainWindow extends View implements Initializable {
                 Tab source = (Tab) event.getSource();
                 closeTab(source.getText());
             });
-        } 
+        }
         return tab;
     }
 
