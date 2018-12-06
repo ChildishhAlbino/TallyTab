@@ -8,6 +8,7 @@ package com.albinodevelopment.Model.Components;
 import com.albinodevelopment.Model.Components.Builders.IBuildable;
 import com.albinodevelopment.XML.XMLable;
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.TreeMap;
 import org.jdom2.Element;
 
@@ -21,12 +22,12 @@ public class Menu implements Serializable, IBuildable, XMLable {
 
     private transient StringBuilder stringBuilder;
 
-    private final TreeMap<String, MenuItem> drinks = new TreeMap<>((String o1, String o2) -> o1.compareTo(o2));
-    
-    public Menu(){
+    private final TreeMap<String, MenuItem> drinks = new TreeMap<>((String o1, String o2) -> o1.compareToIgnoreCase(o2));
+
+    public Menu() {
         name = "New Menu";
     }
-    
+
     public TreeMap<String, MenuItem> getDrinksMap() {
         return drinks;
     }
@@ -82,7 +83,7 @@ public class Menu implements Serializable, IBuildable, XMLable {
         drinks.values().forEach((drink) -> {
             root.addContent(drink.toXML());
         });
-        
+
         return root;
     }
 }

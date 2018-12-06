@@ -54,6 +54,9 @@ public class MenuBuilder implements IComponentManager<Menu> {
 
     @Override
     public Menu get() {
+        if(drinksList == null){
+            create();
+        }
         return drinksList;
     }
 

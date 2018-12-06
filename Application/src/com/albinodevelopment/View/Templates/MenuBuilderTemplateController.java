@@ -9,6 +9,7 @@ import com.albinodevelopment.Commands.ControllerCommand;
 import com.albinodevelopment.Commands.ModelCommand;
 import com.albinodevelopment.Commands.ViewCommand;
 import com.albinodevelopment.Logging.ConnorLogger;
+import com.albinodevelopment.Model.Components.Builders.MenuBuilder;
 import com.albinodevelopment.Model.Components.Menu;
 import com.albinodevelopment.Model.Components.MenuItem;
 import java.net.URL;
@@ -67,14 +68,15 @@ public class MenuBuilderTemplateController extends MenuBuilderTemplate implement
     private void addItemButtonAction(ActionEvent event) {
         String name = itemNameTF.getText();
         String price = itemPriceTF.getText();
-        if ((notBlank(name) && notBlank(price))) {
+        if ((notBlank(itemNameTF) && notBlank(itemPriceTF))) {
             view.getCommandHandler().handle(new ControllerCommand.ValidateDrinkCreationCommand(name, price));
         }
     }
 
     @FXML
     private void saveButtonAction(ActionEvent event) {
-
+        view.handle(new ViewCommand.PassToControllerCommand(new ControllerCommand.PassToModelCommand(new ModelCommand.SaveDrinksListCommand())));
+        this.update(MenuBuilder.getInstance().get());
     }
 
     @FXML
@@ -109,7 +111,7 @@ public class MenuBuilderTemplateController extends MenuBuilderTemplate implement
         menuTitle.setText(input.getName());
         TreeMap<String, MenuItem> menuMap = input.getDrinksMap();
         menuBuilderItemTeplates.clear();
-        if(scrollVbox.getChildren().size() > 1){
+        if (scrollVbox.getChildren().size() > 1) {
             scrollVbox.getChildren().remove(1, scrollVbox.getChildren().size());
         }
         for (MenuItem item : menuMap.values()) {
@@ -122,8 +124,12 @@ public class MenuBuilderTemplateController extends MenuBuilderTemplate implement
         }
     }
 
-    private boolean notBlank(String text) {
-        return text != "";
+    private boolean notBlank(TextField tf) {
+        boolean notBlank = tf.getText() != "";
+        if(notBlank){
+            tf.clear();
+        }
+        return notBlank;
     }
 
 }
