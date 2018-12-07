@@ -5,12 +5,11 @@
  */
 package com.albinodevelopment.Commands;
 
-import com.albinodevelopment.Controller.Controller;
+import com.albinodevelopment.Model.Components.Builders.MenuBuilder;
 import com.albinodevelopment.Model.Components.MenuItem;
 import com.albinodevelopment.Model.Components.Menu;
 import com.albinodevelopment.Model.Components.Functions.Function;
-import com.albinodevelopment.View.MainWindow;
-import com.albinodevelopment.View.MenuBuilder.MenuBuilderWindow;
+import com.albinodevelopment.View.IOutput;
 import com.albinodevelopment.View.View;
 
 /**
@@ -58,17 +57,17 @@ public abstract class ViewCommand extends Command<View> {
 
         @Override
         public ExecutionResult execute(View commandHandler) {
-            MenuBuilderWindow drinksListBuilderWindow = (MenuBuilderWindow) commandHandler.getWindowByName(MainWindow.Windows.menuBuilder);
-            drinksListBuilderWindow.createGUIFromDrink(drink);
+            commandHandler.updateMenuBuilderWindow(MenuBuilder.getInstance().get());
+            commandHandler.handle(new PushOutputMessasgeCommand(commandHandler.getMenuBuilderWindow(), "Added item: " + drink.getName()));
             return ExecutionResult.success;
         }
     }
 
-    public static class LoadDrinksListCommand extends ViewCommand {
+    public static class LoadMenuCommand extends ViewCommand {
 
         private final Menu drinkList;
 
-        public LoadDrinksListCommand(Menu drinkList) {
+        public LoadMenuCommand(Menu drinkList) {
             this.drinkList = drinkList;
         }
 
@@ -79,8 +78,9 @@ public abstract class ViewCommand extends Command<View> {
 
         @Override
         public ExecutionResult execute(View commandHandler) {
-            MenuBuilderWindow drinksListBuilderWindow = (MenuBuilderWindow) commandHandler.getWindowByName(MainWindow.Windows.menuBuilder);
-            drinksListBuilderWindow.loadDrinksList(drinkList);
+//            MenuBuilderWindow drinksListBuilderWindow = (MenuBuilderWindow) commandHandler.getWindowByName(MainWindow.Windows.menuBuilder);
+//            drinksListBuilderWindow.loadDrinksList(drinkList);
+            commandHandler.updateMenuBuilderWindow(MenuBuilder.getInstance().get());
             return ExecutionResult.success;
         }
 
@@ -119,5 +119,27 @@ public abstract class ViewCommand extends Command<View> {
             commandHandler.updateTab(function);
             return ExecutionResult.success;
         }
+    }
+
+    public static class PushOutputMessasgeCommand extends ViewCommand {
+
+        public final IOutput target;
+        public final String message;
+
+        public PushOutputMessasgeCommand(IOutput target, String message) {
+            this.target = target;
+            this.message = message;
+        }
+
+        @Override
+        public ExecutionResult execute(View commandHandler) {
+            if (target != null) {
+                target.output(message);
+                return ExecutionResult.success;
+            } else {
+                return ExecutionResult.failure;
+            }
+        }
+
     }
 }

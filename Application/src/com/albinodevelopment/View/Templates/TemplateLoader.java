@@ -5,6 +5,7 @@
  */
 package com.albinodevelopment.View.Templates;
 
+import com.albinodevelopment.Logging.ConnorLogger;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -27,6 +28,8 @@ public class TemplateLoader<T extends ITemplate<?>> {
             return t;
         } catch (IOException ex) {
             // log 
+            ConnorLogger.log("ERROR: " + ex.getLocalizedMessage(), ConnorLogger.PriorityLevel.High);
+            ex.printStackTrace();
             return null;
         }
     }

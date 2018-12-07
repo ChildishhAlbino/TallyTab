@@ -21,7 +21,7 @@ public abstract class ModelCommand extends Command<Model> {
 
         private final Command viewCommand;
 
-        public PassToViewCommand(ControllerCommand viewCommand) {
+        public PassToViewCommand(ViewCommand viewCommand) {
             this.viewCommand = viewCommand;
         }
 
@@ -85,7 +85,7 @@ public abstract class ModelCommand extends Command<Model> {
         @Override
         public ExecutionResult execute(Model commandHandler) {
             commandHandler.openDrinksList();
-            commandHandler.getCommandHandler().handle(new ViewCommand.LoadDrinksListCommand(commandHandler.getDrinksListBuilder().get()));
+            commandHandler.getCommandHandler().handle(new ViewCommand.LoadMenuCommand(commandHandler.getDrinksListBuilder().get()));
             return ExecutionResult.success;
         }
 
@@ -144,6 +144,7 @@ public abstract class ModelCommand extends Command<Model> {
         @Override
         public ExecutionResult execute(Model commandHandler) {
             commandHandler.removeDrinkFromDrinksList(drink);
+//            commandHandler.handle(new PassToViewCommand(new ViewCommand.PushOutputMessasgeCommand(, errorCode)));
             return ExecutionResult.success;
         }
 

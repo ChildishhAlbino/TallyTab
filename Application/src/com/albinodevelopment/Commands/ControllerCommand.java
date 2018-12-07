@@ -57,6 +57,7 @@ public abstract class ControllerCommand extends Command<Controller> {
      * Static Controller Command that validates the creation of a drink.
      */
     public static class ValidateDrinkCreationCommand extends ControllerCommand {
+
         /**
          * the name of the drink. FINAL
          */
@@ -92,10 +93,18 @@ public abstract class ControllerCommand extends Command<Controller> {
 
         private final String name;
         private final String price;
+        private final MenuItem item;
 
         public ValidateDrinkRemovalCommand(String name, String price) {
             this.name = name;
             this.price = price;
+            this.item = null;
+        }
+
+        public ValidateDrinkRemovalCommand(MenuItem item) {
+            this.name = null;
+            this.price = null;
+            this.item = item;
         }
 
         @Override
@@ -105,12 +114,17 @@ public abstract class ControllerCommand extends Command<Controller> {
 
         @Override
         public ExecutionResult execute(Controller commandHandler) {
-            MenuItem drink = commandHandler.validateDrinkCreation(name, price);
-            if (drink != null) {
-                commandHandler.getCommandHandler().handle(new ModelCommand.RemoveDrinkFromDrinksListCommand(drink));
-                return ExecutionResult.success;
+            if (item == null) {
+                MenuItem drink = commandHandler.validateDrinkCreation(name, price);
+                if (drink != null) {
+                    commandHandler.getCommandHandler().handle(new ModelCommand.RemoveDrinkFromDrinksListCommand(drink));
+                    return ExecutionResult.success;
+                } else {
+                    return ExecutionResult.failure;
+                }
             } else {
-                return ExecutionResult.failure;
+                commandHandler.getCommandHandler().handle(new ModelCommand.RemoveDrinkFromDrinksListCommand(item));
+                return ExecutionResult.success;
             }
         }
     }
