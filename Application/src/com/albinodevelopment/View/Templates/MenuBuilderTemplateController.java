@@ -87,6 +87,12 @@ public class MenuBuilderTemplateController extends MenuBuilderTemplate implement
     @FXML
     private void changeDrinksListNameButtonAction(ActionEvent event) {
 //        main.handle(new ViewCommand.PassToControllerCommand(new ControllerCommand.PassToModelCommand(new ModelCommand.OpenDrinksListCommand())));
+        String newTitle = menuTitleTF.getText();
+        if (notBlank(menuTitleTF)) {
+            MenuBuilder.getInstance().changeName(newTitle);
+            update(MenuBuilder.getInstance().get());
+        }
+
     }
 
     @Override
@@ -126,7 +132,7 @@ public class MenuBuilderTemplateController extends MenuBuilderTemplate implement
 
     private boolean notBlank(TextField tf) {
         boolean notBlank = tf.getText() != "";
-        if(notBlank){
+        if (notBlank) {
             tf.clear();
         }
         return notBlank;

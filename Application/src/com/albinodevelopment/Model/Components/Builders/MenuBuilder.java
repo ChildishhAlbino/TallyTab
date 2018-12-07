@@ -48,7 +48,7 @@ public class MenuBuilder implements IComponentManager<Menu> {
     @Override
     public void save() {
         checkInterpreter();
-        if (drinksList.GetListSize() > 0) {
+        if (drinksList.GetListSize() > 0 && drinksList.getName().contains("/") == false) {
             ConnorLogger.log("Saving menu to file.", ConnorLogger.PriorityLevel.Low);
             drinksListInterpreter.save(drinksList);
             clear();
@@ -92,6 +92,10 @@ public class MenuBuilder implements IComponentManager<Menu> {
         checkInterpreter();
         Menu dl = drinksListInterpreter.interpret(path);
         return dl;
+    }
+
+    public void changeName(String text) {
+        drinksList.setName(text);
     }
 
 }
