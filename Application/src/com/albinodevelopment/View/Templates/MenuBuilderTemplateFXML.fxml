@@ -46,7 +46,7 @@
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="62.0" prefWidth="406.0" spacing="15.0">
                      <children>
-                        <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveButtonAction" prefHeight="62.0" prefWidth="200.0" text="Save">
+                        <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveButtonAction" prefHeight="62.0" prefWidth="200.0" text="Save &amp; Close">
                            <font>
                               <Font name="System Bold" size="24.0" />
                            </font>
