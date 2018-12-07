@@ -58,6 +58,11 @@
                         </Button>
                      </children>
                   </HBox>
+                  <Label fx:id="output" alignment="CENTER" prefHeight="159.0" prefWidth="378.0" textAlignment="CENTER" wrapText="true">
+                     <font>
+                        <Font name="System Bold" size="36.0" />
+                     </font>
+                  </Label>
                </children>
                <padding>
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />

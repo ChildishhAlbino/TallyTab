@@ -7,6 +7,7 @@ package com.albinodevelopment.View;
 
 import com.albinodevelopment.Model.Components.Functions.Function;
 import com.albinodevelopment.Model.Components.Menu;
+import com.albinodevelopment.View.Templates.MenuBuilderTemplate;
 
 /**
  *
@@ -28,4 +29,6 @@ public interface IView {
     void closeNewFunctionWindow();
     
     void updateMenuBuilderWindow(Menu menu);
+    
+    MenuBuilderTemplate getMenuBuilderWindow();
 }

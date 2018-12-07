@@ -49,6 +49,11 @@ public class MainWindow extends View implements Initializable {
         menuBuilderTemplate.generate(menu);
     }
 
+    @Override
+    public MenuBuilderTemplate getMenuBuilderWindow() {
+        return menuBuilderTemplate;
+    }
+
     public enum Windows {
         menuBuilder,
         settings,

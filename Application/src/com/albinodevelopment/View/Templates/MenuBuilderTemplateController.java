@@ -12,6 +12,7 @@ import com.albinodevelopment.Logging.ConnorLogger;
 import com.albinodevelopment.Model.Components.Builders.MenuBuilder;
 import com.albinodevelopment.Model.Components.Menu;
 import com.albinodevelopment.Model.Components.MenuItem;
+import com.albinodevelopment.View.IOutput;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -91,6 +92,7 @@ public class MenuBuilderTemplateController extends MenuBuilderTemplate implement
         if (notBlank(menuTitleTF)) {
             MenuBuilder.getInstance().changeName(newTitle);
             update(MenuBuilder.getInstance().get());
+            view.handle(new ViewCommand.PushOutputMessasgeCommand(this, "Title changed!"));
         }
 
     }
@@ -131,11 +133,21 @@ public class MenuBuilderTemplateController extends MenuBuilderTemplate implement
     }
 
     private boolean notBlank(TextField tf) {
-        boolean notBlank = tf.getText() != "";
+        ConnorLogger.log(tf.getText(), ConnorLogger.PriorityLevel.Low);
+        boolean notBlank = !"".equals(tf.getText());
         if (notBlank) {
             tf.clear();
+        } else {
+            view.handle(new ViewCommand.PushOutputMessasgeCommand(this, "Please don't leave text field blank."));
         }
         return notBlank;
+    }
+
+    @Override
+    public void output(String output) {
+        if (output != null) {
+            this.output.setText(output);
+        }
     }
 
 }

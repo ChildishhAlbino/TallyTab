@@ -6,12 +6,12 @@
 package com.albinodevelopment.View.Templates;
 
 import com.albinodevelopment.Model.Components.Menu;
-import javafx.scene.Parent;
+import com.albinodevelopment.View.IOutput;
 
 /**
  *
  * @author conno
  */
-public abstract class MenuBuilderTemplate extends Template implements ITemplate<Menu> {
+public abstract class MenuBuilderTemplate extends Template implements ITemplate<Menu>, IOutput{
 
 }
