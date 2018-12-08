@@ -85,7 +85,7 @@ public abstract class ModelCommand extends Command<Model> {
         @Override
         public ExecutionResult execute(Model commandHandler) {
             commandHandler.openDrinksList();
-            commandHandler.getCommandHandler().handle(new ViewCommand.LoadMenuCommand(commandHandler.getDrinksListBuilder().get()));
+            commandHandler.getCommandHandler().handle(new ViewCommand.LoadMenuCommand("Loaded menu from file."));
             return ExecutionResult.success;
         }
 
@@ -122,7 +122,7 @@ public abstract class ModelCommand extends Command<Model> {
         @Override
         public ExecutionResult execute(Model commandHandler) {
             commandHandler.addDrinkToDrinksList(drink);
-            commandHandler.getCommandHandler().handle(new ViewCommand.GenerateGUIFromDrinkCommand(drink));
+            commandHandler.getCommandHandler().handle(new ViewCommand.LoadMenuCommand("Added item: " + drink.getName()));
             return ExecutionResult.success;
         }
 

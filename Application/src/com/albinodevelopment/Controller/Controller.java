@@ -15,9 +15,6 @@ import com.albinodevelopment.Model.Components.Builders.MenuBuilder;
 import com.albinodevelopment.Model.Components.MenuItem;
 import com.albinodevelopment.Model.Components.Menu;
 import com.albinodevelopment.Model.Components.CustomerTab;
-import com.albinodevelopment.Model.Components.Functions.Function;
-import com.albinodevelopment.View.Templates.FunctionTemplate;
-import java.util.HashMap;
 
 /**
  *

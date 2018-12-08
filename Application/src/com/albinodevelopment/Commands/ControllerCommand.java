@@ -79,11 +79,15 @@ public abstract class ControllerCommand extends Command<Controller> {
 
         @Override
         public ExecutionResult execute(Controller commandHandler) {
-            MenuItem drink = commandHandler.validateDrinkCreation(name, price);
-            if (drink != null) {
-                commandHandler.getCommandHandler().handle(new ModelCommand.AddDrinkToDrinksListCommand(drink));
+            MenuItem menuItem = commandHandler.validateDrinkCreation(name, price);
+            if (menuItem != null) {
+                commandHandler.getCommandHandler().handle(new ModelCommand.AddDrinkToDrinksListCommand(menuItem));
                 return ExecutionResult.success;
             } else {
+                commandHandler.handle(
+                        new PassToModelCommand(
+                                new ModelCommand.PassToViewCommand(
+                                        new ViewCommand.PushOutputMessageToMenuBuilderCommand("Please enter a valid price."))));
                 return ExecutionResult.failure;
             }
         }

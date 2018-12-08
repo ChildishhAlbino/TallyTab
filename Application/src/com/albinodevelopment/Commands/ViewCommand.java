@@ -42,48 +42,20 @@ public abstract class ViewCommand extends Command<View> {
         }
     }
 
-    public static class GenerateGUIFromDrinkCommand extends ViewCommand {
-
-        private final MenuItem drink;
-
-        public GenerateGUIFromDrinkCommand(MenuItem drink) {
-            this.drink = drink;
-        }
-
-        @Override
-        public boolean canExecute(View commandHandler) {
-            return drink != null;
-        }
-
-        @Override
-        public ExecutionResult execute(View commandHandler) {
-            commandHandler.updateMenuBuilderWindow(MenuBuilder.getInstance().get());
-            commandHandler.handle(new PushOutputMessasgeCommand(commandHandler.getMenuBuilderWindow(), "Added item: " + drink.getName()));
-            return ExecutionResult.success;
-        }
-    }
-
     public static class LoadMenuCommand extends ViewCommand {
 
-        private final Menu drinkList;
+        private final String message;
 
-        public LoadMenuCommand(Menu drinkList) {
-            this.drinkList = drinkList;
-        }
-
-        @Override
-        public boolean canExecute(View commandHandler) {
-            return drinkList != null;
+        public LoadMenuCommand(String message) {
+            this.message = message;
         }
 
         @Override
         public ExecutionResult execute(View commandHandler) {
-//            MenuBuilderWindow drinksListBuilderWindow = (MenuBuilderWindow) commandHandler.getWindowByName(MainWindow.Windows.menuBuilder);
-//            drinksListBuilderWindow.loadDrinksList(drinkList);
             commandHandler.updateMenuBuilderWindow(MenuBuilder.getInstance().get());
+            commandHandler.handle(new PushOutputMessasgeCommand(commandHandler.getMenuBuilderWindow(), message));
             return ExecutionResult.success;
         }
-
     }
 
     public static class OpenNewFunctionWindowCommand extends ViewCommand {
@@ -139,6 +111,21 @@ public abstract class ViewCommand extends Command<View> {
             } else {
                 return ExecutionResult.failure;
             }
+        }
+    }
+
+    public static class PushOutputMessageToMenuBuilderCommand extends ViewCommand {
+
+        private final String message;
+
+        public PushOutputMessageToMenuBuilderCommand(String message) {
+            this.message = message;
+        }
+
+        @Override
+        public ExecutionResult execute(View commandHandler) {
+            commandHandler.handle(new PushOutputMessasgeCommand(commandHandler.getMenuBuilderWindow(), message));
+            return ExecutionResult.success;
         }
 
     }

@@ -91,7 +91,11 @@ public class Model implements ICommandHandler<ModelCommand> {
     }
 
     public void saveDrinksList() {
-        drinksListBuilder.save();
+        if (drinksListBuilder.save()) {
+            commandHandler.handle(new ViewCommand.PushOutputMessageToMenuBuilderCommand("Menu saved!"));
+        } else {
+            commandHandler.handle(new ViewCommand.PushOutputMessageToMenuBuilderCommand("Menu couldn't be saved."));
+        }
     }
 
     public MenuBuilder getDrinksListBuilder() {

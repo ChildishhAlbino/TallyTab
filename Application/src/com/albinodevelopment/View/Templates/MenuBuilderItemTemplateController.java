@@ -34,7 +34,7 @@ public class MenuBuilderItemTemplateController extends MenuBuilderItemTemplate i
     @FXML
     private void removeButtonAction(ActionEvent e) {
         view.handle(new ViewCommand.PassToControllerCommand(new ControllerCommand.ValidateDrinkRemovalCommand(item)));
-        view.handle(new ViewCommand.LoadMenuCommand(MenuBuilder.getInstance().get()));
+        view.handle(new ViewCommand.LoadMenuCommand("Removed item: " + item.getName()));
     }
 
     @Override

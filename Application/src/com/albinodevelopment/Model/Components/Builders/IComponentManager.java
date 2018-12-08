@@ -17,7 +17,7 @@ public interface IComponentManager<T extends IBuildable> { //
 
     void open();
 
-    void save();
+    boolean save();
 
     T get();
 

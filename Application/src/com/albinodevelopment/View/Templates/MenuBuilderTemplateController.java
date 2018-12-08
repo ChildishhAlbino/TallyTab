@@ -12,7 +12,6 @@ import com.albinodevelopment.Logging.ConnorLogger;
 import com.albinodevelopment.Model.Components.Builders.MenuBuilder;
 import com.albinodevelopment.Model.Components.Menu;
 import com.albinodevelopment.Model.Components.MenuItem;
-import com.albinodevelopment.View.IOutput;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -67,7 +66,8 @@ public class MenuBuilderTemplateController extends MenuBuilderTemplate implement
 
     @FXML
     private void addItemButtonAction(ActionEvent event) {
-        String name = itemNameTF.getText();
+        String rawNameTxt = itemNameTF.getText();
+        String name = rawNameTxt.substring(0, 1).toUpperCase() + rawNameTxt.substring(1);
         String price = itemPriceTF.getText();
         if ((notBlank(itemNameTF) && notBlank(itemPriceTF))) {
             view.getCommandHandler().handle(new ControllerCommand.ValidateDrinkCreationCommand(name, price));
@@ -90,9 +90,14 @@ public class MenuBuilderTemplateController extends MenuBuilderTemplate implement
 //        main.handle(new ViewCommand.PassToControllerCommand(new ControllerCommand.PassToModelCommand(new ModelCommand.OpenDrinksListCommand())));
         String newTitle = menuTitleTF.getText();
         if (notBlank(menuTitleTF)) {
-            MenuBuilder.getInstance().changeName(newTitle);
-            update(MenuBuilder.getInstance().get());
-            view.handle(new ViewCommand.PushOutputMessasgeCommand(this, "Title changed!"));
+            if (newTitle.contains("/") || newTitle.contains("\\")) {
+                view.handle(new ViewCommand.PushOutputMessasgeCommand(this, "Title cannot contain slashes"));
+            } else {
+                MenuBuilder.getInstance().changeName(newTitle);
+                update(MenuBuilder.getInstance().get());
+                view.handle(new ViewCommand.PushOutputMessasgeCommand(this, "Title changed!"));
+            }
+
         }
 
     }
