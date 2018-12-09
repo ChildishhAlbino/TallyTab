@@ -8,13 +8,14 @@ package com.albinodevelopment.View.Templates;
 import com.albinodevelopment.Model.Components.MenuItem;
 import com.albinodevelopment.Model.Components.MenuItemContainer;
 import com.albinodevelopment.Model.Components.Functions.Function;
+import com.albinodevelopment.View.IOutput;
 import javafx.scene.Parent;
 
 /**
  *
  * @author conno
  */
-public abstract class FunctionTemplate extends Template implements ITemplate<Function> {
+public abstract class FunctionTemplate extends Template<Function> implements IOutput{
 
     public void updateDrinkContent(MenuItemContainer drinksTabItem) {
 

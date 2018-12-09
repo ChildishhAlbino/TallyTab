@@ -5,12 +5,16 @@
  */
 package com.albinodevelopment.View.Templates;
 
+import com.albinodevelopment.Commands.ControllerCommand;
+import com.albinodevelopment.Commands.ModelCommand;
+import com.albinodevelopment.Commands.ViewCommand;
 import com.albinodevelopment.Logging.ConnorLogger;
 import com.albinodevelopment.Model.Components.MenuItem;
 import com.albinodevelopment.Model.Components.CustomerTab;
 import com.albinodevelopment.Model.Components.MenuItemContainer;
 import com.albinodevelopment.Model.Components.Functions.Function;
 import com.albinodevelopment.Model.Components.Functions.FunctionManager;
+import com.albinodevelopment.View.IOutput;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
@@ -20,6 +24,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
 /**
@@ -31,7 +36,7 @@ public class FunctionTemplateController extends FunctionTemplate implements Init
 
     private final TemplateLoaderFactory templateLoaderFactory = new TemplateLoaderFactory();
     private final HashMap<MenuItemContainer, MenuItemTemplate> templates = new HashMap<>();
-    
+
     @FXML
     private Label title;
 
@@ -49,6 +54,12 @@ public class FunctionTemplateController extends FunctionTemplate implements Init
 
     @FXML
     private VBox drinksVbox;
+
+    @FXML
+    private TextField limitEditTF;
+
+    @FXML
+    private Label output;
 
     /**
      * Initializes the controller class.
@@ -115,11 +126,44 @@ public class FunctionTemplateController extends FunctionTemplate implements Init
             }
         }
     }
-    
+
     @FXML
-    public void saveFunctionButtonAction(ActionEvent event){
+    public void saveFunctionButtonAction(ActionEvent event) {
         ConnorLogger.log("Saving function to XML!!", ConnorLogger.PriorityLevel.Low);
         FunctionManager.getInstance().saveFunction(title.getText());
+    }
+
+    @FXML
+    public void editLimitButtonAction(ActionEvent event) {
+        ConnorLogger.log("Validating limit edit request.", ConnorLogger.PriorityLevel.Low);
+        String input = limitEditTF.getText();
+        if (notBlank(limitEditTF)) {
+            try {
+                Double newLimit = Double.valueOf(input);
+                view.handle(new ViewCommand.PushOutputMessasgeCommand(this, "Processing limit change."));
+                view.handle(new ViewCommand.PassToControllerCommand(new ControllerCommand.PassToModelCommand(new ModelCommand.EditLimitCommand(content, newLimit))));
+            } catch (NumberFormatException ex) {
+                view.handle(new ViewCommand.PushOutputMessasgeCommand(this, "Invalid limit."));
+            }
+        }
+    }
+
+    private boolean notBlank(TextField tf) {
+        ConnorLogger.log(tf.getText(), ConnorLogger.PriorityLevel.Zero);
+        boolean notBlank = !"".equals(tf.getText());
+        if (notBlank) {
+            tf.clear();
+        } else {
+            view.handle(new ViewCommand.PushOutputMessasgeCommand(this, "Please don't leave text field blank."));
+        }
+        return notBlank;
+    }
+
+    @Override
+    public void output(String output) {
+        if (output != null) {
+            this.output.setText(output);
+        }
     }
 
 }

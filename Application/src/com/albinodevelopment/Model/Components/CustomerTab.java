@@ -113,12 +113,15 @@ public class CustomerTab implements Serializable, XMLable {
         return limit;
     }
 
-    public void ChangeLimit(double limit) {
-        if (limit > currentValue) {
+    public boolean ChangeLimit(double limit) {
+        if (limit >= currentValue) {
             this.limit = limit;
             ConnorLogger.log("Limit Changed.", ConnorLogger.PriorityLevel.Zero);
+            CheckValues();
+            return true;
         } else {
             ConnorLogger.log("New limit was below current value. Cannot change.", ConnorLogger.PriorityLevel.Zero);
+            return false;
         }
     }
 

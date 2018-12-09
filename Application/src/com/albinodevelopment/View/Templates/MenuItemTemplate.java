@@ -12,7 +12,7 @@ import com.albinodevelopment.Model.Components.MenuItemContainer;
  *
  * @author conno
  */
-public abstract class MenuItemTemplate extends Template implements ITemplate<MenuItemContainer> {
+public abstract class MenuItemTemplate extends Template<MenuItemContainer> {
 
     protected MenuItem drink;
     protected FunctionTemplate tabContent;

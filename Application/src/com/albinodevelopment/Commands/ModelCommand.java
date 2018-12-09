@@ -144,7 +144,6 @@ public abstract class ModelCommand extends Command<Model> {
         @Override
         public ExecutionResult execute(Model commandHandler) {
             commandHandler.removeDrinkFromDrinksList(drink);
-//            commandHandler.handle(new PassToViewCommand(new ViewCommand.PushOutputMessasgeCommand(, errorCode)));
             return ExecutionResult.success;
         }
 
@@ -195,6 +194,30 @@ public abstract class ModelCommand extends Command<Model> {
         public ExecutionResult execute(Model commandHandler) {
             commandHandler.functionManager.remove(functionName);
             return ExecutionResult.success;
+        }
+    }
+
+    public static class EditLimitCommand extends ModelCommand {
+
+        public final Function function;
+        public final double limit;
+
+        public EditLimitCommand(Function function, double limit) {
+            this.function = function;
+            this.limit = limit;
+        }
+
+        @Override
+
+        public ExecutionResult execute(Model commandHandler) {
+            if (commandHandler.functionManager.getFunction(function.getName()).getDrinksTab().ChangeLimit(limit)) {
+                commandHandler.getCommandHandler().handle(new ViewCommand.UpdateTabContentCommand(function));
+                commandHandler.handle(new PassToViewCommand(new ViewCommand.PushOutputMessageToFunctionTabCommand(function, "Successfully edited limit.")));
+                return ExecutionResult.success;
+            } else {
+                commandHandler.handle(new PassToViewCommand(new ViewCommand.PushOutputMessageToFunctionTabCommand(function, "New limit was smaller than current balance.")));
+                return ExecutionResult.failure;
+            }
         }
 
     }
