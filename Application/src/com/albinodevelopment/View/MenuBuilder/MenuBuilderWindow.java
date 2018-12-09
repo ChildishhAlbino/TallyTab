@@ -94,7 +94,7 @@ public class MenuBuilderWindow extends Window implements Initializable {
     }
 
     private void createGUIFromDrinksList(Menu drinksList) {
-        drinksList.getDrinksMap().values().forEach((drink) -> {
+        drinksList.getMenuMap().values().forEach((drink) -> {
             createGUIFromDrink(drink);
         });
     }

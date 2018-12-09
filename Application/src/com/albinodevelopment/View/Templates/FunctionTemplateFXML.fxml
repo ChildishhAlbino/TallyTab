@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -136,33 +137,43 @@
                         </GridPane>
                      </children>
                   </VBox>
-                  <HBox alignment="CENTER_LEFT" prefHeight="139.0" prefWidth="378.0">
+                  <HBox alignment="CENTER_LEFT" prefHeight="66.0" prefWidth="378.0">
                      <padding>
                         <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                      </padding>
                      <children>
-                        <ProgressBar fx:id="progressBar" prefHeight="155.0" prefWidth="348.0" progress="0.5" />
+                        <ProgressBar fx:id="progressBar" prefHeight="57.0" prefWidth="348.0" progress="0.5" />
                      </children>
                   </HBox>
-                  <HBox spacing="15.0">
+                  <HBox alignment="CENTER" prefHeight="62.0" prefWidth="396.0" spacing="15.0">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#saveFunctionButtonAction" prefHeight="62.0" prefWidth="100.0" text="Save">
+                        <Button mnemonicParsing="false" onAction="#saveFunctionButtonAction" prefHeight="62.0" prefWidth="175.0" text="Save Function">
                            <font>
-                              <Font name="System Bold" size="12.0" />
+                              <Font name="System Bold" size="19.0" />
                            </font>
                         </Button>
-                        <Button mnemonicParsing="false" prefHeight="62.0" prefWidth="100.0" text="Edit Limit">
+                        <Button mnemonicParsing="false" onAction="#swapMenuButtonAction" prefHeight="62.0" prefWidth="175.0" text="Change Menu">
                            <font>
-                              <Font name="System Bold" size="12.0" />
+                              <Font name="System Bold" size="19.0" />
                            </font>
                         </Button>
-                        <Button mnemonicParsing="false" prefHeight="62.0" prefWidth="100.0" text="Edit Menu">
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" layoutX="49.0" layoutY="474.0" spacing="15.0">
+                     <children>
+                        <TextField fx:id="limitEditTF" prefHeight="62.0" prefWidth="271.0" promptText="Enter a new limit here." />
+                        <Button mnemonicParsing="false" onAction="#editLimitButtonAction" prefHeight="62.0" prefWidth="100.0" text="Edit Limit" textAlignment="CENTER">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Button>
                      </children>
                   </HBox>
+                  <Label fx:id="output" alignment="TOP_CENTER" layoutX="119.0" layoutY="25.0" prefHeight="134.0" prefWidth="378.0" textAlignment="CENTER" wrapText="true">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
                </children>
                <padding>
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />

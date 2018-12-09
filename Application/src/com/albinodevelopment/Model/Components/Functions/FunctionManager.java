@@ -9,6 +9,7 @@ import com.albinodevelopment.IO.FileIO;
 import com.albinodevelopment.Logging.ConnorLogger;
 import com.albinodevelopment.Model.Components.MenuItem;
 import com.albinodevelopment.Model.Components.CustomerTab;
+import com.albinodevelopment.Model.Components.Menu;
 import java.util.HashMap;
 import org.jdom2.Document;
 
@@ -36,7 +37,7 @@ public class FunctionManager {
     private final HashMap<String, Function> functions = new HashMap<>();
 
     public Function changeDrinkValue(String functionName, MenuItem drink, int amount) {
-        functions.get(functionName).getDrinksTab().changeDrinkAmount(amount, drink);
+        functions.get(functionName).getTab().changeItemAmount(amount, drink);
         Function function = functions.get(functionName);
         return function;
     }
@@ -76,6 +77,10 @@ public class FunctionManager {
         }
 
         return s;
+    }
+    
+    public void changeFunctionMenu(Function function, Menu newMenu){
+        function.changeMenu(newMenu);
     }
     
     public boolean saveFunction(String name){

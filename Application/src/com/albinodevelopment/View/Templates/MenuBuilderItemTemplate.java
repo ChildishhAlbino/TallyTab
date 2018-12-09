@@ -11,6 +11,6 @@ import com.albinodevelopment.Model.Components.MenuItem;
  *
  * @author conno
  */
-public abstract class MenuBuilderItemTemplate extends Template implements ITemplate<MenuItem>{
+public abstract class MenuBuilderItemTemplate extends Template<MenuItem>{
     
 }

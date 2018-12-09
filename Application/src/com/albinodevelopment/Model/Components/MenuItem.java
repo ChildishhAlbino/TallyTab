@@ -30,7 +30,15 @@ public class MenuItem extends Item implements Serializable, XMLable {
         Element priceContainer = new Element("Price");
         priceContainer.addContent(String.valueOf(this.price));
         drinkContainer.addContent(priceContainer);
-        
+
+        Element stateContainer = new Element("State");
+        if(state == ItemState.locked){
+            stateContainer.addContent("Locked");
+        } else {
+            stateContainer.addContent("Open");
+        }
+        drinkContainer.addContent(stateContainer);
+
         return drinkContainer;
     }
 

@@ -19,27 +19,24 @@ import com.albinodevelopment.Settings.ISettingsManager;
 public class MenuBuilder implements IComponentManager<Menu> {
 
     private static MenuBuilder instance;
-    private Menu drinksList;
+    private Menu menu;
     private IDrinksListInterpreter drinksListInterpreter;
 
     @Override
     public void create() {
-        drinksList = new Menu();
+        menu = new Menu();
     }
 
     @Override
     public void open() {
-        String directory = FileIO.openFileExplorer(
-                ApplicationSettings.getInstance()
-                        .getSetting(ISettingsManager.settingsList.DrinksListDirectory)
-                        .getValue().toString() + "\\DrinksLists");
+        String directory = FileIO.openFileExplorer(FileIO.MENU_DIRECTORY());
         if (directory != null) {
             ConnorLogger.log(directory, ConnorLogger.PriorityLevel.Low);
             checkInterpreter();
 
             Menu temp = drinksListInterpreter.interpret(directory);
             if (temp != null) {
-                drinksList = temp;
+                menu = temp;
                 ConnorLogger.log("Drinks List opened correctly.", ConnorLogger.PriorityLevel.Low);
             }
         }
@@ -48,9 +45,9 @@ public class MenuBuilder implements IComponentManager<Menu> {
     @Override
     public boolean save() {
         checkInterpreter();
-        if (drinksList.GetListSize() > 0) {
+        if (menu.GetListSize() > 0) {
             ConnorLogger.log("Saving menu to file.", ConnorLogger.PriorityLevel.Low);
-            drinksListInterpreter.save(drinksList);
+            drinksListInterpreter.save(menu);
             clear();
             return true;
         }
@@ -59,10 +56,10 @@ public class MenuBuilder implements IComponentManager<Menu> {
 
     @Override
     public Menu get() {
-        if (drinksList == null) {
+        if (menu == null) {
             create();
         }
-        return drinksList;
+        return menu;
     }
 
     private void checkInterpreter() {
@@ -72,7 +69,7 @@ public class MenuBuilder implements IComponentManager<Menu> {
 
     @Override
     public void clear() {
-        drinksList = null;
+        menu = null;
     }
 
     public static MenuBuilder getInstance() {
@@ -92,12 +89,12 @@ public class MenuBuilder implements IComponentManager<Menu> {
     @Override
     public Menu openAndGet(String path) {
         checkInterpreter();
-        Menu dl = drinksListInterpreter.interpret(path);
-        return dl;
+        Menu menu = drinksListInterpreter.interpret(path);
+        return menu;
     }
 
     public void changeName(String text) {
-        drinksList.setName(text);
+        menu.setName(text);
     }
 
 }

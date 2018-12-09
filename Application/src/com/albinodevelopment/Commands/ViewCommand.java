@@ -129,4 +129,24 @@ public abstract class ViewCommand extends Command<View> {
         }
 
     }
+
+    public static class PushOutputMessageToFunctionTabCommand extends ViewCommand {
+
+        private final Function function;
+        private final String message;
+
+        public PushOutputMessageToFunctionTabCommand(Function function, String message) {
+            this.function = function;
+            this.message = message;
+        }
+        
+        
+
+        @Override
+        public ExecutionResult execute(View commandHandler) {
+            commandHandler.handle(new PushOutputMessasgeCommand(commandHandler.getFunctionTemplate(function), message));
+            return ExecutionResult.success;
+        }
+
+    }
 }

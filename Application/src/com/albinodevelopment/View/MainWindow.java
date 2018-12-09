@@ -54,6 +54,11 @@ public class MainWindow extends View implements Initializable {
         return menuBuilderTemplate;
     }
 
+    @Override
+    public FunctionTemplate getFunctionTemplate(Function function) {
+        return tabs.get(function);
+    }
+
     public enum Windows {
         menuBuilder,
         settings,
@@ -280,7 +285,8 @@ public class MainWindow extends View implements Initializable {
 
     private FunctionTemplate createNewFunctionTemplate(Function function) {
         FunctionTemplate template = (FunctionTemplate) templateLoaderFactory.getBuilder().getContentController("FunctionTemplateFXML.fxml");
-        template.setMain(this);
+        template.setMain(this); 
+        template.setContent(function);
         tabs.put(function, template);
         return template;
     }

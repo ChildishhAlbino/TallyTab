@@ -12,9 +12,8 @@ import com.albinodevelopment.Model.Components.MenuItemContainer;
  *
  * @author conno
  */
-public abstract class MenuItemTemplate extends Template implements ITemplate<MenuItemContainer> {
-
-    protected MenuItem drink;
+public abstract class MenuItemTemplate extends Template<MenuItemContainer> {
+    
     protected FunctionTemplate tabContent;
 
     public void setTabContent(FunctionTemplate tabContent) {

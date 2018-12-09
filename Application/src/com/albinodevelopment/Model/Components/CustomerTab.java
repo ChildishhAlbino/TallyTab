@@ -19,21 +19,21 @@ import org.jdom2.Element;
  */
 public class CustomerTab implements Serializable, XMLable {
 
-    private final Menu drinksList;
+    private final Menu menu;
     private final HashMap<MenuItem, Integer> count;
     private double limit;
     private double currentValue;
     private double percentUsed;
 
     public CustomerTab(Menu drinksList, double Limit) {
-        this.drinksList = drinksList;
+        this.menu = drinksList;
         this.limit = Limit;
         this.count = new HashMap<>();
         init();
     }
 
-    public CustomerTab(Menu drinksList, double Limit, HashMap<MenuItem, Integer> count) {
-        this.drinksList = drinksList;
+    public CustomerTab(Menu menu, double Limit, HashMap<MenuItem, Integer> count) {
+        this.menu = menu;
         this.limit = Limit;
         this.count = count;
         CheckValues();
@@ -44,38 +44,38 @@ public class CustomerTab implements Serializable, XMLable {
         CalculatePercentUsed();
     }
 
-    public void changeDrinkAmount(int delta, MenuItem drink) {
-        ConnorLogger.log("Attempting to change value of " + drink.getName(), ConnorLogger.PriorityLevel.Low);
-        int currentAmount = count.get(drink);
+    public void changeItemAmount(int delta, MenuItem item) {
+        ConnorLogger.log("Attempting to change value of " + item.getName(), ConnorLogger.PriorityLevel.Low);
+        int currentAmount = count.get(item);
         int newAmount = currentAmount + delta;
-        Double potentialValue = currentValue + getPriceForAmount(drink, delta);
+        Double potentialValue = currentValue + getPriceForAmount(item, delta);
 
         if (potentialValue <= limit) {
-            count.put(drink, newAmount);
+            count.put(item, newAmount);
         } else {
-            ConnorLogger.log("Drink would've put you over the limit mate!", ConnorLogger.PriorityLevel.Medium);
+            ConnorLogger.log("Item would've put you over the limit mate!", ConnorLogger.PriorityLevel.Medium);
         }
         CheckValues();
     }
 
-    public int GetCount(MenuItem drink) {
-        return count.get(drink);
+    public int GetCount(MenuItem item) {
+        return count.get(item);
     }
 
-    private Double getPriceForAmount(MenuItem drink, int amount) {
-        Double price = round((drink.getPrice() * amount), 2);
-        ConnorLogger.log(drink.getName() + ": " + String.valueOf(price), ConnorLogger.PriorityLevel.Zero);
+    private Double getPriceForAmount(MenuItem item, int amount) {
+        Double price = round((item.getPrice() * amount), 2);
+        ConnorLogger.log(item.getName() + ": " + String.valueOf(price), ConnorLogger.PriorityLevel.Zero);
         return price;
     }
 
     private Double CalculateCost() throws NumberFormatException {
         double cost = Double.NaN;
-        for (int i = 0; i < drinksList.GetListSize(); i++) {
-            MenuItem drink = drinksList.GetDrink(i);
+        for (int i = 0; i < menu.GetListSize(); i++) {
+            MenuItem drink = menu.GetDrink(i);
             if (Double.isNaN(cost)) {
-                cost = getDrinkSubtotal(drink);
+                cost = getItemSubtotal(drink);
             } else {
-                cost += getDrinkSubtotal(drink);
+                cost += getItemSubtotal(drink);
             }
             //ConnorLogger.Log(String.valueOf(cost), ConnorLogger.PriorityLevel.Low);
         }
@@ -87,8 +87,8 @@ public class CustomerTab implements Serializable, XMLable {
         }
     }
 
-    public double getDrinkSubtotal(MenuItem drink) {
-        return getPriceForAmount(drink, GetCount(drink));
+    public double getItemSubtotal(MenuItem item) {
+        return getPriceForAmount(item, GetCount(item));
     }
 
     private void CalculatePercentUsed() {
@@ -113,28 +113,33 @@ public class CustomerTab implements Serializable, XMLable {
         return limit;
     }
 
-    public void ChangeLimit(double limit) {
-        if (limit > currentValue) {
+    public boolean ChangeLimit(double limit) {
+        if (limit >= currentValue) {
             this.limit = limit;
             ConnorLogger.log("Limit Changed.", ConnorLogger.PriorityLevel.Zero);
+            CheckValues();
+            return true;
         } else {
             ConnorLogger.log("New limit was below current value. Cannot change.", ConnorLogger.PriorityLevel.Zero);
+            return false;
         }
     }
 
-    public Menu getDrinksList() {
-        return drinksList;
+    public Menu getMenu() {
+        return menu;
     }
 
     public void init() {
-        drinksList.getDrinksMap().values().forEach((drink) -> {
-            count.put(drink, 0);
+        menu.getMenuMap().values().forEach((item) -> {
+            if(count.get(item) == null){
+                count.put(item, 0);
+            } 
         });
     }
 
-    public MenuItemContainer getDrinksTabItem(MenuItem drink) {
-        MenuItemContainer drinksTabItem = new MenuItemContainer(drink, GetCount(drink), getDrinkSubtotal(drink));
-        return drinksTabItem;
+    public MenuItemContainer getMenuItemContainer(MenuItem menuItem) {
+        MenuItemContainer menuItemContainer = new MenuItemContainer(menuItem, GetCount(menuItem), getItemSubtotal(menuItem));
+        return menuItemContainer;
     }
 
     public static double round(double value, int places) {
@@ -149,11 +154,11 @@ public class CustomerTab implements Serializable, XMLable {
 
     @Override
     public Element toXML() {
-        Element ret = drinksList.toXML();
-        for (int i = 0; i < drinksList.GetListSize(); i++) {
+        Element ret = menu.toXML();
+        for (int i = 0; i < menu.GetListSize(); i++) {
             Element currDrink = ret.getChildren("Drink").get(i);
             Element count = new Element("Count");
-            count.addContent(String.valueOf(GetCount(drinksList.GetDrink(i))));
+            count.addContent(String.valueOf(GetCount(menu.GetDrink(i))));
             currDrink.addContent(count);
         }
 

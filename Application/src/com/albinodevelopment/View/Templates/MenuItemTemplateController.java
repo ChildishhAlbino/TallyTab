@@ -42,7 +42,7 @@ public class MenuItemTemplateController extends MenuItemTemplate implements Init
     private Button plusButton;
     @FXML
     private Button minusButton;
-
+    
     /**
      * Initializes the controller class.
      *
@@ -68,7 +68,7 @@ public class MenuItemTemplateController extends MenuItemTemplate implements Init
 
     @Override
     public void update(MenuItemContainer input) {
-        this.drink = input.getDrink();
+        setContent(input);
         drinkName.setText(input.getDrink().getName());
         drinkPrice.setText(String.valueOf(input.getDrink().getPrice()));
         currentAmt.setText(String.valueOf(input.getAmountUsed()));
@@ -77,19 +77,19 @@ public class MenuItemTemplateController extends MenuItemTemplate implements Init
 
     @FXML
     private void handlePlusButton(ActionEvent event) {
-        ConnorLogger.log("+1 " + drink.getName(), ConnorLogger.PriorityLevel.Medium);
-        view.handle(new ViewCommand.PassToControllerCommand(new ControllerCommand.ValidateDrinkAmountChangeCommand(+1, drink, tabContent.getText())));
+        ConnorLogger.log("+1 " + content.getDrink().getName(), ConnorLogger.PriorityLevel.Medium);
+        view.handle(new ViewCommand.PassToControllerCommand(new ControllerCommand.ValidateDrinkAmountChangeCommand(+1, content.getDrink(), tabContent.getText())));
     }
 
     @FXML
     private void handleMinusButton(ActionEvent event) {
-        ConnorLogger.log("-1 " + drink.getName(), ConnorLogger.PriorityLevel.Medium);
-        view.handle(new ViewCommand.PassToControllerCommand(new ControllerCommand.ValidateDrinkAmountChangeCommand(-1, drink, tabContent.getText())));
+        ConnorLogger.log("-1 " + content.getDrink().getName(), ConnorLogger.PriorityLevel.Medium);
+        view.handle(new ViewCommand.PassToControllerCommand(new ControllerCommand.ValidateDrinkAmountChangeCommand(-1, content.getDrink(), tabContent.getText())));
     }
 
     @Override
     public String getText() {
-        return drink.getName();
+        return content.getDrink().getName();
     }
 
 }

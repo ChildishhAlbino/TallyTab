@@ -9,6 +9,7 @@ import com.albinodevelopment.Model.Components.MenuItem;
 import com.albinodevelopment.Model.Components.CustomerTab;
 import com.albinodevelopment.Model.Components.Functions.Function;
 import com.albinodevelopment.Model.Components.Functions.FunctionManager;
+import com.albinodevelopment.Model.Components.Menu;
 import com.albinodevelopment.Model.Model;
 
 /**
@@ -144,7 +145,6 @@ public abstract class ModelCommand extends Command<Model> {
         @Override
         public ExecutionResult execute(Model commandHandler) {
             commandHandler.removeDrinkFromDrinksList(drink);
-//            commandHandler.handle(new PassToViewCommand(new ViewCommand.PushOutputMessasgeCommand(, errorCode)));
             return ExecutionResult.success;
         }
 
@@ -196,6 +196,51 @@ public abstract class ModelCommand extends Command<Model> {
             commandHandler.functionManager.remove(functionName);
             return ExecutionResult.success;
         }
+    }
+
+    public static class EditLimitCommand extends ModelCommand {
+
+        public final Function function;
+        public final double limit;
+
+        public EditLimitCommand(Function function, double limit) {
+            this.function = function;
+            this.limit = limit;
+        }
+
+        @Override
+
+        public ExecutionResult execute(Model commandHandler) {
+            if (commandHandler.functionManager.getFunction(function.getName()).getTab().ChangeLimit(limit)) {
+                commandHandler.getCommandHandler().handle(new ViewCommand.UpdateTabContentCommand(function));
+                commandHandler.handle(new PassToViewCommand(new ViewCommand.PushOutputMessageToFunctionTabCommand(function, "Successfully edited limit.")));
+                return ExecutionResult.success;
+            } else {
+                commandHandler.handle(new PassToViewCommand(new ViewCommand.PushOutputMessageToFunctionTabCommand(function, "New limit was smaller than current balance.")));
+                generateErrorCode("Couldn't update limit.");
+                return ExecutionResult.failure;
+            }
+        }
 
     }
+
+    public static class SwapMenuCommand extends ModelCommand {
+
+        public final Function function;
+        public final Menu newMenu;
+
+        public SwapMenuCommand(Function function, Menu newMenu) {
+            this.function = function;
+            this.newMenu = newMenu;
+        }
+
+        @Override
+        public ExecutionResult execute(Model commandHandler) {
+            commandHandler.functionManager.changeFunctionMenu(function, newMenu);
+            commandHandler.handle(new PassToViewCommand(new ViewCommand.UpdateTabContentCommand(function)));
+            return ExecutionResult.success;
+        }
+
+    }
+
 }

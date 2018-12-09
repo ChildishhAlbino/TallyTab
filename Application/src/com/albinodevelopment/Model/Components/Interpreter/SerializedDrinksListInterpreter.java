@@ -33,7 +33,7 @@ public class SerializedDrinksListInterpreter implements IDrinksListInterpreter, 
     public void save(Menu drinksList) {
         SerializerDeserializerFactory.getSerializer(com.albinodevelopment.Model.Components.Menu.class)
                 .serialize(drinksList,
-                        FileIO.DRINKS_LIST_DIRECTORY(), drinksList.getName());
+                        FileIO.MENU_DIRECTORY(), drinksList.getName());
     }
 
     @Override

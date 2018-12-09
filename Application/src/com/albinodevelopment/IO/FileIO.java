@@ -59,9 +59,9 @@ public class FileIO {
         return s;
     }
 
-    public static String DRINKS_LIST_DIRECTORY() {
+    public static String MENU_DIRECTORY() {
         String s = APPLICATION_DIRECTORY();
-        s += System.getProperty("file.separator") + "DrinksLists";
+        s += System.getProperty("file.separator") + "Menus";
         return s;
     }
 

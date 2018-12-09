@@ -12,6 +12,6 @@ import com.albinodevelopment.View.IOutput;
  *
  * @author conno
  */
-public abstract class MenuBuilderTemplate extends Template implements ITemplate<Menu>, IOutput{
+public abstract class MenuBuilderTemplate extends Template<Menu> implements IOutput{
 
 }
