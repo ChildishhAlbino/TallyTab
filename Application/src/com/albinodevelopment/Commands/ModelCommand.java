@@ -9,6 +9,7 @@ import com.albinodevelopment.Model.Components.MenuItem;
 import com.albinodevelopment.Model.Components.CustomerTab;
 import com.albinodevelopment.Model.Components.Functions.Function;
 import com.albinodevelopment.Model.Components.Functions.FunctionManager;
+import com.albinodevelopment.Model.Components.Menu;
 import com.albinodevelopment.Model.Model;
 
 /**
@@ -222,4 +223,23 @@ public abstract class ModelCommand extends Command<Model> {
         }
 
     }
+
+    public static class SwapMenuCommand extends ModelCommand {
+
+        public final Function function;
+        public final Menu newMenu;
+
+        public SwapMenuCommand(Function function, Menu newMenu) {
+            this.function = function;
+            this.newMenu = newMenu;
+        }
+
+        @Override
+        public ExecutionResult execute(Model commandHandler) {
+            commandHandler.functionManager.changeFunctionMenu(function, newMenu);
+            return ExecutionResult.success;
+        }
+
+    }
+
 }
