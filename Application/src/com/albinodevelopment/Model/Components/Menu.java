@@ -8,7 +8,6 @@ package com.albinodevelopment.Model.Components;
 import com.albinodevelopment.Model.Components.Builders.IBuildable;
 import com.albinodevelopment.XML.XMLable;
 import java.io.Serializable;
-import java.util.Comparator;
 import java.util.TreeMap;
 import org.jdom2.Element;
 

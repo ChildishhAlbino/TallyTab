@@ -8,6 +8,7 @@ package com.albinodevelopment.Model.Components.Functions;
 import com.albinodevelopment.Logging.ConnorLogger;
 import com.albinodevelopment.Model.Components.Menu;
 import com.albinodevelopment.Model.Components.CustomerTab;
+import com.albinodevelopment.Model.Components.Item;
 import com.albinodevelopment.Model.Components.MenuItem;
 import com.albinodevelopment.XML.XMLable;
 import java.io.Serializable;
@@ -68,6 +69,7 @@ public class Function implements Serializable, XMLable {
                 // merge and lock
                 if (tab.GetCount(item) != 0) {
                     // merge it 
+                    item.setItemState(Item.ItemState.locked);
                     newMenu.add(item);
                     newCount.put(item, tab.GetCount(item));
                     ConnorLogger.log("Item: " + item.getName().toUpperCase() + " has value of " + tab.GetCount(item) + " and will be added as a locked item.", ConnorLogger.PriorityLevel.Medium);

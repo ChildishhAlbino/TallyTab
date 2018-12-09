@@ -42,7 +42,7 @@ public class MenuItemTemplateController extends MenuItemTemplate implements Init
     private Button plusButton;
     @FXML
     private Button minusButton;
-
+    
     /**
      * Initializes the controller class.
      *

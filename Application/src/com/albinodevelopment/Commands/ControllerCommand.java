@@ -8,6 +8,7 @@ package com.albinodevelopment.Commands;
 import com.albinodevelopment.Controller.Controller;
 import com.albinodevelopment.Model.Components.MenuItem;
 import com.albinodevelopment.Model.Components.CustomerTab;
+import com.albinodevelopment.Model.Components.Item;
 
 /**
  * Abstract class that contains static subclasses that all inherit from. Defines
@@ -193,7 +194,7 @@ public abstract class ControllerCommand extends Command<Controller> {
 
         @Override
         public ExecutionResult execute(Controller commandHandler) {
-            if (commandHandler.validateDrinkAmountChange(functionName)) {
+            if (commandHandler.validateDrinkAmountChange(functionName) && drink.getItemState() == Item.ItemState.open) {
                 commandHandler.getCommandHandler().handle(new ModelCommand.ChangeDrinkAmountCommand(amountChange, functionName, drink));
                 return ExecutionResult.success;
             } else {
