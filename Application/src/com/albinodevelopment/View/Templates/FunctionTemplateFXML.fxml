@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -161,6 +162,11 @@
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Button>
+                     </children>
+                  </HBox>
+                  <HBox layoutX="49.0" layoutY="474.0" spacing="15.0">
+                     <children>
+                        <TextField disable="true" prefHeight="25.0" prefWidth="320.0" promptText="Enter a new limit here." />
                      </children>
                   </HBox>
                </children>
