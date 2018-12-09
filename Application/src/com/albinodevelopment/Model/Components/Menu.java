@@ -22,36 +22,36 @@ public class Menu implements Serializable, IBuildable, XMLable {
 
     private transient StringBuilder stringBuilder;
 
-    private final TreeMap<String, MenuItem> drinks = new TreeMap<>((String o1, String o2) -> o1.compareToIgnoreCase(o2));
+    private final TreeMap<String, MenuItem> items = new TreeMap<>((String o1, String o2) -> o1.compareToIgnoreCase(o2));
 
     public Menu() {
         name = "New Menu";
     }
 
     public TreeMap<String, MenuItem> getMenuMap() {
-        return drinks;
+        return items;
     }
 
     public MenuItem GetDrink(String name) {
-        return drinks.get(name);
+        return items.get(name);
     }
 
     public int GetListSize() {
-        return drinks.size();
+        return items.size();
     }
 
     public MenuItem GetDrink(int index) {
-        MenuItem drink = (MenuItem) drinks.values().toArray()[index];
+        MenuItem drink = (MenuItem) items.values().toArray()[index];
         //ConnorLogger.Log(drink.GetName(), ConnorLogger.PriorityLevel.Low);
         return drink;
     }
 
     public void add(MenuItem drink) {
-        drinks.put(drink.getName(), drink);
+        items.put(drink.getName(), drink);
     }
 
     public void remove(MenuItem drink) {
-        drinks.remove(drink.getName());
+        items.remove(drink.getName());
     }
 
     @Override
@@ -60,7 +60,7 @@ public class Menu implements Serializable, IBuildable, XMLable {
             stringBuilder = new StringBuilder();
         }
         stringBuilder.delete(0, stringBuilder.length());
-        drinks.values().forEach((drink) -> {
+        items.values().forEach((drink) -> {
             stringBuilder.append(drink.toString()).append("\n");
         });
         String s = stringBuilder.toString();
@@ -80,10 +80,19 @@ public class Menu implements Serializable, IBuildable, XMLable {
         Element root = new Element("DrinksList");
         root.setAttribute("Version", "1");
         root.setAttribute("Name", this.name);
-        drinks.values().forEach((drink) -> {
+        items.values().forEach((drink) -> {
             root.addContent(drink.toXML());
         });
 
         return root;
+    }
+
+    public boolean contains(MenuItem item) {
+
+        if (items.containsKey(item.name)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
