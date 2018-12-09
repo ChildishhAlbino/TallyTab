@@ -158,23 +158,6 @@ public abstract class ControllerCommand extends Command<Controller> {
         }
     }
 
-//    public static class CreateMapEntryCommand extends ControllerCommand {
-//
-//        private final Function function;
-//        private final TabContent tabContent;
-//
-//        public CreateMapEntryCommand(Function function, TabContent tabContent) {
-//            this.function = function;
-//            this.tabContent = tabContent;
-//        }
-//
-//        @Override
-//        public ExecutionResult Execute(Controller commandHandler) {
-//            commandHandler.addToMap(tabContent, function);
-//            return ExecutionResult.success;
-//        }
-//
-//    }
     public static class ValidateDrinkAmountChangeCommand extends ControllerCommand {
 
         private final int amountChange;
@@ -205,19 +188,4 @@ public abstract class ControllerCommand extends Command<Controller> {
 
     }
 
-//    public static class RemoveTabContentValueCommand extends ControllerCommand {
-// 
-//        private final String functionName;
-//
-//        public RemoveTabContentValueCommand(String functionName) {
-//            this.functionName = functionName;
-//        }
-//
-//        @Override
-//        public ExecutionResult Execute(Controller commandHandler) {
-//            commandHandler.removeFromMap(functionName);
-//            return ExecutionResult.success;
-//        }
-//
-//    }
 }

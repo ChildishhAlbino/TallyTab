@@ -36,8 +36,10 @@ public class FileIO {
 
     public static Document getXMLDocumentFromFile(String filePath) {
         try {
-            Document document = saxBuilder.build(new File(filePath));
-            return document;
+            if (new File(filePath).exists()) {
+                Document document = saxBuilder.build(new File(filePath));
+                return document;
+            }
         } catch (JDOMException | IOException ex) {
             Logger.getLogger(FileIO.class.getName()).log(Level.SEVERE, null, ex);
         }

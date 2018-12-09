@@ -20,19 +20,23 @@ public class ApplicationSettingsXMLInterpreter {
 
     public static ApplicationSettings interpret(String filePath) {
         Document document = FileIO.getXMLDocumentFromFile(filePath);
-        Element root = document.getRootElement();
-        Setting.DrinksListDirectorySetting drinksListDirectorySetting = null;
-        Setting.DrinksListInterpreterSetting drinksListInterpreterSetting = null;
-        for (Element child : root.getChildren()) {
-            if (child.getName().equals(Setting.getDrinksListDirectoryTag())) {
-                drinksListDirectorySetting = createDrinksListDirectorySetting(child);
-            } else if (child.getName().equals(Setting.getDrinksListInterpreterTag())) {
-                drinksListInterpreterSetting = createDrinksListInterpreterSetting(child);
-            } else {
-                ConnorLogger.log("Child was not a recognised setting.", ConnorLogger.PriorityLevel.Low);
+        if (document != null) {
+            Element root = document.getRootElement();
+            Setting.DrinksListDirectorySetting drinksListDirectorySetting = null;
+            Setting.DrinksListInterpreterSetting drinksListInterpreterSetting = null;
+            for (Element child : root.getChildren()) {
+                if (child.getName().equals(Setting.getDrinksListDirectoryTag())) {
+                    drinksListDirectorySetting = createDrinksListDirectorySetting(child);
+                } else if (child.getName().equals(Setting.getDrinksListInterpreterTag())) {
+                    drinksListInterpreterSetting = createDrinksListInterpreterSetting(child);
+                } else {
+                    ConnorLogger.log("Child was not a recognised setting.", ConnorLogger.PriorityLevel.Low);
+                }
             }
+            return new ApplicationSettings(drinksListDirectorySetting, drinksListInterpreterSetting);
+        } else {
+            return new ApplicationSettings();
         }
-        return new ApplicationSettings(drinksListDirectorySetting, drinksListInterpreterSetting);
     }
 
     public static void save(ISettingsManager applicationSettings) {

@@ -238,6 +238,7 @@ public abstract class ModelCommand extends Command<Model> {
         public ExecutionResult execute(Model commandHandler) {
             commandHandler.functionManager.changeFunctionMenu(function, newMenu);
             commandHandler.handle(new PassToViewCommand(new ViewCommand.UpdateTabContentCommand(function)));
+            commandHandler.handle(new PassToViewCommand(new ViewCommand.PushOutputMessageToFunctionTabCommand(function, "Swapped menus!")));
             return ExecutionResult.success;
         }
 
