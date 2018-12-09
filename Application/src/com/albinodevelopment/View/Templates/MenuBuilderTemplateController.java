@@ -122,7 +122,7 @@ public class MenuBuilderTemplateController extends MenuBuilderTemplate implement
     @Override
     public void update(Menu input) {
         menuTitle.setText(input.getName());
-        TreeMap<String, MenuItem> menuMap = input.getDrinksMap();
+        TreeMap<String, MenuItem> menuMap = input.getMenuMap();
         menuBuilderItemTeplates.clear();
         if (scrollVbox.getChildren().size() > 1) {
             scrollVbox.getChildren().remove(1, scrollVbox.getChildren().size());

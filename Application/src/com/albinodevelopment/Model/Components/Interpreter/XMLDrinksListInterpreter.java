@@ -42,7 +42,7 @@ public class XMLDrinksListInterpreter implements IDrinksListInterpreter, Seriali
         root.setAttribute("Version", "1");
         root.setAttribute("Name", drinksList.getName());
         document.setRootElement(root);
-        drinksList.getDrinksMap().values().forEach((drink) -> {
+        drinksList.getMenuMap().values().forEach((drink) -> {
             root.addContent(createDrinkXML(drink));
         });
 

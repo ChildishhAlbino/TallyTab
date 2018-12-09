@@ -50,7 +50,7 @@ public class Function implements Serializable, XMLable {
     }
 
     public Menu getDrinksList() {
-        return drinksTab.getDrinksList();
+        return drinksTab.getMenu();
     }
 
     public CustomerTab getDrinksTab() {

@@ -76,8 +76,8 @@ public class FunctionTemplateController extends FunctionTemplate implements Init
     }
 
     private void generateDrinksListGUI(CustomerTab drinksTab) {
-        drinksTab.getDrinksList().getDrinksMap().values().forEach((MenuItem drink) -> {
-            MenuItemContainer drinksTabContainer = new MenuItemContainer(drink, drinksTab.GetCount(drink), drinksTab.getDrinkSubtotal(drink));
+        drinksTab.getMenu().getMenuMap().values().forEach((MenuItem drink) -> {
+            MenuItemContainer drinksTabContainer = new MenuItemContainer(drink, drinksTab.GetCount(drink), drinksTab.getItemSubtotal(drink));
             MenuItemTemplate drinkItemContent = generateDrinkItemContent(drinksTabContainer);
             Parent drinkContent = drinkItemContent.generate(drinksTabContainer);
             drinksVbox.getChildren().add(drinkContent);
@@ -111,7 +111,7 @@ public class FunctionTemplateController extends FunctionTemplate implements Init
             generateDrinksListGUI(input.getDrinksTab());
         } else {
             for (MenuItemTemplate drinkItemContent : templates.values()) {
-                drinkItemContent.update(input.getDrinksTab().getDrinksTabItem(drinkItemContent.drink));
+                drinkItemContent.update(input.getDrinksTab().getMenuItemContainer(drinkItemContent.drink));
             }
         }
     }

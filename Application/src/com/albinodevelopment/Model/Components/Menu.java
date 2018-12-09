@@ -28,7 +28,7 @@ public class Menu implements Serializable, IBuildable, XMLable {
         name = "New Menu";
     }
 
-    public TreeMap<String, MenuItem> getDrinksMap() {
+    public TreeMap<String, MenuItem> getMenuMap() {
         return drinks;
     }
 
