@@ -18,7 +18,7 @@ public abstract class Item implements i_Item, Serializable {
         locked,
     }
     
-    protected ItemState state;
+    protected ItemState state = ItemState.open;
     protected double price;
     protected String name;
 
