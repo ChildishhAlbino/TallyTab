@@ -37,7 +37,7 @@ public class FunctionManager {
     private final HashMap<String, Function> functions = new HashMap<>();
 
     public Function changeDrinkValue(String functionName, MenuItem drink, int amount) {
-        functions.get(functionName).getDrinksTab().changeItemAmount(amount, drink);
+        functions.get(functionName).getTab().changeItemAmount(amount, drink);
         Function function = functions.get(functionName);
         return function;
     }

@@ -75,7 +75,7 @@ public class Function implements Serializable, XMLable {
         return canChange;
     }
 
-    public CustomerTab getDrinksTab() {
+    public CustomerTab getTab() {
         return tab;
     }
 

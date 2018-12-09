@@ -8,13 +8,15 @@ package com.albinodevelopment.View.Templates;
 import com.albinodevelopment.Commands.ControllerCommand;
 import com.albinodevelopment.Commands.ModelCommand;
 import com.albinodevelopment.Commands.ViewCommand;
+import com.albinodevelopment.IO.FileIO;
 import com.albinodevelopment.Logging.ConnorLogger;
+import com.albinodevelopment.Model.Components.Builders.MenuBuilder;
 import com.albinodevelopment.Model.Components.MenuItem;
 import com.albinodevelopment.Model.Components.CustomerTab;
 import com.albinodevelopment.Model.Components.MenuItemContainer;
 import com.albinodevelopment.Model.Components.Functions.Function;
 import com.albinodevelopment.Model.Components.Functions.FunctionManager;
-import com.albinodevelopment.View.IOutput;
+import com.albinodevelopment.Model.Components.Menu;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
@@ -86,16 +88,16 @@ public class FunctionTemplateController extends FunctionTemplate implements Init
         progressBar.setProgress(input.getPercentAsDouble());
     }
 
-    private void generateDrinksListGUI(CustomerTab drinksTab) {
+    private void generateTabGUI(CustomerTab drinksTab) {
         drinksTab.getMenu().getMenuMap().values().forEach((MenuItem drink) -> {
             MenuItemContainer drinksTabContainer = new MenuItemContainer(drink, drinksTab.GetCount(drink), drinksTab.getItemSubtotal(drink));
-            MenuItemTemplate drinkItemContent = generateDrinkItemContent(drinksTabContainer);
+            MenuItemTemplate drinkItemContent = generateMenuItemTemplate(drinksTabContainer);
             Parent drinkContent = drinkItemContent.generate(drinksTabContainer);
             drinksVbox.getChildren().add(drinkContent);
         });
     }
 
-    private MenuItemTemplate generateDrinkItemContent(MenuItemContainer menuItemContainer) {
+    private MenuItemTemplate generateMenuItemTemplate(MenuItemContainer menuItemContainer) {
         MenuItemTemplate menuItemContent = (MenuItemTemplate) templateLoaderFactory.getBuilder().getContentController("MenuItemTemplateFXML.fxml");
         menuItemContent.setMain(view);
         menuItemContent.setTabContent(this);
@@ -115,16 +117,21 @@ public class FunctionTemplateController extends FunctionTemplate implements Init
 
     @Override
     public void update(Function input) {
-        // take function
-        setupInfoPage(input);
-        // generate GUI elements
-        if (templates.isEmpty()) {
-            generateDrinksListGUI(input.getDrinksTab());
-        } else {
-            for (MenuItemTemplate drinkItemContent : templates.values()) {
-                drinkItemContent.update(input.getDrinksTab().getMenuItemContainer(drinkItemContent.drink));
-            }
+        if(input != null){
+            clear();
+            setupInfoPage(input);
+            generateTabGUI(input.getTab());
         }
+//        // take function
+//        setupInfoPage(input);
+//        // generate GUI elements
+//        if (templates.isEmpty()) {
+//            generateDrinksListGUI(input.getTab());
+//        } else {
+//            for (MenuItemTemplate drinkItemContent : templates.values()) {
+//                drinkItemContent.update(input.getTab().getMenuItemContainer(drinkItemContent.drink));
+//            }
+//        }
     }
 
     @FXML
@@ -147,6 +154,13 @@ public class FunctionTemplateController extends FunctionTemplate implements Init
             }
         }
     }
+    
+      @FXML
+    public void swapMenuButtonAction(ActionEvent event) {
+        String directory = FileIO.openFileExplorer(FileIO.DRINKS_LIST_DIRECTORY());
+        Menu newMenu = MenuBuilder.getInstance().openAndGet(directory);
+        view.handle(new ViewCommand.PassToControllerCommand(new ControllerCommand.PassToModelCommand(new ModelCommand.SwapMenuCommand(content, newMenu))));
+    }
 
     private boolean notBlank(TextField tf) {
         ConnorLogger.log(tf.getText(), ConnorLogger.PriorityLevel.Zero);
@@ -164,6 +178,13 @@ public class FunctionTemplateController extends FunctionTemplate implements Init
         if (output != null) {
             this.output.setText(output);
         }
+    }
+
+    private void clear() {
+        if(drinksVbox.getChildren().size() > 0){
+            drinksVbox.getChildren().remove(1, drinksVbox.getChildren().size());
+        }
+        templates.clear();
     }
 
 }

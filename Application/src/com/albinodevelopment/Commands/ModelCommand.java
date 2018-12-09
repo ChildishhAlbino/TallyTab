@@ -211,7 +211,7 @@ public abstract class ModelCommand extends Command<Model> {
         @Override
 
         public ExecutionResult execute(Model commandHandler) {
-            if (commandHandler.functionManager.getFunction(function.getName()).getDrinksTab().ChangeLimit(limit)) {
+            if (commandHandler.functionManager.getFunction(function.getName()).getTab().ChangeLimit(limit)) {
                 commandHandler.getCommandHandler().handle(new ViewCommand.UpdateTabContentCommand(function));
                 commandHandler.handle(new PassToViewCommand(new ViewCommand.PushOutputMessageToFunctionTabCommand(function, "Successfully edited limit.")));
                 return ExecutionResult.success;
@@ -237,6 +237,7 @@ public abstract class ModelCommand extends Command<Model> {
         @Override
         public ExecutionResult execute(Model commandHandler) {
             commandHandler.functionManager.changeFunctionMenu(function, newMenu);
+            commandHandler.handle(new PassToViewCommand(new ViewCommand.UpdateTabContentCommand(function)));
             return ExecutionResult.success;
         }
 

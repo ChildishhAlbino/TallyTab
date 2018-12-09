@@ -36,6 +36,7 @@ public class CustomerTab implements Serializable, XMLable {
         this.menu = menu;
         this.limit = Limit;
         this.count = count;
+        init();
         CheckValues();
     }
 
@@ -131,13 +132,15 @@ public class CustomerTab implements Serializable, XMLable {
 
     public void init() {
         menu.getMenuMap().values().forEach((item) -> {
-            count.put(item, 0);
+            if(count.get(item) == null){
+                count.put(item, 0);
+            } 
         });
     }
 
-    public MenuItemContainer getMenuItemContainer(MenuItem menu) {
-        MenuItemContainer drinksTabItem = new MenuItemContainer(menu, GetCount(menu), getItemSubtotal(menu));
-        return drinksTabItem;
+    public MenuItemContainer getMenuItemContainer(MenuItem menuItem) {
+        MenuItemContainer menuItemContainer = new MenuItemContainer(menuItem, GetCount(menuItem), getItemSubtotal(menuItem));
+        return menuItemContainer;
     }
 
     public static double round(double value, int places) {

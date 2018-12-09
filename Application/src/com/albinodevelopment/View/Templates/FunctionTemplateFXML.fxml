@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8.0.192" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.albinodevelopment.View.Templates.FunctionTemplateController">
+<VBox prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.albinodevelopment.View.Templates.FunctionTemplateController">
    <children>
       <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="1080.0" prefWidth="1920.0" VBox.vgrow="ALWAYS">
          <children>
@@ -147,14 +147,14 @@
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="62.0" prefWidth="396.0" spacing="15.0">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#saveFunctionButtonAction" prefHeight="62.0" prefWidth="100.0" text="Save">
+                        <Button mnemonicParsing="false" onAction="#saveFunctionButtonAction" prefHeight="62.0" prefWidth="175.0" text="Save Function">
                            <font>
-                              <Font name="System Bold" size="12.0" />
+                              <Font name="System Bold" size="19.0" />
                            </font>
                         </Button>
-                        <Button mnemonicParsing="false" prefHeight="62.0" prefWidth="100.0" text="Edit Menu">
+                        <Button mnemonicParsing="false" onAction="#swapMenuButtonAction" prefHeight="62.0" prefWidth="175.0" text="Change Menu">
                            <font>
-                              <Font name="System Bold" size="12.0" />
+                              <Font name="System Bold" size="19.0" />
                            </font>
                         </Button>
                      </children>
@@ -162,7 +162,7 @@
                   <HBox alignment="CENTER" layoutX="49.0" layoutY="474.0" spacing="15.0">
                      <children>
                         <TextField fx:id="limitEditTF" prefHeight="62.0" prefWidth="271.0" promptText="Enter a new limit here." />
-                        <Button mnemonicParsing="false" onAction="#editLimitButtonAction" prefHeight="62.0" prefWidth="100.0" text="Edit Limit">
+                        <Button mnemonicParsing="false" onAction="#editLimitButtonAction" prefHeight="62.0" prefWidth="100.0" text="Edit Limit" textAlignment="CENTER">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
