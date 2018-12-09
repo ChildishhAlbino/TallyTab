@@ -36,7 +36,6 @@ public class CustomerTab implements Serializable, XMLable {
         this.menu = menu;
         this.limit = Limit;
         this.count = count;
-        init();
         CheckValues();
     }
 

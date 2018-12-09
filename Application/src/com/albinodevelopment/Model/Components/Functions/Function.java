@@ -5,6 +5,7 @@
  */
 package com.albinodevelopment.Model.Components.Functions;
 
+import com.albinodevelopment.Logging.ConnorLogger;
 import com.albinodevelopment.Model.Components.Menu;
 import com.albinodevelopment.Model.Components.CustomerTab;
 import com.albinodevelopment.Model.Components.MenuItem;
@@ -61,16 +62,24 @@ public class Function implements Serializable, XMLable {
 
         for (MenuItem item : tab.getMenu().getMenuMap().values()) {
             if (newMenu.contains(item)) {
-                if (tab.GetCount(item) != 0) {
-                    // merge it 
-                    newCount.put(item, tab.GetCount(item));
-                }
+                newCount.put(newMenu.GetDrink(item.getName()), tab.GetCount(item));
+                ConnorLogger.log("Item: " + item.getName().toUpperCase() + " will be added as an unlocked item.", ConnorLogger.PriorityLevel.Medium);
             } else {
                 // merge and lock
-                newCount.put(item, tab.GetCount(item));
+                if (tab.GetCount(item) != 0) {
+                    // merge it 
+                    newMenu.add(item);
+                    newCount.put(item, tab.GetCount(item));
+                    ConnorLogger.log("Item: " + item.getName().toUpperCase() + " has value of " + tab.GetCount(item) + " and will be added as a locked item.", ConnorLogger.PriorityLevel.Medium);
+                }
             }
         }
-        
+        for (MenuItem item : newMenu.getMenuMap().values()) {
+            ConnorLogger.log(item.getName().toUpperCase() + " has a value of " + newCount.get(item), ConnorLogger.PriorityLevel.Medium);
+            if (newCount.get(item) == null) {
+                newCount.put(item, 0);
+            }
+        }
         tab = new CustomerTab(newMenu, tab.GetLimit(), newCount);
         return canChange;
     }

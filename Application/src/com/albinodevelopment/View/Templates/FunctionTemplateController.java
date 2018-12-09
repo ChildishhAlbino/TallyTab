@@ -122,16 +122,6 @@ public class FunctionTemplateController extends FunctionTemplate implements Init
             setupInfoPage(input);
             generateTabGUI(input.getTab());
         }
-//        // take function
-//        setupInfoPage(input);
-//        // generate GUI elements
-//        if (templates.isEmpty()) {
-//            generateDrinksListGUI(input.getTab());
-//        } else {
-//            for (MenuItemTemplate drinkItemContent : templates.values()) {
-//                drinkItemContent.update(input.getTab().getMenuItemContainer(drinkItemContent.drink));
-//            }
-//        }
     }
 
     @FXML

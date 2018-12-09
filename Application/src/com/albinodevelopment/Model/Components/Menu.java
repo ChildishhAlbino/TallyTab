@@ -89,7 +89,7 @@ public class Menu implements Serializable, IBuildable, XMLable {
 
     public boolean contains(MenuItem item) {
 
-        if (items.containsKey(item.name)) {
+        if (items.get(item.getName()) != null) {
             return true;
         } else {
             return false;
