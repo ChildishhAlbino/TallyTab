@@ -16,6 +16,7 @@ import com.albinodevelopment.Model.Components.CustomerTab;
 import com.albinodevelopment.Model.Components.MenuItemContainer;
 import com.albinodevelopment.Model.Components.Functions.Function;
 import com.albinodevelopment.Model.Components.Functions.FunctionManager;
+import com.albinodevelopment.Model.Components.Item;
 import com.albinodevelopment.Model.Components.Menu;
 import java.net.URL;
 import java.util.HashMap;
@@ -98,7 +99,13 @@ public class FunctionTemplateController extends FunctionTemplate implements Init
     }
 
     private MenuItemTemplate generateMenuItemTemplate(MenuItemContainer menuItemContainer) {
-        MenuItemTemplate menuItemContent = (MenuItemTemplate) templateLoaderFactory.getBuilder().getContentController("MenuItemTemplateFXML.fxml");
+        MenuItemTemplate menuItemContent;
+        if (menuItemContainer.getDrink().getItemState() == Item.ItemState.open) {
+            menuItemContent = (MenuItemTemplate) templateLoaderFactory.getBuilder().getContentController("MenuItemTemplateFXML.fxml");
+        } else {
+            menuItemContent = (MenuItemTemplate) templateLoaderFactory.getBuilder().getContentController("MenuItemTemplateLOCKEDFXML.fxml");
+        }
+
         menuItemContent.setMain(view);
         menuItemContent.setTabContent(this);
         templates.put(menuItemContainer, menuItemContent);
@@ -117,7 +124,7 @@ public class FunctionTemplateController extends FunctionTemplate implements Init
 
     @Override
     public void update(Function input) {
-        if(input != null){
+        if (input != null) {
             clear();
             setupInfoPage(input);
             generateTabGUI(input.getTab());
@@ -144,8 +151,8 @@ public class FunctionTemplateController extends FunctionTemplate implements Init
             }
         }
     }
-    
-      @FXML
+
+    @FXML
     public void swapMenuButtonAction(ActionEvent event) {
         String directory = FileIO.openFileExplorer(FileIO.DRINKS_LIST_DIRECTORY());
         Menu newMenu = MenuBuilder.getInstance().openAndGet(directory);
@@ -171,7 +178,7 @@ public class FunctionTemplateController extends FunctionTemplate implements Init
     }
 
     private void clear() {
-        if(drinksVbox.getChildren().size() > 0){
+        if (drinksVbox.getChildren().size() > 0) {
             drinksVbox.getChildren().remove(1, drinksVbox.getChildren().size());
         }
         templates.clear();

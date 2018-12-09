@@ -63,6 +63,7 @@ public class Function implements Serializable, XMLable {
 
         for (MenuItem item : tab.getMenu().getMenuMap().values()) {
             if (newMenu.contains(item)) {
+                newMenu.GetDrink(item.getName()).setItemState(Item.ItemState.open);
                 newCount.put(newMenu.GetDrink(item.getName()), tab.GetCount(item));
                 ConnorLogger.log("Item: " + item.getName().toUpperCase() + " will be added as an unlocked item.", ConnorLogger.PriorityLevel.Medium);
             } else {

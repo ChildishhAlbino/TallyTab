@@ -79,8 +79,8 @@ public class Menu implements Serializable, IBuildable, XMLable {
         Element root = new Element("DrinksList");
         root.setAttribute("Version", "1");
         root.setAttribute("Name", this.name);
-        items.values().forEach((drink) -> {
-            root.addContent(drink.toXML());
+        items.values().forEach((item) -> {
+            root.addContent(item.toXML());
         });
 
         return root;
