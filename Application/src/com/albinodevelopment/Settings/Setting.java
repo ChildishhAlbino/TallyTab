@@ -81,7 +81,7 @@ public abstract class Setting<U> implements ISetting<U>, Serializable {
             super.setToDefault(); //To change body of generated methods, choose Tools | Templates.
             restructure();
         }
-        
+
         private void writeToFile() {
             File file = new File("userDirectory.txt");
             try {
@@ -96,7 +96,8 @@ public abstract class Setting<U> implements ISetting<U>, Serializable {
 
         private void setupDirectory() {
             new File(value).mkdir();
-            new File(value + System.getProperty("file.separator") + "DrinksLists").mkdir();
+            new File(value + System.getProperty("file.separator") + "Menus").mkdir();
+            new File(value + System.getProperty("file.separator") + "Functions").mkdir();
         }
 
         private void restructure() {

@@ -29,10 +29,7 @@ public class MenuBuilder implements IComponentManager<Menu> {
 
     @Override
     public void open() {
-        String directory = FileIO.openFileExplorer(
-                ApplicationSettings.getInstance()
-                        .getSetting(ISettingsManager.settingsList.DrinksListDirectory)
-                        .getValue().toString() + "\\DrinksLists");
+        String directory = FileIO.openFileExplorer(FileIO.MENU_DIRECTORY());
         if (directory != null) {
             ConnorLogger.log(directory, ConnorLogger.PriorityLevel.Low);
             checkInterpreter();

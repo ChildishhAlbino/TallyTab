@@ -154,9 +154,11 @@ public class FunctionTemplateController extends FunctionTemplate implements Init
 
     @FXML
     public void swapMenuButtonAction(ActionEvent event) {
-        String directory = FileIO.openFileExplorer(FileIO.DRINKS_LIST_DIRECTORY());
-        Menu newMenu = MenuBuilder.getInstance().openAndGet(directory);
-        view.handle(new ViewCommand.PassToControllerCommand(new ControllerCommand.PassToModelCommand(new ModelCommand.SwapMenuCommand(content, newMenu))));
+        String directory = FileIO.openFileExplorer(FileIO.MENU_DIRECTORY());
+        if (directory != null) {
+            Menu newMenu = MenuBuilder.getInstance().openAndGet(directory);
+            view.handle(new ViewCommand.PassToControllerCommand(new ControllerCommand.PassToModelCommand(new ModelCommand.SwapMenuCommand(content, newMenu))));
+        }
     }
 
     private boolean notBlank(TextField tf) {

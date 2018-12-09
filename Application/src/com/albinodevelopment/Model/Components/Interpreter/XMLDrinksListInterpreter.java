@@ -38,7 +38,7 @@ public class XMLDrinksListInterpreter implements IDrinksListInterpreter, Seriali
             root.addContent(item.toXML());
         });
 
-        FileIO.writeXMLDocumentToFile(document, FileIO.DRINKS_LIST_DIRECTORY(), drinksList.getName() + ".xml");
+        FileIO.writeXMLDocumentToFile(document, FileIO.MENU_DIRECTORY(), drinksList.getName() + ".xml");
     }
 
     @Override
