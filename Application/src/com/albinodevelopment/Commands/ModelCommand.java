@@ -216,6 +216,7 @@ public abstract class ModelCommand extends Command<Model> {
                 return ExecutionResult.success;
             } else {
                 commandHandler.handle(new PassToViewCommand(new ViewCommand.PushOutputMessageToFunctionTabCommand(function, "New limit was smaller than current balance.")));
+                generateErrorCode("Couldn't update limit.");
                 return ExecutionResult.failure;
             }
         }
