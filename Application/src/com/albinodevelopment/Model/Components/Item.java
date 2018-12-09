@@ -12,7 +12,13 @@ import java.io.Serializable;
  * @author conno
  */
 public abstract class Item implements i_Item, Serializable {
-
+    
+    public enum ItemState{
+        open,
+        locked,
+    }
+    
+    protected ItemState state;
     protected double price;
     protected String name;
 
@@ -35,5 +41,13 @@ public abstract class Item implements i_Item, Serializable {
     public String toString() {
         String s = "Drink: " + name + " Price: $" + price;
         return s;
+    }
+    
+    public ItemState getItemState(){
+        return state;
+    }
+    
+    public void setItemState(ItemState state){
+        this.state = state;
     }
 }
