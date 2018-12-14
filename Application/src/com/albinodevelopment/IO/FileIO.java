@@ -48,7 +48,9 @@ public class FileIO {
 
     public static boolean writeXMLDocumentToFile(Document document, String directory, String fileName) {
         try {
-            xmlOutputter.output(document, new FileOutputStream(directory + System.getProperty("file.separator") + fileName));
+            FileOutputStream fileOutputStream = new FileOutputStream(directory + System.getProperty("file.separator") + fileName);
+            xmlOutputter.output(document, fileOutputStream);
+            fileOutputStream.close();
             return true;
         } catch (IOException ex) {
             Logger.getLogger(FileIO.class.getName()).log(Level.SEVERE, null, ex);
@@ -112,6 +114,7 @@ public class FileIO {
             String directory = bufferedReader.readLine();
             if (directory != null) {
                 ConnorLogger.log("Directory == " + directory, ConnorLogger.PriorityLevel.Zero);
+                bufferedReader.close();
                 return directory + System.getProperty("file.separator");
             } else {
                 throw new IOException("The directory was null.");
